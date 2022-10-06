@@ -7,7 +7,7 @@ namespace UniCMD
         public static string currentdir;
         public static string command;
         public static string uncvcommand;
-        public static string version = "v1.0b";
+        public static string version = "v1.1b";
         internal static object filename;
 
         public static void Main()
