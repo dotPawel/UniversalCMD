@@ -17,6 +17,7 @@ https://github.com/PawelStuff/UniversalCMD/releases/latest<br />
 + File Management
 + Process management
 + AeroCL Backcompatibility
++ Python3 execution using IronPython
 
 ![unicmd banner 3](https://user-images.githubusercontent.com/89011403/187044183-d36343db-e355-4354-a8bf-cd9ca39d2ee5.png)
 
