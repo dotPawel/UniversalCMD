@@ -7,7 +7,7 @@ namespace UniCMD
         public static string currentdir;
         public static string command;
         public static string uncvcommand;
-        public static string version = "v0.9b";
+        public static string version = "v1.0b";
         internal static object filename;
 
         public static void Main()
@@ -278,6 +278,20 @@ namespace UniCMD
             if (command.StartsWith("process kill "))
             {
                 processutils.killprocess();
+            }
+
+            // python commands
+            if (command == "python3")
+            {
+                commandusages.pythonusage();
+            }
+            if (command.StartsWith("python3 path "))
+            {
+                python3commands.runfilepath();
+            }
+            else if (command.StartsWith("python3 "))
+            {
+                python3commands.runfile();
             }
 
             // backbridge

@@ -182,6 +182,20 @@ namespace UniCMD
             Program.CMD();
         }
 
+        // python commands usage
+        public static void pythonusage()
+        {
+            Console.WriteLine("Usage of 'python3'");
+            Console.WriteLine();
+            Console.WriteLine("  Python execution using IronPython");
+            Console.WriteLine("  IronPython version : 2.7.11");
+            Console.WriteLine("  input : python3 {name}");
+            Console.WriteLine("          python3 path {path}");
+            Console.WriteLine("  output : name/path is executed with IronPython (*must be a .py file)");
+
+            Program.CMD();
+        }
+
         // backbridge stuff
         public static void backbridgeusage()
         {

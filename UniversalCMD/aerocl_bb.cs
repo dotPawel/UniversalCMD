@@ -363,8 +363,6 @@ namespace UniCMD
             }
             catch
             {
-                Console.ForegroundColor = ConsoleColor.DarkRed;
-
                 Console.WriteLine();
                 Console.WriteLine("==================================================");
                 Console.WriteLine(" AeroCL | CRASH HANDLER");
