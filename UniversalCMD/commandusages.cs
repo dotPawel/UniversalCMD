@@ -63,6 +63,10 @@ namespace UniCMD
             Console.WriteLine("   ╚Process Kill Path {path}");
             Console.WriteLine("   ╚Process Kill All");
             Console.WriteLine();
+            Console.WriteLine(" Python 3 Execution");
+            Console.WriteLine("  ╚Python3 {name}");
+            Console.WriteLine("  ╚Python3 Path {path}");
+            Console.WriteLine();
             Console.WriteLine(" Other");
             Console.WriteLine("  ╚Clear");
             Console.WriteLine("  ╚About");
