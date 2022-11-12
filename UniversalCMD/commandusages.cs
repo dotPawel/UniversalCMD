@@ -63,9 +63,9 @@ namespace UniCMD
             Console.WriteLine("   ╚Process Kill Path {path}");
             Console.WriteLine("   ╚Process Kill All");
             Console.WriteLine();
-            Console.WriteLine(" Python 3 Execution");
-            Console.WriteLine("  ╚Python3 {name}");
-            Console.WriteLine("  ╚Python3 Path {path}");
+            Console.WriteLine(" IronPython 3 Execution");
+            Console.WriteLine("  ╚IronPython3 {name}");
+            Console.WriteLine("  ╚IronPython3 Path {path}");
             Console.WriteLine();
             Console.WriteLine(" Other");
             Console.WriteLine("  ╚Clear");
@@ -187,14 +187,14 @@ namespace UniCMD
         }
 
         // python commands usage
-        public static void pythonusage()
+        public static void ironpythonusage()
         {
-            Console.WriteLine("Usage of 'python3'");
+            Console.WriteLine("Usage of 'ironpython3'");
             Console.WriteLine();
             Console.WriteLine("  Python execution using IronPython");
             Console.WriteLine("  IronPython version : 2.7.11");
-            Console.WriteLine("  input : python3 {name}");
-            Console.WriteLine("          python3 path {path}");
+            Console.WriteLine("  input : ironpython3 {name}");
+            Console.WriteLine("          ironpython3 path {path}");
             Console.WriteLine("  output : name/path is executed with IronPython (*must be a .py file)");
 
             Program.CMD();

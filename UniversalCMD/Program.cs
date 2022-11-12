@@ -4,10 +4,14 @@ namespace UniCMD
 {
     static internal class Program
     {
+        public static string version = "v1.2r";
+        // r - release
+        // rc - release candidate
+        // d - debug
+
         public static string currentdir;
         public static string command;
         public static string uncvcommand;
-        public static string version = "v1.1b";
         internal static object filename;
 
         public static void Main()
@@ -281,15 +285,15 @@ namespace UniCMD
             }
 
             // python commands
-            if (command == "python3")
+            if (command == "ironpython3")
             {
-                commandusages.pythonusage();
+                commandusages.ironpythonusage();
             }
-            if (command.StartsWith("python3 path "))
+            if (command.StartsWith("ironpython3 path "))
             {
                 python3commands.runfilepath();
             }
-            else if (command.StartsWith("python3 "))
+            else if (command.StartsWith("ironpython3 "))
             {
                 python3commands.runfile();
             }

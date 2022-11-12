@@ -9,7 +9,7 @@ namespace UniCMD
     static internal class aerocl_bb
     {
         public static string currentDir = "";
-        public static string bbver = "0.5";
+        public static string bbver = "0.6";
         internal static void acl_main()
         {
             Console.Clear();
@@ -371,6 +371,8 @@ namespace UniCMD
                 Console.WriteLine("press any key to return into UniCMD");
                 Console.WriteLine("==================================================");
                 Console.ReadKey();
+                Console.Clear();
+                Program.CMD();
             }
         }
     }
