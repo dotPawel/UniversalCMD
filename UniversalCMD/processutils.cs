@@ -68,7 +68,7 @@ namespace UniCMD
         public static void killprocess()
         {
             var killed = 0;
-            string filename = Program.command.Replace("process kill ", "");
+            string filename = Program.command.Replace("proc end ", "");
             Process[] process = Process.GetProcessesByName(filename);
             try
             {
@@ -86,13 +86,13 @@ namespace UniCMD
             }
             Program.CMD();
         }
-        public static void startprocess()
+        public static void processrun()
         {
             if (Program.currentdir == null)
             {
                 fileutils.nodirset();
             }
-            string file = Program.command.Replace("process start ", "");
+            string file = Program.command.Replace("proc run ", "");
             if (File.Exists(Program.currentdir + file))
             {
                 Console.WriteLine("Selected : " + file);
@@ -126,9 +126,9 @@ namespace UniCMD
             }
             Program.CMD();
         }
-        public static void startprocesspath()
+        public static void processrunpath()
         {
-            string file = Program.command.Replace("process start path ", "");
+            string file = Program.command.Replace("proc run /p ", "");
             if (File.Exists(file))
             {
                 Console.WriteLine("Selected : " + file);

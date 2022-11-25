@@ -1,4 +1,6 @@
-﻿using System.Management;
+﻿using IronPython.Runtime.Operations;
+using System.Diagnostics;
+using System.Management;
 using System.Security.Principal;
 
 namespace UniCMD

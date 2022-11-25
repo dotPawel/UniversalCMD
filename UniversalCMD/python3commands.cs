@@ -12,7 +12,7 @@ namespace UniCMD
     {
         public static void runfile()
         {
-            string filename = Program.command.Replace("python3 ", "");
+            string filename = Program.command.Replace("ironpython ", "");
             if (File.Exists(Program.currentdir + filename) && filename.EndsWith(".py"))
             {
                 try
@@ -38,7 +38,7 @@ namespace UniCMD
         }
         public static void runfilepath()
         {
-            string filename = Program.command.Replace("python3 path ", "");
+            string filename = Program.command.Replace("ironpython /p ", "");
             if (File.Exists(filename) && filename.EndsWith(".py"))
             {
                 try

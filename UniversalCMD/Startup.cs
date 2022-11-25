@@ -11,7 +11,7 @@ namespace UniCMD
             Console.WriteLine("   UniCMD Start-Up\n");
             checkdata();
 
-            string[] config = System.IO.File.ReadAllLines(@"UniCMD.data\config.cfg");
+            string[] config = System.IO.File.ReadAllLines(@"UniCMD.data/config.cfg");
             Console.WriteLine("config.cfg > to string");
             if (config.Contains("showExceptions = y"))
             {
@@ -48,7 +48,7 @@ namespace UniCMD
                 }
             }
             // config
-            if (File.Exists(@"UniCMD.data\config.cfg"))
+            if (File.Exists(@"UniCMD.data/config.cfg"))
             {
                 Console.WriteLine("config.cfg > OK");
             }

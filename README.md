@@ -3,7 +3,7 @@
 # An easy to use command line utility & an AeroCL replacement
 <p align="center">
 get the latest release<br />
-https://github.com/dotPawel/UniversalCMD/releases/latest<br />
+https://github.com/PawelStuff/UniversalCMD/releases/latest<br />
 </p>
 
 
@@ -18,7 +18,6 @@ https://github.com/dotPawel/UniversalCMD/releases/latest<br />
 + Process management
 + AeroCL Backcompatibility
 + Python3 execution using IronPython
-+ Custom StartText
 
 ![unicmd banner 3](https://user-images.githubusercontent.com/89011403/187044183-d36343db-e355-4354-a8bf-cd9ca39d2ee5.png)
 
@@ -27,4 +26,4 @@ using the "ACL_BB start" command<br />
 <br />
 <br />
 <br />
-*UniversalCMD needs .NET 7.0 Runtime to run, [get it here](https://dotnet.microsoft.com/en-us/download/dotnet/6.0)
+*UniversalCMD needs .NET 6.0 Runtime to run, [get it here](https://dotnet.microsoft.com/en-us/download/dotnet/6.0)

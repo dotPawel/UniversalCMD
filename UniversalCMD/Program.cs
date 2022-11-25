@@ -1,10 +1,11 @@
 ﻿using System.Diagnostics;
+using System.Runtime.InteropServices;
 
 namespace UniCMD
 {
     static internal class Program
     {
-        public static string version = "v1.2r";
+        public static string version = "v2.0rc LTS";
         // r - release
         // rc - release candidate
         // d - debug
@@ -24,11 +25,16 @@ namespace UniCMD
             Process proc = Process.GetCurrentProcess();
             Console.Title = "UniCMD (" + version + ")";
 
+            if (File.Exists(@"UniCMD.data\starttext.unicmd"))
+            {
+                configcommands.ParseStarttext();
+            }
+
             Console.WriteLine(" --------------------------------------------------");
             Console.WriteLine(" UniversalCMD / Rainman / Build " + version + "\n");
             Console.WriteLine("  Host OS");
             Console.WriteLine("   └ " + Environment.OSVersion);
-            Console.WriteLine("  Memory Used (by UniCMD)");
+            Console.WriteLine("  Memory");
             Console.WriteLine("   └ " + proc.PrivateMemorySize64 + " (KB)");
             Console.WriteLine("  CPU Name/Model");
             otherutils.cpuname();
@@ -83,7 +89,7 @@ namespace UniCMD
             {
                 commandusages.about();
             }
-            if (command == "clear")
+            if (command == "clr")
             {
                 otherutils.clearconsole();
             }
@@ -94,206 +100,206 @@ namespace UniCMD
             }
 
             // directory commands
-            if (command == "set directory")
+            if (command == "set dir")
             {
                 fileutils.setdir();
             }
-            if (command == "clear set directory")
+            if (command == "set dir clr")
             {
                 fileutils.clearsetdir();
             }
-            if (command == "directory list")
+            if (command == "dir lst")
             {
                 fileutils.listdir();
             }
 
-            if (command == "directory create")
+            if (command == "dir make")
             {
-                commandusages.createdirusage();
+                commandusages.dirmakeusage();
             }
-            if (command.StartsWith("directory create path "))
+            if (command.StartsWith("dir make /p "))
             {
                 fileutils.createdirpath();
             }
-            else if (command.StartsWith("directory create "))
+            else if (command.StartsWith("dir make "))
             {
                 fileutils.createdir();
             }
 
-            if (command == "directory delete")
+            if (command == "dir del")
             {
                 commandusages.deletedirusage();
             }
-            if (command.StartsWith("directory delete path "))
+            if (command.StartsWith("dir del /p "))
             {
                 fileutils.deletedirpath();
             }
-            else if (command.StartsWith("directory delete "))
+            else if (command.StartsWith("dir del "))
             {
                 fileutils.deletedir();
             }
 
-            if (command == "directory clone")
+            if (command == "dir cln")
             {
                 commandusages.clonedirusage();
             }
-            if (command.StartsWith("directory clone path"))
+            if (command.StartsWith("dir cln /p "))
             {
                 fileutils.clonedirpath();
             }
-            else if (command.StartsWith("directory clone "))
+            else if (command.StartsWith("dir cln "))
             {
                 fileutils.clonedir();
             }
 
-            if (command == "directory rename")
+            if (command == "dir rnm")
             {
                 commandusages.renamedirusage();
             }
-            if (command.StartsWith("directory rename path"))
+            if (command.StartsWith("dir rnm /p "))
             {
                 fileutils.renamedirpath();
             }
-            else if (command.StartsWith("directory rename "))
+            else if (command.StartsWith("dir rnm "))
             {
                 fileutils.renamedir();
             }
 
 
             // file commands
-            if (command == "file create")
+            if (command == "file make")
             {
                 commandusages.createfileusage();
             }
-            if (command.StartsWith("file create path "))
+            if (command.StartsWith("file make /p "))
             {
                 fileutils.createfilepath();
             }
-            else if (command.StartsWith("file create "))
+            else if (command.StartsWith("file make "))
             {
-                fileutils.createfile();
+                fileutils.makefile();
             }
 
-            if (command == "file delete")
+            if (command == "file del")
             {
                 commandusages.deletefileusage();
             }
-            if (command.StartsWith("file delete path "))
+            if (command.StartsWith("file del /p "))
             {
                 fileutils.deletefilepath();
             }
-            else if (command.StartsWith("file delete "))
+            else if (command.StartsWith("file del "))
             {
                 fileutils.deletefile();
             }
 
-            if (command == "file read")
+            if (command == "file rd")
             {
                 commandusages.readfileusage();
             }
-            if (command.StartsWith("file read path "))
+            if (command.StartsWith("file rd /p "))
             {
                 fileutils.readfilepath();
             }
-            else if (command.StartsWith("file read "))
+            else if (command.StartsWith("file rd "))
             {
                 fileutils.readfile();
             }
             
-            if (command == "file write")
+            if (command == "file wrt")
             {
                 commandusages.writefileusage();
             }
-            if (command.StartsWith("file write path "))
+            if (command.StartsWith("file wrt /p "))
             {
                 fileutils.writefilepath();
             }
-            else if (command.StartsWith("file write "))
+            else if (command.StartsWith("file wrt "))
             {
                 fileutils.writefile();
             }
 
-            if (command == "file clear")
+            if (command == "file clr")
             {
                 commandusages.clearfileusage();
             }
-            if (command.StartsWith("file clear path "))
+            if (command.StartsWith("file clr /p "))
             {
                 fileutils.clearfilepath();
             }
-            else if (command.StartsWith("file clear "))
+            else if (command.StartsWith("file clr "))
             {
                 fileutils.clearfile();
             }
 
-            if (command == "file clone")
+            if (command == "file cln")
             {
                 commandusages.clonefileusage();
             }
-            if (command.StartsWith("file clone path "))
+            if (command.StartsWith("file cln /p "))
             {
                 fileutils.clonefilepath();
             }
-            else if (command.StartsWith("file clone "))
+            else if (command.StartsWith("file cln "))
             {
                 fileutils.clonefile();
             }
 
-            if (command == "file rename")
+            if (command == "file rnm")
             {
                 commandusages.renamefileusage();
             }
-            if (command.StartsWith("file rename path "))
+            if (command.StartsWith("file rnm /p "))
             {
                 fileutils.renamefilepath();
             }
-            else if (command.StartsWith("file rename "))
+            else if (command.StartsWith("file rnm "))
             {
                 fileutils.renamefile();
             }
 
             // process commands
-            if (command == "process list")
+            if (command == "proc lst")
             {
                 processutils.listprocess();
             }
 
-            if (command == "process start")
+            if (command == "proc run")
             {
                 commandusages.processstartusage();
             }
-            if (command.StartsWith("process start path "))
+            if (command.StartsWith("proc run /p "))
             {
-                processutils.startprocesspath();
+                processutils.processrunpath();
             }
-            else if (command.StartsWith("process start "))
+            else if (command.StartsWith("proc run "))
             {
-                processutils.startprocess();
+                processutils.processrun();
             }
 
-            if (command == "process kill")
+            if (command == "proc end")
             {
                 commandusages.processkillusage();
             }
-            if (command == "process kill all")
+            if (command == "proc end /all")
             {
                 processutils.killallprocess();
             }
-            if (command.StartsWith("process kill "))
+            if (command.StartsWith("proc end "))
             {
                 processutils.killprocess();
             }
 
             // python commands
-            if (command == "ironpython3")
+            if (command == "ironpython")
             {
                 commandusages.ironpythonusage();
             }
-            if (command.StartsWith("ironpython3 path "))
+            if (command.StartsWith("ironpython /p "))
             {
                 python3commands.runfilepath();
             }
-            else if (command.StartsWith("ironpython3 "))
+            else if (command.StartsWith("ironpython "))
             {
                 python3commands.runfile();
             }
@@ -324,6 +330,28 @@ namespace UniCMD
             if (command == "config print")
             {
                 configcommands.printconfig();
+            }
+
+            // starttext commands
+            if (command == "starttext help")
+            {
+                commandusages.starttxthelp();
+            }
+            if (command == "starttext parse")
+            {
+                configcommands.ParseStarttext();
+            }
+            if (command == "starttext create")
+            {
+                configcommands.starttxtcreate();
+            }
+            if (command == "starttext open")
+            {
+                configcommands.starttxtopen();
+            }
+            if (command == "starttext write-template")
+            {
+                configcommands.starttxtwritetemplate();
             }
 
             // debug

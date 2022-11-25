@@ -116,13 +116,14 @@ namespace UniCMD
             Console.WriteLine("the command for it is 'set directory'");
             Program.CMD();
         }
+
         public static void createdir()
         {
             if (Program.currentdir == null)
             {
                 fileutils.nodirset();
             }
-            string dirname = Program.command.Replace("directory create ", "");
+            string dirname = Program.command.Replace("dir make ", "");
             try
             {
                 if (Directory.Exists(Program.currentdir + dirname))
@@ -149,7 +150,7 @@ namespace UniCMD
         }
         public static void createdirpath()
         {
-            string dirname = Program.command.Replace("directory create path ", "");
+            string dirname = Program.command.Replace("dir make /p ", "");
             try
             {
                 if (Directory.Exists(dirname))
@@ -180,7 +181,7 @@ namespace UniCMD
             {
                 fileutils.nodirset();
             }
-            string dirname = Program.command.Replace("directory delete ", "");
+            string dirname = Program.command.Replace("dir del ", "");
             if (Directory.Exists(Program.currentdir + dirname))
             {
                 try
@@ -211,7 +212,7 @@ namespace UniCMD
         }
         public static void deletedirpath()
         {
-            string dirname = Program.command.Replace("directory delete path ", "");
+            string dirname = Program.command.Replace("dir del /p ", "");
             if (Directory.Exists(dirname))
             {
                 try
@@ -246,7 +247,7 @@ namespace UniCMD
             {
                 fileutils.nodirset();
             }
-            string filename = Program.command.Replace("directory clone ", "");
+            string filename = Program.command.Replace("dir cln ", "");
             if (Directory.Exists(Program.currentdir + filename))
             {
                 string clone = Path.Combine(Program.currentdir, filename + "_(copy)");
@@ -300,7 +301,7 @@ namespace UniCMD
         }
         public static void clonedirpath()
         {
-            string filename = Program.command.Replace("directory clone path ", "");
+            string filename = Program.command.Replace("dir cln /p ", "");
             if (Directory.Exists(filename))
             {
                 string clone = Path.Combine(filename + "_(copy)");
@@ -358,7 +359,7 @@ namespace UniCMD
             {
                 fileutils.nodirset();
             }
-            string filename = Program.command.Replace("directory rename ", "");
+            string filename = Program.command.Replace("dir rnm ", "");
             if (Directory.Exists(Program.currentdir + filename))
             {
                 Console.WriteLine(" Enter new directory name (extension included)");
@@ -398,7 +399,7 @@ namespace UniCMD
         }
         public static void renamedirpath()
         {
-            string filename = Program.command.Replace("directory rename path ", "");
+            string filename = Program.command.Replace("dir rnm /p ", "");
             if (Directory.Exists(filename))
             {
                 Console.WriteLine(" Enter new directory name (extension included)");
@@ -439,7 +440,7 @@ namespace UniCMD
         }
 
         //file
-        public static void createfile()
+        public static void makefile()
         {
             if (Program.currentdir == null)
             {
@@ -447,7 +448,7 @@ namespace UniCMD
             }
             else
             {
-                string filename = Program.command.Replace("file create ", "");
+                string filename = Program.command.Replace("file make ", "");
                 try
                 {
                     var myFile = File.Create(Program.currentdir + filename);
@@ -472,7 +473,7 @@ namespace UniCMD
         }
         public static void createfilepath()
         {
-            string filename = Program.command.Replace("file create path ", "");
+            string filename = Program.command.Replace("file make /p ", "");
             if (File.Exists(filename))
             {
                 Console.WriteLine("File already exists.");
@@ -504,7 +505,7 @@ namespace UniCMD
         }
         public static void deletefilepath()
         {
-            string filename = Program.command.Replace("file delete path ", "");
+            string filename = Program.command.Replace("file del /p ", "");
             if (File.Exists(filename))
             {
                 try
@@ -539,7 +540,7 @@ namespace UniCMD
             {
                 fileutils.nodirset();
             }
-            string filename = Program.command.Replace("file delete ", "");
+            string filename = Program.command.Replace("file del ", "");
             if (File.Exists(Program.currentdir + filename))
             {
                 try
@@ -574,7 +575,7 @@ namespace UniCMD
             {
                 fileutils.nodirset();
             }
-            string filename = Program.command.Replace("file read ", "");
+            string filename = Program.command.Replace("file rd ", "");
             if (File.Exists(Program.currentdir + filename))
             {
                 string file = File.ReadAllText(Program.currentdir + filename, Encoding.UTF8);
@@ -593,7 +594,7 @@ namespace UniCMD
         }
         public static void readfilepath()
         {
-            string filename = Program.command.Replace("file read path ", "");
+            string filename = Program.command.Replace("file rd /p ", "");
 
             if (File.Exists(filename))
             {
@@ -613,7 +614,7 @@ namespace UniCMD
         }
         public static void writefile()
         {
-            string filename = Program.command.Replace("file write ", "");
+            string filename = Program.command.Replace("file wrt ", "");
             if (File.Exists(Program.currentdir + filename))
             {
                 Console.WriteLine("  Writing to " + Program.currentdir + filename);
@@ -656,7 +657,7 @@ namespace UniCMD
         }
         public static void writefilepath() // https://cdn.discordapp.com/attachments/992907489853054976/996056313526239242/nnfreuiownfrelw1231fds.mp4
         {
-            string filename = Program.command.Replace("file write path ", "");
+            string filename = Program.command.Replace("file wrt /p ", "");
             if (File.Exists(filename))
             {
                 Console.WriteLine("  Writing to " + filename);
@@ -699,7 +700,7 @@ namespace UniCMD
         }
         public static void clearfile()
         {
-            string filename = Program.command.Replace("file clear ", "");
+            string filename = Program.command.Replace("file clr ", "");
             if (Program.currentdir == null)
             {
                 fileutils.nodirset();
@@ -789,7 +790,7 @@ namespace UniCMD
         }
         public static void clearfilepath()
         {
-            string filename = Program.command.Replace("file clear path ", "");
+            string filename = Program.command.Replace("file clr /p ", "");
             if (File.Exists(filename))
             {
                 FileInfo fileinfo = new FileInfo(filename);
@@ -879,7 +880,7 @@ namespace UniCMD
             {
                 fileutils.nodirset();
             }
-            string filename = Program.command.Replace("file clone ", "");
+            string filename = Program.command.Replace("file cln ", "");
             if (File.Exists(Program.currentdir + filename))
             {
                 string extension = Path.GetExtension(Program.currentdir + filename);
@@ -937,7 +938,7 @@ namespace UniCMD
             {
                 fileutils.nodirset();
             }
-            string filename = Program.command.Replace("file clone path ", "");
+            string filename = Program.command.Replace("file cln /p ", "");
             if (File.Exists(filename))
             {
                 string extension = Path.GetExtension(filename);
@@ -995,7 +996,7 @@ namespace UniCMD
             {
                 fileutils.nodirset();
             }
-            string filename = Program.command.Replace("file rename ", "");
+            string filename = Program.command.Replace("file rnm ", "");
             if (File.Exists(Program.currentdir + filename))
             {
                 Console.WriteLine(" Enter new file name (extension included)");
@@ -1035,7 +1036,7 @@ namespace UniCMD
         }
         public static void renamefilepath()
         {
-            string filename = Program.command.Replace("file rename path ", "");
+            string filename = Program.command.Replace("file rnm /p ", "");
             if (File.Exists(filename))
             {
                 string filedir1 = Path.GetDirectoryName(filename);
