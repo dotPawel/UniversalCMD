@@ -5,7 +5,7 @@ namespace UniCMD
 {
     static internal class Program
     {
-        public static string version = "v2.0rc LTS";
+        public static string version = "v2.0r LTS";
         // r - release
         // rc - release candidate
         // d - debug
@@ -40,7 +40,7 @@ namespace UniCMD
             otherutils.cpuname();
             Console.WriteLine(" --------------------------------------------------");
             Console.WriteLine("for command index run 'help'");
-            Console.WriteLine("in order to set current run 'set directory'");
+            Console.WriteLine("in order to set current run 'set dir'");
 
             CMD();
         }
