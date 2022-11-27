@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -20,7 +22,7 @@ namespace UniCMD
                 Console.Write(" > ");
                 string path = Console.ReadLine();
 
-                if (path.EndsWith(@"\"))
+                if (path.EndsWith(@"\") || path.EndsWith("/"))
                 {
                     if (Directory.Exists(path))
                     {
@@ -37,6 +39,7 @@ namespace UniCMD
                 else
                 {
                     Console.WriteLine("\nentered path needs to end with a backslash for UniCMD to read it properly");
+                    Console.WriteLine("(or a forward slash if on linux)");
                     Program.CMD();
                 }
             }
@@ -44,7 +47,7 @@ namespace UniCMD
             {
                 Console.WriteLine("Changing current directory..");
                 Console.WriteLine("this command edits the current directory");
-                Console.WriteLine("to clear set current execute 'clear set directory' in main prompt");
+                Console.WriteLine("to clear set current execute 'set dir clr' in main prompt");
                 Console.WriteLine("to cancel this action leave the field empty");
                 Console.WriteLine("to go back one directory enter '..'\n");
 
@@ -66,7 +69,7 @@ namespace UniCMD
 
                     if (Directory.Exists(setnewdir))
                     {
-                        if (setnewdir.EndsWith(@"\"))
+                        if (setnewdir.EndsWith(@"\") || setnewdir.EndsWith("/"))
                         {
                             Program.currentdir = setnewdir;
                             Console.WriteLine("Sucessfully edited directory..");

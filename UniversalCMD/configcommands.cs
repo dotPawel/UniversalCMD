@@ -14,6 +14,7 @@ namespace UniCMD
         {
             try
             {
+                
                 string fileName = "UniCMD.data/config.cfg";
                 FileInfo f = new FileInfo(fileName);
                 string fullname = f.FullName;
