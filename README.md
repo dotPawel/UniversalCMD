@@ -26,4 +26,4 @@ using the "ACL_BB start" command<br />
 <br />
 <br />
 <br />
-*UniversalCMD needs .NET 6.0 Runtime to run, [get it here](https://dotnet.microsoft.com/en-us/download/dotnet/6.0)
+*UniversalCMD needs .NET 7.0 Runtime to run, [get it here](https://dotnet.microsoft.com/en-us/download/dotnet/7.0)
