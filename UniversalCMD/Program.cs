@@ -5,10 +5,12 @@ namespace UniCMD
 {
     static internal class Program
     {
-        public static string version = "v2.0r LTS";
+        public static string version = "v2.0d Linux-C1";
         // r - release
         // rc - release candidate
         // d - debug
+
+        // compile using dotnet publish -c debug -r ubuntu.16.04-x64 --self-contained
 
         public static string currentdir;
         public static string command;
@@ -36,8 +38,11 @@ namespace UniCMD
             Console.WriteLine("   └ " + Environment.OSVersion);
             Console.WriteLine("  Memory");
             Console.WriteLine("   └ " + proc.PrivateMemorySize64 + " (KB)");
-            Console.WriteLine("  CPU Name/Model");
-            otherutils.cpuname();
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+            {
+                Console.WriteLine("  CPU Name/Model");
+                otherutils.cpuname();
+            }               
             Console.WriteLine(" --------------------------------------------------");
             Console.WriteLine("for command index run 'help'");
             Console.WriteLine("in order to set current run 'set dir'");
@@ -47,7 +52,7 @@ namespace UniCMD
         public static void CMD()
         {
             Console.WriteLine();
-            if (otherutils.runningAsAdmin == true)
+            if (!RuntimeInformation.IsOSPlatform(OSPlatform.Linux) && otherutils.runningAsAdmin == true)
             {
                 Console.Write("(#) ");
             }

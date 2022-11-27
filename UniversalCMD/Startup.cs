@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics;
+using System.Runtime.InteropServices;
 
 namespace UniCMD
 {
@@ -62,7 +63,12 @@ namespace UniCMD
                     myFile.Close();
                     Console.WriteLine("writing config template..");
                     writetemplate();
-                    Console.WriteLine("UniCMD will restart now");                    
+                    Console.WriteLine("UniCMD will restart now");
+                    if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
+                    {
+                        Process.Start(@"UniCMD");
+                        Environment.Exit(0);
+                    }
                     Process.Start(@"UniCMD.exe");
                     Environment.Exit(0);
                 }
