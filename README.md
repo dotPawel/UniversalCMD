@@ -1,29 +1,21 @@
-![Unicmd banner](https://user-images.githubusercontent.com/89011403/187036721-ad778434-1502-4378-b0e2-30aa343a8618.png)
-  
-# An easy to use command line utility & an AeroCL replacement
-<p align="center">
-get the latest release<br />
-https://github.com/PawelStuff/UniversalCMD/releases/latest<br />
-</p>
+![unicmd banner linux](https://user-images.githubusercontent.com/89011403/204157512-2c3ade5c-6d4a-4e23-a668-b9ec1931c8e2.png)
+## THIS IS NOT FINISHED AND IS VERY UNSTABLE
 
+This port is not guaranteed to be finished.<br />
 
+## Running UniCMD on your Linux installation
+Binaries in the releases section are compiled for Ubuntu so Ubuntu/Debian based distros will work best <br />
+1. Extract the "publish" folder in your chosen location<br />
+2. Open terminal inside the "publish" folder and run<br />
+``` ./UniCMD ``` 
+3. (Optional) It is recommended to provide execute permissions to avoid some issues <br />
+``` chmod 777 ./UniCMD ```<br />
 
-![unicmd banner 2](https://user-images.githubusercontent.com/89011403/187037623-80da1f7c-36ee-4d15-85b8-c71997c92c90.png)
+And your UniCMD instance should be up and running! (many crashes may and will occur) <br />
 
-+ Easy to use commands
-+ Very lightweight
-+ Portable (does not create anything on its own outside its own folder)
-+ Color themes
-+ File Management
-+ Process management
-+ AeroCL Backcompatibility
-+ Python execution using IronPython
-
-![unicmd banner 3](https://user-images.githubusercontent.com/89011403/187044183-d36343db-e355-4354-a8bf-cd9ca39d2ee5.png)
-
-With the UniversalCMD-AeroCL Backbridge you can boot straight into AeroCL from the UniversalCMD command line<br />
-using the "ACL_BB start" command<br />
+## Compiling UniCMD for Linux
+The command i used for compiling UniCMD for Linux is <br />
+``` dotnet publish -c debug -r ubuntu.16.04-x64 --self-contained ``` <br />
 <br />
-<br />
-<br />
-*UniversalCMD needs .NET 7.0 Runtime to run, [get it here](https://dotnet.microsoft.com/en-us/download/dotnet/7.0)
+After compiling your UniCMD binary (publish folder) will be located in <br />
+```bin/Debug/net7.0/ubuntu.16.04-x64```
