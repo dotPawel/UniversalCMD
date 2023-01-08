@@ -36,5 +36,11 @@ namespace UniCMD
                 Console.WriteLine(" exception : \n" + exc);
             }           
         }
+        public static void echo()
+        {
+            string text = Program.command.Replace("echo ", "");
+            Console.WriteLine(text);
+            Program.CMD();
+        }
     }
 }

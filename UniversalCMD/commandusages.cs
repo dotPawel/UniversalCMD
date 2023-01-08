@@ -43,8 +43,8 @@ namespace UniCMD
             Console.WriteLine();
             Console.WriteLine(" Directory Management");
             Console.WriteLine("  ╚Set/Clear Directory");
-            Console.WriteLine("   ╚Set Dir");
-            Console.WriteLine("   ╚Set Dir Clr");
+            Console.WriteLine("   ╚SD");
+            Console.WriteLine("   ╚SD Clr");
             Console.WriteLine("  ╚Directory Make");
             Console.WriteLine("   ╚Dir Make {name}");
             Console.WriteLine("   ╚Dir Make /P {path}");
@@ -74,6 +74,7 @@ namespace UniCMD
             Console.WriteLine("  ╚Clr");
             Console.WriteLine("  ╚About");
             Console.WriteLine("  ╚Exit");
+            Console.WriteLine("  ╚Echo");
             Console.WriteLine();
             Console.WriteLine(" Configuration File");
             Console.WriteLine("  ╚Config Open");

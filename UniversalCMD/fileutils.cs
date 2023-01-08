@@ -362,7 +362,7 @@ namespace UniCMD
             string filename = Program.command.Replace("dir rnm ", "");
             if (Directory.Exists(Program.currentdir + filename))
             {
-                Console.WriteLine(" Enter new directory name (extension included)");
+                Console.WriteLine(" Enter new directory name");
                 Console.WriteLine(" to cancel enter empty\n");
                 Console.Write("   >");
                 string newname = Console.ReadLine();
@@ -402,7 +402,7 @@ namespace UniCMD
             string filename = Program.command.Replace("dir rnm /p ", "");
             if (Directory.Exists(filename))
             {
-                Console.WriteLine(" Enter new directory name (extension included)");
+                Console.WriteLine(" Enter new directory name");
                 Console.WriteLine(" to cancel enter empty\n");
                 Console.Write("   >");
                 string newname = Console.ReadLine();

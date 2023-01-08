@@ -5,7 +5,7 @@ namespace UniCMD
 {
     static internal class Program
     {
-        public static string version = "v2.0r LTS";
+        public static string version = "v2.1r";
         // r - release
         // rc - release candidate
         // d - debug
@@ -64,7 +64,7 @@ namespace UniCMD
                 uncvcommand = Console.ReadLine();
                 command = uncvcommand.ToLower();
             }
-            catch // for preventing crash after starting process and quiting UniCMD
+            catch // for preventing wierd crashes
             {
 
             }
@@ -93,6 +93,10 @@ namespace UniCMD
             {
                 otherutils.clearconsole();
             }
+            if (command.StartsWith("echo "))
+            {
+                otherutils.echo();
+            }
 
             if (command == "help")
             {
@@ -100,11 +104,11 @@ namespace UniCMD
             }
 
             // directory commands
-            if (command == "set dir")
+            if (command == "sd")
             {
                 fileutils.setdir();
             }
-            if (command == "set dir clr")
+            if (command == "sd clr")
             {
                 fileutils.clearsetdir();
             }
