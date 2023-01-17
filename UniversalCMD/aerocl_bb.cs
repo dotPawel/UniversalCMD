@@ -78,7 +78,7 @@ namespace UniCMD
                     if (CMD == "ACL_BB EXIT")
                     {
                         Console.WriteLine("Returning to UniCMD..");
-                        Program.CMD();
+                        Program.Prompt();
                     }
                     if (CMD == "ACL_BB RESTART")
                     {
@@ -372,7 +372,7 @@ namespace UniCMD
                 Console.WriteLine("==================================================");
                 Console.ReadKey();
                 Console.Clear();
-                Program.CMD();
+                Program.Prompt();
             }
         }
     }

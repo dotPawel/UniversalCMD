@@ -10,7 +10,7 @@ namespace UniCMD
 {
     internal class python3commands
     {
-        public static void runfile()
+        public static void RunFile()
         {
             string filename = Program.command.Replace("ironpython ", "");
             if (File.Exists(Program.currentdir + filename) && filename.EndsWith(".py"))
@@ -34,9 +34,9 @@ namespace UniCMD
             {
                 Console.WriteLine("File does not exist or isnt a .py file");
             }
-            Program.CMD();
+            Program.Prompt();
         }
-        public static void runfilepath()
+        public static void RunFilePath()
         {
             string filename = Program.command.Replace("ironpython /p ", "");
             if (File.Exists(filename) && filename.EndsWith(".py"))
@@ -60,7 +60,7 @@ namespace UniCMD
             {
                 Console.WriteLine("File does not exist or isnt a .py file");
             }
-            Program.CMD();
+            Program.Prompt();
         }
     }
 }

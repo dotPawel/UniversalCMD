@@ -35,7 +35,7 @@ namespace UniCMD
             }
             if (dbg == "exit")
             {
-                Program.CMD();
+                Program.Prompt();
             }
             if (dbg == "currentdir(?)")
             {
@@ -61,7 +61,7 @@ namespace UniCMD
             }
             if (dbg == "startUp()")
             {
-                Startup.mainstartup();
+                Startup.MainStartUp();
             }
             if (dbg == "delete.data()")
             {
@@ -73,7 +73,7 @@ namespace UniCMD
                 catch (Exception ex)
                 {
                     Console.WriteLine("Cannot delete UniCMD.data");
-                    otherutils.exception_print(ex);
+                    otherutils.PrintException(ex);
                 }
                 dbg_prompt();
             }

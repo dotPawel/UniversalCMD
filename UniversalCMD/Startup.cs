@@ -6,10 +6,10 @@ namespace UniCMD
     {
         public static bool showExceptions = false;
         public static string[] config;
-        public static void mainstartup()
+        public static void MainStartUp()
         {
             Console.WriteLine("   UniCMD Start-Up\n");
-            checkdata();
+            CheckData();
 
             string[] config = System.IO.File.ReadAllLines(@"UniCMD.data/config.cfg");
             Console.WriteLine("config.cfg > to string");
@@ -18,13 +18,12 @@ namespace UniCMD
                 Console.WriteLine("showExceptions > ENABLED");
                 showExceptions = true;
             }
-            settheme(config);
 
             Console.WriteLine("\n    Start-Up finished");
             Console.Clear();
             // after this unicmd boots into the main prompt
         }
-        public static void checkdata()
+        public static void CheckData()
         {
             // data folder
             if (Directory.Exists(@"UniCMD.data"))
@@ -61,7 +60,7 @@ namespace UniCMD
                     var myFile = File.Create(@"UniCMD.data/config.cfg");
                     myFile.Close();
                     Console.WriteLine("writing config template..");
-                    writetemplate();
+                    WriteTemplate();
                     Console.WriteLine("UniCMD will restart now");                    
                     Process.Start(@"UniCMD.exe");
                     Environment.Exit(0);
@@ -74,48 +73,8 @@ namespace UniCMD
                     Console.ReadKey();
                 }              
             }
-        }
-        static void settheme(string[] config)
-        {
-            foreach (string line in config)
-            {
-                if (line.StartsWith("textColor = "))
-                {
-                    string color = line.Replace("textColor = ", "");
-                    try
-                    {
-                        ConsoleColor consoleColor = (ConsoleColor)Enum.Parse(typeof(ConsoleColor), color, true);
-                        Console.ForegroundColor = consoleColor;
-                        Console.WriteLine("config.cfg > textColor = " + consoleColor);
-                    }
-                    catch
-                    {
-                        Console.WriteLine("\nconfig.cfg > textColor > Error");
-                        Console.WriteLine("could not parse and set text color");
-                        Console.WriteLine("check your config file for any errors");
-                        Console.ReadKey();
-                    }
-                }
-                if (line.StartsWith("backgroundColor = "))
-                {
-                    string color = line.Replace("backgroundColor = ", "");
-                    try
-                    {
-                        ConsoleColor consoleColor = (ConsoleColor)Enum.Parse(typeof(ConsoleColor), color, true);
-                        Console.BackgroundColor = consoleColor;
-                        Console.WriteLine("config.cfg > backgroundColor = " + consoleColor);
-                    }
-                    catch
-                    {
-                        Console.WriteLine("\nconfig.cfg > backgroundColor > Error");
-                        Console.WriteLine("could not parse and set background color");
-                        Console.WriteLine("check your config file for any errors");
-                        Console.ReadKey();
-                    }
-                }
-            }       
-        }
-        public static void writetemplate()
+        }       
+        public static void WriteTemplate()
         {
             using (StreamWriter sw = File.AppendText(@"UniCMD.data/config.cfg"))
             {
@@ -123,9 +82,6 @@ namespace UniCMD
                 sw.WriteLine("//this is used when UniCMD is booting (start-up)");
                 sw.WriteLine();
                 sw.WriteLine("showExceptions = n");
-                sw.WriteLine();
-                sw.WriteLine("textColor = White");
-                sw.WriteLine("backgroundColor = Black");
                 sw.Close();
             }
         }

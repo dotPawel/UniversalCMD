@@ -8,268 +8,413 @@ namespace UniCMD
 {
     internal class commandusages
     {
-        public static void about()
+        public static void About()
         {
             Console.WriteLine("   UniversalCMD / Codename Rainman / Build " + Program.version + "\n");
             Console.WriteLine("  a better AeroCL & a easier command line solution");
 
-            Program.CMD();
+            Program.Prompt();
         }
-        public static void help()
+        public static void CommandIndex()
         {
-            Console.WriteLine("    Command Index\n");
-            Console.WriteLine(" File Management");
-            Console.WriteLine("  ╚File Make");
-            Console.WriteLine("   ╚File Make {name}");
-            Console.WriteLine("   ╚File Make /P {path}");
-            Console.WriteLine("  ╚File Delete");
-            Console.WriteLine("   ╚File Del {name}");
-            Console.WriteLine("   ╚File Del /P {path}");
-            Console.WriteLine("  ╚File Read");
-            Console.WriteLine("   ╚File Rd {name}");
-            Console.WriteLine("   ╚File Rd /P {path}");
-            Console.WriteLine("  ╚File Write");
-            Console.WriteLine("   ╚File Wrt {name}");
-            Console.WriteLine("   ╚File Wrt /P {path}");
-            Console.WriteLine("  ╚File Clear");
-            Console.WriteLine("   ╚File Clr {name}");
-            Console.WriteLine("   ╚File Clr /P {path}");
-            Console.WriteLine("  ╚File Clone");
-            Console.WriteLine("   ╚File Cln {name}");
-            Console.WriteLine("   ╚File Cln /P {path}");
-            Console.WriteLine("  ╚File Rename");
-            Console.WriteLine("   ╚File Rnm {name}");
-            Console.WriteLine("   ╚File Rnm /P {path}");
-            Console.WriteLine();
-            Console.WriteLine(" Directory Management");
-            Console.WriteLine("  ╚Set/Clear Directory");
-            Console.WriteLine("   ╚SD");
-            Console.WriteLine("   ╚SD Clr");
-            Console.WriteLine("  ╚Directory Make");
-            Console.WriteLine("   ╚Dir Make {name}");
-            Console.WriteLine("   ╚Dir Make /P {path}");
-            Console.WriteLine("  ╚Directory Delete");
-            Console.WriteLine("   ╚Dir Del {name}");
-            Console.WriteLine("   ╚Dir Del /P {path}");
-            Console.WriteLine("  ╚Dir Cln");
-            Console.WriteLine("   ╚Dir Cln {name}");
-            Console.WriteLine("   ╚Dir Cln /P {path}");
-            Console.WriteLine("  ╚Dir Rnm");
-            Console.WriteLine("   ╚Dir Rnm {name}");
-            Console.WriteLine("   ╚Dir Rnm /P {path}");
-            Console.WriteLine();
-            Console.WriteLine(" Process Commands");
-            Console.WriteLine("  ╚Process Run");
-            Console.WriteLine("   ╚Proc Run {name}");
-            Console.WriteLine("   ╚Proc Run /P {path}");
-            Console.WriteLine("  ╚Process End");
-            Console.WriteLine("   ╚Proc End {name}");
-            Console.WriteLine("   ╚Proc End /All");
-            Console.WriteLine();
-            Console.WriteLine(" IronPython Execution");
-            Console.WriteLine("  ╚IronPython {name}");
-            Console.WriteLine("  ╚IronPython /P {path}");
-            Console.WriteLine();
-            Console.WriteLine(" Other");
-            Console.WriteLine("  ╚Clr");
-            Console.WriteLine("  ╚About");
-            Console.WriteLine("  ╚Exit");
-            Console.WriteLine("  ╚Echo");
-            Console.WriteLine();
-            Console.WriteLine(" Configuration File");
-            Console.WriteLine("  ╚Config Open");
-            Console.WriteLine("  ╚Config Rewrite");
-            Console.WriteLine("  ╚Config Print");
-            Console.WriteLine();
-            Console.WriteLine(" StartText File");
-            Console.WriteLine("  ╚StartText Help");
-            Console.WriteLine("  ╚StartText Open");
-            Console.WriteLine("  ╚StartText Create");
-            Console.WriteLine("  ╚StartText Parse");
-            Console.WriteLine("  ╚StartText Write-Template");
-            Console.WriteLine();
-            Console.WriteLine(" AeroCL Backbridge");
-            Console.WriteLine("  ╚ACL_BB");
-            Console.WriteLine("   ╚ACL_BB start");
-            Console.WriteLine("   ╚ACL_BB about");
+            Console.WriteLine("""
+                   Command Index
 
-            Program.CMD();
+                 File Management
+                  ╚File Make
+                   ╚File Make {name}
+                   ╚File Make /P {path}
+                  ╚File Delete
+                   ╚File Del {name}
+                   ╚File Del /P {path}
+                  ╚File Read
+                   ╚File Rd {name}
+                   ╚File Rd /P {path}
+                  ╚File Write
+                   ╚File Wrt {name}
+                   ╚File Wrt /P {path}
+                  ╚File Clear
+                   ╚File Clr {name}
+                   ╚File Clr /P {path}
+                  ╚File Clone
+                   ╚File Cln {name}
+                   ╚File Cln /P {path}
+                  ╚File Rename
+                   ╚File Rnm {name}
+                   ╚File Rnm /P {path}
+                
+                 Directory Management
+                  ╚Set/Clear Directory
+                   ╚SD
+                   ╚SD Clr
+                  ╚Directory Make
+                   ╚Dir Make {name}
+                   ╚Dir Make /P {path}
+                  ╚Directory Delete
+                   ╚Dir Del {name}
+                   ╚Dir Del /P {path}
+                  ╚Dir Cln
+                   ╚Dir Cln {name}
+                   ╚Dir Cln /P {path}
+                  ╚Dir Rnm
+                   ╚Dir Rnm {name}
+                   ╚Dir Rnm /P {path}
+                
+                 Process Commands
+                  ╚Process Run
+                   ╚Proc Run {name}
+                   ╚Proc Run /P {path}
+                  ╚Process End
+                   ╚Proc End {name}
+                   ╚Proc End /All
+
+                 IronPython Execution
+                  ╚IronPython {name}
+                  ╚IronPython /P {path}
+
+                 UniScript
+                  ╚UniScript {name}
+                  ╚UniScript /P {path}
+               
+                 Other
+                  ╚Clr
+                  ╚About
+                  ╚Exit
+                  ╚Echo
+                   ╚Echo
+                   ╚Echo /PTM
+
+                 User preferences & customization
+                  ╚Customization
+                    ╚StartText
+                     ╚StartText Open
+                     ╚StartText Create
+                     ╚StartText Parse
+                     ╚StartText Write-Template
+                   ╚Prompttext
+                    ╚Prompttext Open
+                    ╚Prompttext Create
+                    ╚Prompttext Write-Template
+                   ╚TextModules
+                    ╚TextModules Example
+                  ╚Configuration File
+                   ╚Config Open
+                   ╚Config Rewrite
+                   ╚Config Print
+                
+                 AeroCL Backbridge
+                  ╚ACL_BB
+                   ╚ACL_BB start
+                   ╚ACL_BB about
+                """);
+            Program.Prompt();
         }
         //filesystem commands usage
-        public static void dirmakeusage()
+        public static void DirMakeUsage()
         {
-            Console.WriteLine("Usage of 'dir make'");
-            Console.WriteLine();
-            Console.WriteLine("  input : dir make {name}");
-            Console.WriteLine("          dir make /p {path}");
-            Console.WriteLine("  output : directory is created from name/path");
+            Console.WriteLine("""
+                Usage of 'dir make'
 
-            Program.CMD();
-        }
-        public static void deletedirusage()
-        {
-            Console.WriteLine("Usage of 'dir del'");
-            Console.WriteLine();
-            Console.WriteLine("  input : dir del {name}");
-            Console.WriteLine("          dir del /p {path}");
-            Console.WriteLine("  output : name/path is deleted");
-            Program.CMD();
-        }
-        public static void clonedirusage()
-        {
-            Console.WriteLine("Usage of 'directory clone'");
-            Console.WriteLine();
-            Console.WriteLine("  input : dir cln {name}");
-            Console.WriteLine("          dir cln /p {path}");
-            Console.WriteLine("  output : name/path is cloned (a copy is made)");
-            Program.CMD();
-        }
-        public static void renamedirusage()
-        {
-            Console.WriteLine("Usage of 'dir rnm'");
-            Console.WriteLine();
-            Console.WriteLine("  input : dir rnm {name}");
-            Console.WriteLine("          dir rnm /p {path}");
-            Console.WriteLine("  output : a renaming wizard for name/path is started");
-            Program.CMD();
-        }
-        public static void createfileusage()
-        {
-            Console.WriteLine("Usage of 'file make'");
-            Console.WriteLine();
-            Console.WriteLine("  input : file make {name}");
-            Console.WriteLine("          file make /p {path}");
-            Console.WriteLine("  output : name/path is created");
-            Program.CMD();
-        }
-        public static void deletefileusage()
-        {
-            Console.WriteLine("Usage of 'file del'");
-            Console.WriteLine();
-            Console.WriteLine("  input : file del {name}");
-            Console.WriteLine("          file del /p {path}");
-            Console.WriteLine("  output : name/path is deleted");
-            Program.CMD();
-        }
-        public static void readfileusage()
-        {
-            Console.WriteLine("Usage of 'file rd'");
-            Console.WriteLine();
-            Console.WriteLine("  input : file rd {name}");
-            Console.WriteLine("          file rd /p {path}");
-            Console.WriteLine("  output : contents of name/path are printed out");
-            Program.CMD();
-        }
-        public static void writefileusage()
-        {
-            Console.WriteLine("Usage of 'file wrt'");
-            Console.WriteLine();
-            Console.WriteLine("  input : file wrt {name}");
-            Console.WriteLine("          file wrt /p {path}");
-            Console.WriteLine("  output : a writing process is opened from name/path");
-            Program.CMD();
-        }
-        public static void clearfileusage()
-        {
-            Console.WriteLine("Usage of 'file clr'");
-            Console.WriteLine();
-            Console.WriteLine("  input : file clr {name}");
-            Console.WriteLine("          file clr /p {path}");
-            Console.WriteLine("  output : name/path is wiped of all data");
-            Program.CMD();
-        }
-        public static void clonefileusage()
-        {
-            Console.WriteLine("Usage of 'file cln'");
-            Console.WriteLine();
-            Console.WriteLine("  input : file cln {name}");
-            Console.WriteLine("          file cln /p {path}");
-            Console.WriteLine("  output : a copy of name/path is made");
-            Program.CMD();
-        }
-        public static void renamefileusage()
-        {
-            Console.WriteLine("Usage of 'file rename'");
-            Console.WriteLine();
-            Console.WriteLine("  input : file rename {name}");
-            Console.WriteLine("          file rename path {path}");
-            Console.WriteLine("  output : name/path is renamed");
+                  input : dir make {name}
+                          dir make /p {path}
+                  output : directory is created from name/path
 
-            Program.CMD();
+                """);
+            Program.Prompt();
+        }
+        public static void DirDeleteUsage()
+        {
+            Console.WriteLine("""
+                Usage of 'dir del'
+
+                  input : dir del {name}
+                          dir del /p {path}
+                  output : name/path is deleted
+                """);
+            
+            Program.Prompt();
+        }
+        public static void DirCloneUsage()
+        {
+            Console.WriteLine("""
+                Usage of 'directory clone'
+
+                  input : dir cln {name}
+                        dir cln /p {path}
+                  output : name/path is cloned (a copy is made)
+                """);
+            
+            Program.Prompt();
+        }
+        public static void DirRenameUsage()
+        {
+            Console.WriteLine("""
+                Usage of 'dir rnm'
+
+                  input : dir rnm {name}
+                          dir rnm /p {path}
+                  output : a renaming wizard for name/path is started
+                """);
+            
+            Program.Prompt();
+        }
+        public static void FileCreateUsage()
+        {
+            Console.WriteLine("""
+                Usage of 'file make'
+
+                  input : file make {name}
+                          file make /p {path}
+                  output : name/path is created
+                """);
+            
+            Program.Prompt();
+        }
+        public static void FileDeleteUsage()
+        {
+            Console.WriteLine("""
+                Usage of 'file del'
+
+                  input : file del {name}
+                          file del /p {path}
+                  output : name/path is deleted
+                """);
+            
+            Program.Prompt();
+        }
+        public static void FileReadUsage()
+        {
+            Console.WriteLine("""
+                Usage of 'file rd'
+
+                  input : file rd {name}
+                          file rd /p {path}
+                  output : contents of name/path are printed out
+                """);
+            
+            Program.Prompt();
+        }
+        public static void FileWriteUsage()
+        {
+            Console.WriteLine("""
+                Usage of 'file wrt'
+
+                  input : file wrt {name}
+                          file wrt /p {path}
+                  output : a writing process is opened from name/path
+                """);
+            
+            Program.Prompt();
+        }
+        public static void FileClearUsage()
+        {
+            Console.WriteLine("""
+                Usage of 'file clr'
+
+                  input : file clr {name}
+                          file clr /p {path}
+                  output : name/path is wiped of all data
+                """);
+            
+            Program.Prompt();
+        }
+        public static void FileCloneUsage()
+        {
+            Console.WriteLine("""
+                Usage of 'file cln'
+
+                  input : file cln {name}
+                          file cln /p {path}
+                  output : a copy of name/path is made
+                """);   
+            Program.Prompt();
+        }
+        public static void FileRenameUsage()
+        {
+            Console.WriteLine("""
+                Usage of 'file rename'
+
+                  input : file rename {name}
+                          file rename path {path}
+                  output : name/path is renamed
+                """);         
+            Program.Prompt();
         }
 
         // python commands usage
-        public static void ironpythonusage()
+        public static void IronPythonUsage()
         {
-            Console.WriteLine("Usage of 'ironpython'");
-            Console.WriteLine();
-            Console.WriteLine("  Python execution using IronPython");
-            Console.WriteLine("  IronPython version : 2.7.11");
-            Console.WriteLine("  input : ironpython {name}");
-            Console.WriteLine("          ironpython /p {path}");
-            Console.WriteLine("  output : name/path is executed with IronPython (*must be a .py file)");
+            Console.WriteLine("""
+                Usage of 'ironpython'
 
-            Program.CMD();
+                  Python execution using IronPython
+                  IronPython version : 2.7.11
+                  input : ironpython {name}
+                          ironpython /p {path}
+                  output : name/path is executed with IronPython (*must be a .py file)
+                """);
+            Program.Prompt();
         }
 
         // backbridge stuff
-        public static void backbridgeusage()
+        public static void BackbridgeUsage()
         {
-            Console.WriteLine("Usage of 'ACL_BB'");
-            Console.WriteLine();
-            Console.WriteLine("  input : ACL_BB start");
-            Console.WriteLine("  output : AeroCL backbridge is started and switched to");
-            Console.WriteLine();
-            Console.WriteLine("  input : ACL_BB about");
-            Console.WriteLine("  output : AeroCL backbridge information is displayed");
+            Console.WriteLine("""
+                Usage of 'ACL_BB'
 
-            Program.CMD();
+                  input : ACL_BB start
+                  output : AeroCL backbridge is started and switched to
+
+                  input : ACL_BB about
+                  output : AeroCL backbridge information is displayed
+                """);
+            Program.Prompt();
         }
-        public static void backbridgeabout()
+        public static void BackbridgeAbout()
         {
-            Console.WriteLine("  AeroCL Backbridge");
-            Console.WriteLine(" a AeroCL loader built into UniCMD");
-            Console.WriteLine(" included AeroCL version : 2.0");
-            Console.WriteLine(" loader version : {0}", aerocl_bb.bbver);
-            Program.CMD();
+            Console.WriteLine("""
+                  AeroCL Backbridge
+                a AeroCL loader built into UniCMD
+                included AeroCL version : 2.0
+                loader version : {0}
+                """, aerocl_bb.bbver);  
+            Program.Prompt();
         }
 
         // process commands usage
-        public static void processkillusage()
+        public static void ProcessKillUsage()
         {
-            Console.WriteLine("Usage of 'process end'");
-            Console.WriteLine();
-            Console.WriteLine("  input : process end {name}");
-            Console.WriteLine("  output : every process with name is killed");
+            Console.WriteLine("""
+                Usage of 'process end'
 
-            Program.CMD();
+                  input : process end {name}
+                  output : every process with name is killed
+                """);
+            
+
+            Program.Prompt();
         }
-        public static void processstartusage()
+        public static void ProcessStartUsage()
         {
-            Console.WriteLine("Usage of 'process run'");
-            Console.WriteLine();
-            Console.WriteLine("  input : process run {name}");
-            Console.WriteLine("          process run /p {path}");
-            Console.WriteLine("  output : name/path is started");
+            Console.WriteLine("""
+                Usage of 'process run'
 
-            Program.CMD();
-        }
+                  input : process run {name}
+                          process run /p {path}
+                  output : name/path is started
+                """);
+            
 
-        // starttext commands
-        public static void starttxthelp()
-        {
-            Console.WriteLine(" StartText is a feature that allows for custom text");
-            Console.WriteLine(" to be displayed when UniCMD is opened.");
-            Console.WriteLine(" To restore default StartText delete your custom file in");
-            Console.WriteLine(@" UniCMD.data\starttext.unicmd");
-            Console.WriteLine();
-            Console.WriteLine(" Use in starttext.unicmd file");
-            Console.WriteLine("  ::ver:: -- UniCMD version");
-            Console.WriteLine("  ::osver:: -- OS version");
-            Console.WriteLine("  ::ram:: -- RAM memory");
-            Console.WriteLine("  ::time:: -- System time");
-            Program.CMD();
+            Program.Prompt();
         }
 
+        // starttext & prompttext commands
+        public static void StarttextHelp()
+        {
+            Console.WriteLine("""
+                StartText is a feature that allows for custom text
+                to be displayed when UniCMD is opened.
+                To restore default StartText delete your custom file in
+                  UniCMD.data\starttext.unicmd
+                To create an StartText file simply enter 'starttext create'
+
+                This feature supports TextModules, learn more by entering 'textmodules help'
+                """);
+            Program.Prompt();
+        }
+        public static void PrompttextHelp()
+        {
+            Console.WriteLine("""
+                Prompttext is a feature that allows for custom prompt bars
+                (kind of like ohmyzsh or ohmyposh but less advanced)
+                The contents of prompttext.unicmd replaces your default prompt bar
+                To restore default prompt bar delete your custom file in
+                  UniCMD.data\prompttext.unicmd
+                To create an Prompttext file simply enter 'prompttext create'
+
+                This feature supports TextModules, learn more by entering 'textmodules help'
+                """);
+             
+            Program.Prompt();
+        }
+
+        public static void TextModulesHelp()
+        {
+            Console.WriteLine("""
+                TextModules is a feature that allows for inserting UniCMD-side data into text
+                This is feature can by used in StartText or PromptText
+                Enter 'TextModule Example' for an example of using TextModules
+
+                 All TextModules are listed bellow
+                -- Data modules
+                 ::ver:: - UniCMD version
+                 ::osver:: - OS version
+                 ::ram:: - RAM memory
+                 ::time:: - System time
+                 ::cdir:: - Current set directory
+                 ::root:: - If running as admin '(#)' is inserted, If not it is replaced with three spaces
+                 ::user:: - System username
+                 ::host:: - Host machine name
+                 ::proc:: - Processor count
+                 ::mmem:: - Memory mapped to UniCMD
+                 ::tick:: - Tick count
+                 ::sysp:: - System page size
+                -- Color modules
+                 :[red]:
+                 :[green]:
+                 :[blue]:
+                 :[cyan]:
+                 :[yellow]:
+                 :[purple]:
+                 :[white]:
+                 :[]: - Close both background and text color streams
+                 Use :{}: instead of :[]: for setting the background color
+
+                *Textmodules colors do not work under the plain cmd window, use an terminal that supports ANSI
+
+                """);
+            Program.Prompt();
+        }
+        public static void TextModulesExample()
+        {
+            Console.WriteLine("TextModules example, for more refer to 'textmodules help'\n");
+            Console.WriteLine(" -- Unparsed text\n");
+            Console.WriteLine(" :[red]: this text is red :[]:");
+            Console.WriteLine(" :[green]: this text is green :[]:");
+            Console.WriteLine(" :[blue]: this text is green :[]:");
+            Console.WriteLine(" :{red}: the background of this text is red :[]:");
+            Console.WriteLine(" :{green}: the background of this text is green :[]:");
+            Console.WriteLine(" :{blue}: the background of this text is blue :[]:");
+            Console.WriteLine();
+            Console.WriteLine(" the current time is ::time::");
+            Console.WriteLine(" you are using UniCMD version ::ver::");
+            Console.WriteLine(" your os version is ::osver::");
+            Console.WriteLine("\n -- Parsed text\n");
+            Console.WriteLine(" \u001b[31m this text is red \u001b[0m");
+            Console.WriteLine(" \u001b[32m this text is green \u001b[0m");
+            Console.WriteLine(" \u001b[34m this text is green \u001b[0m");
+            Console.WriteLine(" \u001b[41m the background of this text is red\u001b[0m");
+            Console.WriteLine(" \u001b[42m the background of this text is green\u001b[0m");
+            Console.WriteLine(" \u001b[44m the background of this text is blue\u001b[0m");
+            Console.WriteLine();
+            Console.WriteLine(" the current time is " + DateTime.Now.ToString("hh:mm tt"));
+            Console.WriteLine(" you are using UniCMD version " + Program.version);
+            Console.WriteLine(" your os version is " + Environment.OSVersion.ToString());
+            Program.Prompt();
+        }
+
+        public static void UniScriptHelp()
+        {
+            Console.WriteLine("""
+                UniScript is an scripting language that allows for
+                executing UniCMD commands from an .unsc file
+                for simple automation of tasks.
+
+                  To run a UniScript file enter :
+                  'uniscript {name}'
+                  'uniscript /p {path}'
+                """);
+            Program.Prompt();
+        }
     }
 }

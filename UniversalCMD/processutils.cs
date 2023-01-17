@@ -9,7 +9,7 @@ namespace UniCMD
 {
     internal class processutils
     {
-        public static void listprocess()
+        public static void ListProcess()
         {
             Process[] processlist = Process.GetProcesses();
             Console.WriteLine("  Processes running : Name | ID");
@@ -18,9 +18,9 @@ namespace UniCMD
             {
                 Console.WriteLine(" " + process.ProcessName + " | " + process.Id);
             }
-            Program.CMD();
+            Program.Prompt();
         }
-        public static void killallprocess()
+        public static void KillAllProcess()
         {
             var failed = 0;
             var success = 0;
@@ -58,14 +58,14 @@ namespace UniCMD
             }
             else
             {
-                Program.CMD();
+                Program.Prompt();
             }
             Console.WriteLine("Task finished");
             Console.WriteLine("Success : " + success);
             Console.WriteLine("Failed : " + failed);
-            Program.CMD();
+            Program.Prompt();
         }
-        public static void killprocess()
+        public static void KillProcess()
         {
             var killed = 0;
             string filename = Program.command.Replace("proc end ", "");
@@ -82,15 +82,15 @@ namespace UniCMD
             catch (Exception ex)
             {
                 Console.WriteLine("Could not kill process");
-                otherutils.exception_print(ex);
+                otherutils.PrintException(ex);
             }
-            Program.CMD();
+            Program.Prompt();
         }
-        public static void processrun()
+        public static void RunProcess()
         {
             if (Program.currentdir == null)
             {
-                fileutils.nodirset();
+                fileutils.NoDirSet();
             }
             string file = Program.command.Replace("proc run ", "");
             if (File.Exists(Program.currentdir + file))
@@ -117,16 +117,16 @@ namespace UniCMD
                 catch (Exception ex)
                 {
                     Console.WriteLine("Could not start process");
-                    otherutils.exception_print(ex);
+                    otherutils.PrintException(ex);
                 }
             }
             else
             {
                 Console.WriteLine("File does not exist");
             }
-            Program.CMD();
+            Program.Prompt();
         }
-        public static void processrunpath()
+        public static void RunProcessPath()
         {
             string file = Program.command.Replace("proc run /p ", "");
             if (File.Exists(file))
@@ -153,14 +153,14 @@ namespace UniCMD
                 catch (Exception ex)
                 {
                     Console.WriteLine("Could not start process");
-                    otherutils.exception_print(ex);
+                    otherutils.PrintException(ex);
                 }
             }
             else
             {
                 Console.WriteLine("File does not exist");
             }
-            Program.CMD();
+            Program.Prompt();
         }
     }
 }
