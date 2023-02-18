@@ -4,7 +4,7 @@ namespace UniCMD
 {
     static internal class Program
     {
-        public static string version = "v3.0r";
+        public static string version = "v3.1r";
         // r - release
         // rc - release candidate
         // d - debug
@@ -89,6 +89,9 @@ namespace UniCMD
         {
             // here the commands start
 
+            // Behold! the power of the great if/else monster
+            // how did it even get this bad
+
             // misc stuff
             if (command == "exit")
             {
@@ -115,6 +118,16 @@ namespace UniCMD
             {
                 Console.ReadKey();
                 Prompt();
+            }
+            if (command.StartsWith("sleep "))
+            {
+                otherutils.Sleep();
+            }
+
+
+            if (command.StartsWith(".$"))
+            {
+                uniscript.ExecuteMacro();
             }
 
             if (command == "help")

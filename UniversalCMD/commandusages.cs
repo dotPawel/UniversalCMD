@@ -83,6 +83,7 @@ namespace UniCMD
                   ╚Echo
                    ╚Echo
                    ╚Echo /PTM
+                  ╚Sleep {milliseconds}
 
                  User preferences & customization
                   ╚Customization

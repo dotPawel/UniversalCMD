@@ -9,6 +9,34 @@ namespace UniCMD
     internal class uniscript
     {
         public static bool UniScriptExecuting;
+
+        public static void ExecuteMacro()
+        {
+            string text = Program.command.Replace(".$", "");
+
+            if (File.Exists(@"UniCMD.data\Macros\" + text + ".unsc"))
+            {
+                UniScriptExecuting = true;
+                foreach (string line in File.ReadAllLines(@"UniCMD.data\Macros\" + text + ".unsc"))
+                {
+                    if (line.Length > 1)
+                    {
+                        Program.command = line;
+
+                        Program.Command(line);
+                    }
+                }
+
+                UniScriptExecuting = false;
+                Console.WriteLine("\nUniScript macro finished.");
+                Program.Prompt();
+            }
+            else
+            {
+                Console.WriteLine("No macro named '{0}' exists", text);
+                Program.Prompt();
+            }
+        }
         public static void Execute()
         {
             if (Program.currentdir == null)

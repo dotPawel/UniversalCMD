@@ -57,7 +57,7 @@ namespace UniCMD
                 Console.WriteLine("creating config.cfg ..");
                 try
                 {
-                    var myFile = File.Create(@"UniCMD.data/config.cfg");
+                    var myFile = File.Create(@"UniCMD.data\config.cfg");
                     myFile.Close();
                     Console.WriteLine("writing config template..");
                     WriteTemplate();
@@ -72,6 +72,27 @@ namespace UniCMD
                     Console.WriteLine("Press any key to continue to UniCMD");
                     Console.ReadKey();
                 }              
+            }
+            // macros folder
+            if (Directory.Exists(@"UniCMD.data\Macros"))
+            {
+                Console.WriteLine("UniCMD > OK");
+            }
+            else
+            {
+                Console.WriteLine("\nUniCMD.data/Macros does not exist");
+                Console.WriteLine("creating UniCMD.data ..");
+                try
+                {
+                    Directory.CreateDirectory(@"UniCMD.data\Macros");
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine("\nCould not create UniCMD.data/Macros");
+                    Console.WriteLine("Exception :\n\n" + ex + "\n");
+                    Console.WriteLine("Press any key to continue to UniCMD");
+                    Console.ReadKey();
+                }
             }
         }       
         public static void WriteTemplate()

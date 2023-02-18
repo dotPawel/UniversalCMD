@@ -2,6 +2,7 @@
 using System.Diagnostics;
 using System.Management;
 using System.Security.Principal;
+using static IronPython.Modules._ast;
 
 namespace UniCMD
 {
@@ -49,6 +50,21 @@ namespace UniCMD
             text = configcommands.ApplyTextModules(text);
 
             Console.WriteLine(text);
+            Program.Prompt();
+        }
+        public static void Sleep()
+        {
+            string input = Program.command.Replace("sleep ", "");
+            bool isInt = Int32.TryParse(input, out int x);
+
+            if (isInt == true)
+            {
+                Thread.Sleep(x);
+            }
+            else
+            {
+                Console.WriteLine("Invalid input value");
+            }
             Program.Prompt();
         }
     }
