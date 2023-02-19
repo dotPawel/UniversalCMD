@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace UniCMD
 {
-    internal class debug
+    internal class Debug
     {
         public static void dbg_start()
         {
@@ -23,7 +23,7 @@ namespace UniCMD
 
             if (dbg == "isAdmin(?)")
             {
-                if (otherutils.runningAsAdmin == true)
+                if (OtherUtils.runningAsAdmin == true)
                 {
                     Console.WriteLine("runningAsAdmin == True");
                 }
@@ -73,7 +73,7 @@ namespace UniCMD
                 catch (Exception ex)
                 {
                     Console.WriteLine("Cannot delete UniCMD.data");
-                    otherutils.PrintException(ex);
+                    OtherUtils.PrintException(ex);
                 }
                 dbg_prompt();
             }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace UniCMD
 {
-    internal class uniscript
+    internal class UniScript
     {
         public static bool UniScriptExecuting;
 
@@ -41,7 +41,7 @@ namespace UniCMD
         {
             if (Program.currentdir == null)
             {
-                fileutils.NoDirSet();
+                FileUtils.NoDirSet();
             }
             string text = Program.command.Replace("uniscript ", "");
             if (File.Exists(Program.currentdir + text))

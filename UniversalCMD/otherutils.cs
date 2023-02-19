@@ -6,7 +6,7 @@ using static IronPython.Modules._ast;
 
 namespace UniCMD
 {
-    internal class otherutils
+    internal class OtherUtils
     {
         public static string unicmdName = System.AppDomain.CurrentDomain.FriendlyName;
         public static bool runningAsAdmin = WindowsIdentity.GetCurrent().Owner.IsWellKnown(WellKnownSidType.BuiltinAdministratorsSid);
@@ -28,7 +28,7 @@ namespace UniCMD
             Console.WriteLine("AeroCL Backbridge Loader");
             Console.WriteLine();
             Console.WriteLine(" AeroCL will load in shortly..\n");
-            aerocl_bb.acl_main();
+            AeroCL_BB.acl_main();
         }
         public static void PrintException(Exception exc)
         {
@@ -47,7 +47,7 @@ namespace UniCMD
         {
             string text = Program.command.Replace("echo /ptm ", "");
 
-            text = configcommands.ApplyTextModules(text);
+            text = ConfigCommands.ApplyTextModules(text);
 
             Console.WriteLine(text);
             Program.Prompt();
@@ -65,6 +65,17 @@ namespace UniCMD
             {
                 Console.WriteLine("Invalid input value");
             }
+            Program.Prompt();
+        }
+        public static void PTMCommand()
+        {
+            string input = Program.command.Replace("[ptm-cmd] ", "");
+
+            input = ConfigCommands.ApplyTextModules(input);
+
+            Program.command = input;
+            Program.Command(input);
+
             Program.Prompt();
         }
     }

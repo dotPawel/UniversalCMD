@@ -6,7 +6,7 @@ using System.Collections.Generic;
 
 namespace UniCMD
 {
-    static internal class aerocl_bb
+    static internal class AeroCL_BB
     {
         public static string currentDir = "";
         public static string bbver = "0.6";

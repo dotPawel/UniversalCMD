@@ -4,7 +4,7 @@ namespace UniCMD
 {
     static internal class Program
     {
-        public static string version = "v3.1r";
+        public static string version = "v3.2r";
         // r - release
         // rc - release candidate
         // d - debug
@@ -26,7 +26,7 @@ namespace UniCMD
 
             if (File.Exists(@"UniCMD.data\starttext.unicmd"))
             {
-                configcommands.ParseStarttext();
+                ConfigCommands.ParseStarttext();
             }
 
             Console.WriteLine(" --------------------------------------------------");
@@ -36,7 +36,7 @@ namespace UniCMD
             Console.WriteLine("  Memory");
             Console.WriteLine("   └ " + proc.PrivateMemorySize64 + " (KB)");
             Console.WriteLine("  CPU Name/Model");
-            otherutils.ReturnCPUName();
+            OtherUtils.ReturnCPUName();
             Console.WriteLine(" --------------------------------------------------");
             Console.WriteLine("for command index run 'help'");
             Console.WriteLine("in order to set current directory run 'sd'");
@@ -45,7 +45,7 @@ namespace UniCMD
         }
         public static void Prompt()
         {
-            if (uniscript.UniScriptExecuting == true)
+            if (UniScript.UniScriptExecuting == true)
             {
                 return;
             }
@@ -54,11 +54,11 @@ namespace UniCMD
 
             if (File.Exists(@"UniCMD.data\prompttext.unicmd"))
             {
-                configcommands.ParsePrompttext();
+                ConfigCommands.ParsePrompttext();
             }
             else
             {
-                if (otherutils.runningAsAdmin == true)
+                if (OtherUtils.runningAsAdmin == true)
                 {
                     Console.Write("(#) ");
                 }
@@ -100,19 +100,19 @@ namespace UniCMD
             }
             if (command == "about")
             {
-                commandusages.About();
+                CommandUsages.About();
             }
             if (command == "clr")
             {
-                otherutils.ClearConsole();
+                OtherUtils.ClearConsole();
             }
             if (command.StartsWith("echo /ptm "))
             {
-                otherutils.EchoPTM();
+                OtherUtils.EchoPTM();
             }
             else if (command.StartsWith("echo "))
             {
-                otherutils.Echo();
+                OtherUtils.Echo();
             }
             if (command == "pause")
             {
@@ -121,321 +121,328 @@ namespace UniCMD
             }
             if (command.StartsWith("sleep "))
             {
-                otherutils.Sleep();
+                OtherUtils.Sleep();
             }
-
 
             if (command.StartsWith(".$"))
             {
-                uniscript.ExecuteMacro();
+                UniScript.ExecuteMacro();
             }
 
             if (command == "help")
             {
-                commandusages.CommandIndex();
+                CommandUsages.CommandIndex();
             }
 
             // directory commands
             if (command == "sd")
             {
-                fileutils.SetDirectory();
+                FileUtils.SetDirectory();
             }
             if (command == "sd clr")
             {
-                fileutils.ClearSetDirectory();
+                FileUtils.ClearSetDirectory();
             }
             if (command == "dir lst")
             {
-                fileutils.ListDir();
+                FileUtils.ListDir();
             }
 
             if (command == "dir make")
             {
-                commandusages.DirMakeUsage();
+                CommandUsages.DirMakeUsage();
             }
             if (command.StartsWith("dir make /p "))
             {
-                fileutils.CreateDirPath();
+                FileUtils.CreateDirPath();
             }
             else if (command.StartsWith("dir make "))
             {
-                fileutils.CreateDir();
+                FileUtils.CreateDir();
             }
 
             if (command == "dir del")
             {
-                commandusages.DirDeleteUsage();
+                CommandUsages.DirDeleteUsage();
             }
             if (command.StartsWith("dir del /p "))
             {
-                fileutils.DeleteDirPath();
+                FileUtils.DeleteDirPath();
             }
             else if (command.StartsWith("dir del "))
             {
-                fileutils.DeleteDir();
+                FileUtils.DeleteDir();
             }
 
             if (command == "dir cln")
             {
-                commandusages.DirCloneUsage();
+                CommandUsages.DirCloneUsage();
             }
             if (command.StartsWith("dir cln /p "))
             {
-                fileutils.CloneDirPath();
+                FileUtils.CloneDirPath();
             }
             else if (command.StartsWith("dir cln "))
             {
-                fileutils.CloneDir();
+                FileUtils.CloneDir();
             }
 
             if (command == "dir rnm")
             {
-                commandusages.DirRenameUsage();
+                CommandUsages.DirRenameUsage();
             }
             if (command.StartsWith("dir rnm /p "))
             {
-                fileutils.RenameDirPath();
+                FileUtils.RenameDirPath();
             }
             else if (command.StartsWith("dir rnm "))
             {
-                fileutils.RenameDir();
+                FileUtils.RenameDir();
             }
 
 
             // file commands
             if (command == "file make")
             {
-                commandusages.FileCreateUsage();
+                CommandUsages.FileCreateUsage();
             }
             if (command.StartsWith("file make /p "))
             {
-                fileutils.CreateFilePath();
+                FileUtils.CreateFilePath();
             }
             else if (command.StartsWith("file make "))
             {
-                fileutils.CreateFile();
+                FileUtils.CreateFile();
             }
 
             if (command == "file del")
             {
-                commandusages.FileDeleteUsage();
+                CommandUsages.FileDeleteUsage();
             }
             if (command.StartsWith("file del /p "))
             {
-                fileutils.DeleteDirPath();
+                FileUtils.DeleteDirPath();
             }
             else if (command.StartsWith("file del "))
             {
-                fileutils.DeleteFile();
+                FileUtils.DeleteFile();
             }
 
             if (command == "file rd")
             {
-                commandusages.FileReadUsage();
+                CommandUsages.FileReadUsage();
             }
             if (command.StartsWith("file rd /p "))
             {
-                fileutils.ReadFilePath();
+                FileUtils.ReadFilePath();
             }
             else if (command.StartsWith("file rd "))
             {
-                fileutils.ReadFile();
+                FileUtils.ReadFile();
             }
 
             if (command == "file wrt")
             {
-                commandusages.FileWriteUsage();
+                CommandUsages.FileWriteUsage();
             }
             if (command.StartsWith("file wrt /p "))
             {
-                fileutils.WriteFilePath();
+                FileUtils.WriteFilePath();
             }
             else if (command.StartsWith("file wrt "))
             {
-                fileutils.WriteFile();
+                FileUtils.WriteFile();
             }
 
             if (command == "file clr")
             {
-                commandusages.FileClearUsage();
+                CommandUsages.FileClearUsage();
             }
             if (command.StartsWith("file clr /p "))
             {
-                fileutils.ClearFilePath();
+                FileUtils.ClearFilePath();
             }
             else if (command.StartsWith("file clr "))
             {
-                fileutils.ClearFile();
+                FileUtils.ClearFile();
             }
 
             if (command == "file cln")
             {
-                commandusages.FileCloneUsage();
+                CommandUsages.FileCloneUsage();
             }
             if (command.StartsWith("file cln /p "))
             {
-                fileutils.CloneFilePath();
+                FileUtils.CloneFilePath();
             }
             else if (command.StartsWith("file cln "))
             {
-                fileutils.CloneFile();
+                FileUtils.CloneFile();
             }
 
             if (command == "file rnm")
             {
-                commandusages.FileRenameUsage();
+                CommandUsages.FileRenameUsage();
             }
             if (command.StartsWith("file rnm /p "))
             {
-                fileutils.RenameFilePath();
+                FileUtils.RenameFilePath();
             }
             else if (command.StartsWith("file rnm "))
             {
-                fileutils.RenameFile();
+                FileUtils.RenameFile();
             }
 
             // process commands
             if (command == "proc lst")
             {
-                processutils.ListProcess();
+                ProcessUtils.ListProcess();
             }
 
             if (command == "proc run")
             {
-                commandusages.ProcessStartUsage();
+                CommandUsages.ProcessStartUsage();
             }
             if (command.StartsWith("proc run /p "))
             {
-                processutils.RunProcessPath();
+                ProcessUtils.RunProcessPath();
             }
             else if (command.StartsWith("proc run "))
             {
-                processutils.RunProcess();
+                ProcessUtils.RunProcess();
             }
 
             if (command == "proc end")
             {
-                commandusages.ProcessKillUsage();
+                CommandUsages.ProcessKillUsage();
             }
             if (command == "proc end /all")
             {
-                processutils.KillAllProcess();
+                ProcessUtils.KillAllProcess();
             }
             if (command.StartsWith("proc end "))
             {
-                processutils.KillProcess();
+                ProcessUtils.KillProcess();
             }
 
             // python commands
             if (command == "ironpython")
             {
-                commandusages.IronPythonUsage();
+                CommandUsages.IronPythonUsage();
             }
             if (command.StartsWith("ironpython /p "))
             {
-                python3commands.RunFilePath();
+                IronPythonCommands.RunFilePath();
             }
             else if (command.StartsWith("ironpython "))
             {
-                python3commands.RunFile();
+                IronPythonCommands.RunFile();
             }
 
             // backbridge
             if (command == "acl_bb")
             {
-                commandusages.BackbridgeUsage();
+                CommandUsages.BackbridgeUsage();
             }
             if (command == "acl_bb about")
             {
-                commandusages.BackbridgeAbout();
+                CommandUsages.BackbridgeAbout();
             }
             if (command == "acl_bb start")
             {
-                otherutils.AeroCL_Loader();
+                OtherUtils.AeroCL_Loader();
             }
 
             // config commands
             if (command == "config open")
             {
-                configcommands.OpenConfig();
+                ConfigCommands.OpenConfig();
             }
             if (command == "config rewrite")
             {
-                configcommands.RewriteConfig();
+                ConfigCommands.RewriteConfig();
             }
             if (command == "config print")
             {
-                configcommands.PrintConfig();
+                ConfigCommands.PrintConfig();
             }
 
             // starttext commands
             if (command == "starttext")
             {
-                commandusages.StarttextHelp();
+                CommandUsages.StarttextHelp();
             }
             if (command == "starttext parse")
             {
-                configcommands.ParseStarttext();
+                ConfigCommands.ParseStarttext();
             }
             if (command == "starttext create")
             {
-                configcommands.CreateStarttext();
+                ConfigCommands.CreateStarttext();
             }
             if (command == "starttext open")
             {
-                configcommands.OpenStarttext();
+                ConfigCommands.OpenStarttext();
             }
             if (command == "starttext write-template")
             {
-                configcommands.WriteTemplateStarttext();
+                ConfigCommands.WriteTemplateStarttext();
             }
 
             // prompttext commands
             if (command == "prompttext")
             {
-                commandusages.PrompttextHelp();
+                CommandUsages.PrompttextHelp();
             }
             if (command == "prompttext create")
             {
-                configcommands.CreatePromptText();
+                ConfigCommands.CreatePromptText();
             }
             if (command == "prompttext open")
             {
-                configcommands.OpenPromptText();
+                ConfigCommands.OpenPromptText();
             }
             if (command == "prompttext write-template")
             {
-                configcommands.WritePromptTextTemplate();
+                ConfigCommands.WritePromptTextTemplate();
             }
 
             // textmodules
             if (command == "textmodules")
             {
-                commandusages.TextModulesHelp();
+                CommandUsages.TextModulesHelp();
             }
             if (command == "textmodules example")
             {
-                commandusages.TextModulesExample();
+                CommandUsages.TextModulesExample();
+            }
+            if (command == "[ptm-cmd]")
+            {
+
+            }
+            if (command.StartsWith("[ptm-cmd] "))
+            {
+                OtherUtils.PTMCommand();
             }
 
             // uniscript
             if (command == "uniscript")
             {
-                commandusages.UniScriptHelp();
+                CommandUsages.UniScriptHelp();
             }
             if (command.StartsWith("uniscript /p "))
             {
-                uniscript.ExecutePath();
+                UniScript.ExecutePath();
             }
             else if (command.StartsWith("uniscript "))
             {
-                uniscript.Execute();
+                UniScript.Execute();
             }
 
             // debug
             if (command == "dbg_start")
             {
-                debug.dbg_start();
+                Debug.dbg_start();
             }          
 
             // error messages
@@ -447,7 +454,7 @@ namespace UniCMD
             } 
             else
             {
-                if (uniscript.UniScriptExecuting == true)
+                if (UniScript.UniScriptExecuting == true)
                 {
                     return;
                 }

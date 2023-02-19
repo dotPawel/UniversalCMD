@@ -8,7 +8,7 @@
     <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
     <GenerateDocumentationFile>False</GenerateDocumentationFile>
     <SignAssembly>False</SignAssembly>
-    <ApplicationIcon>unicmd icon.ico</ApplicationIcon>
+    <ApplicationIcon>images\unicmd icon.ico</ApplicationIcon>
     <Description>UniversalCMD
 </Description>
     <PackageIcon>unicmd icon 512.png</PackageIcon>
@@ -23,11 +23,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Content Include="unicmd icon.ico" />
+    <Content Include="images\unicmd icon.ico" />
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="..\..\..\Images, videos\unicmd icon 512.png">
+    <None Include="..\..\..\Images, videos\unicmd icon 512.png" Link="images\unicmd icon 512.png">
       <Pack>True</Pack>
       <PackagePath>\</PackagePath>
     </None>

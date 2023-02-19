@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace UniCMD
 {
-    internal class configcommands
+    internal class ConfigCommands
     {
         // config commands
         public static void OpenConfig()
@@ -25,7 +25,7 @@ namespace UniCMD
             catch (Exception ex)
             {
                 Console.WriteLine("Failed to open configuration file");
-                otherutils.PrintException(ex);
+                OtherUtils.PrintException(ex);
             }
             Program.Prompt();
         }
@@ -42,7 +42,7 @@ namespace UniCMD
             catch (Exception ex)
             {
                 Console.WriteLine("Failed to restore configuration file");
-                otherutils.PrintException(ex);
+                OtherUtils.PrintException(ex);
             }
             Program.Prompt();
         }
@@ -59,7 +59,7 @@ namespace UniCMD
             catch (Exception ex)
             {
                 Console.WriteLine("Could not print configuration file");
-                otherutils.PrintException(ex);
+                OtherUtils.PrintException(ex);
             }
             Program.Prompt();
         }
@@ -78,7 +78,7 @@ namespace UniCMD
             catch (Exception e)
             {
                 Console.WriteLine("Failed to parse starttext");
-                otherutils.PrintException(e);
+                OtherUtils.PrintException(e);
             }
             Program.Prompt();
         }
@@ -223,7 +223,7 @@ namespace UniCMD
                 .Replace("::tick::", Environment.TickCount.ToString())
                 .Replace("::sysp::", Environment.SystemPageSize.ToString());
 
-            if (otherutils.runningAsAdmin) { text = text.Replace("::root::", "(#)");  }
+            if (OtherUtils.runningAsAdmin) { text = text.Replace("::root::", "(#)");  }
             else { text = text.Replace("::root::", "   "); }
 
             if (Program.currentdir == null) { text = text.Replace("::cdir::", "NULL"); }

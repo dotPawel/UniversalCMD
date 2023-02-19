@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace UniCMD
 {
-    internal class processutils
+    internal class ProcessUtils
     {
         public static void ListProcess()
         {
@@ -26,7 +26,7 @@ namespace UniCMD
             var success = 0;
             Console.WriteLine("This will try to end every process seen by UniCMD");
             Console.WriteLine("and will end UniCMD itself");
-            if (otherutils.runningAsAdmin == false)
+            if (OtherUtils.runningAsAdmin == false)
             {
                 Console.WriteLine("due to lack of admin permissions this is likely to fail at most");
             }
@@ -41,7 +41,7 @@ namespace UniCMD
                 {
                     try
                     {
-                        if (process.ProcessName == otherutils.unicmdName)
+                        if (process.ProcessName == OtherUtils.unicmdName)
                         {
                             Console.WriteLine("SKIPPING : UniCMD exit prevention");
                         }
@@ -82,7 +82,7 @@ namespace UniCMD
             catch (Exception ex)
             {
                 Console.WriteLine("Could not kill process");
-                otherutils.PrintException(ex);
+                OtherUtils.PrintException(ex);
             }
             Program.Prompt();
         }
@@ -90,7 +90,7 @@ namespace UniCMD
         {
             if (Program.currentdir == null)
             {
-                fileutils.NoDirSet();
+                FileUtils.NoDirSet();
             }
             string file = Program.command.Replace("proc run ", "");
             if (File.Exists(Program.currentdir + file))
@@ -117,7 +117,7 @@ namespace UniCMD
                 catch (Exception ex)
                 {
                     Console.WriteLine("Could not start process");
-                    otherutils.PrintException(ex);
+                    OtherUtils.PrintException(ex);
                 }
             }
             else
@@ -153,7 +153,7 @@ namespace UniCMD
                 catch (Exception ex)
                 {
                     Console.WriteLine("Could not start process");
-                    otherutils.PrintException(ex);
+                    OtherUtils.PrintException(ex);
                 }
             }
             else

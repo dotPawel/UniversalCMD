@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace UniCMD
 {
-    internal class commandusages
+    internal class CommandUsages
     {
         public static void About()
         {
@@ -98,6 +98,8 @@ namespace UniCMD
                     ╚Prompttext Write-Template
                    ╚TextModules
                     ╚TextModules Example
+                    ╚Parse Command
+                     ╚[ptm-cmd] {command}
                   ╚Configuration File
                    ╚Config Open
                    ╚Config Rewrite
@@ -278,7 +280,7 @@ namespace UniCMD
                 a AeroCL loader built into UniCMD
                 included AeroCL version : 2.0
                 loader version : {0}
-                """, aerocl_bb.bbver);  
+                """, AeroCL_BB.bbver);  
             Program.Prompt();
         }
 
@@ -414,6 +416,16 @@ namespace UniCMD
                   To run a UniScript file enter :
                   'uniscript {name}'
                   'uniscript /p {path}'
+                """);
+            Program.Prompt();
+        }
+        public static void ParseCommandHelp()
+        {
+            Console.WriteLine("""
+                [PTM-CMD] is a module allowing for TextModules in commands
+
+                  To apply TextModules to a command run :
+                  '[ptm-cmd] {command}'
                 """);
             Program.Prompt();
         }

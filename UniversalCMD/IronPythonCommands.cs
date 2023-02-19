@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace UniCMD
 {
-    internal class python3commands
+    internal class IronPythonCommands
     {
         public static void RunFile()
         {
