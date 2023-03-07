@@ -7,6 +7,54 @@ namespace UniCMD
         //dir
         public static void SetDirectory()
         {
+            string dir = Program.uncvcommand.Replace("sd ", "");
+
+            if (Program.currentdir != null && dir == "..")
+            {
+                try
+                {
+                    string backonedir = Directory.GetParent(Program.currentdir).ToString();
+                    string backtwodir = Directory.GetParent(backonedir).ToString();
+                    Program.currentdir = backtwodir;
+                    Console.WriteLine("Successfully edited directory");
+                    Console.WriteLine(" " + Program.currentdir);
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine("Cannot edit directory");
+                    OtherUtils.PrintException(ex);
+                }
+                Program.Prompt();
+            }
+
+            if (!dir.EndsWith(@"\"))
+            {
+                Console.WriteLine("Path does not end with backslash");
+                Program.Prompt();
+            }
+
+            if (Program.currentdir == null && Directory.Exists(dir))
+            {
+                Program.currentdir = dir;
+
+                Console.WriteLine("Successfully set directory");
+                Console.WriteLine(" " + Program.currentdir);
+                Program.Prompt();
+            }
+            if (Program.currentdir != null && Directory.Exists(Program.currentdir + dir))
+            {
+                Program.currentdir = Program.currentdir + dir;
+                Console.WriteLine("Successfully edited directory");
+                Console.WriteLine(" " + Program.currentdir);
+                Program.Prompt();
+            }
+            else
+            {
+                Console.WriteLine("Cannot access directory.");
+            }
+            Program.Prompt();
+
+            /* Old version
             if (Program.currentdir == null)
             {
                 Console.WriteLine("Setting current directory..");
@@ -76,6 +124,7 @@ namespace UniCMD
                     }
                 }
             }
+            */
         }
         public static void ClearSetDirectory()
         {
@@ -1072,6 +1121,97 @@ namespace UniCMD
                 Console.Write("File does not exist");
             }
             Program.Prompt();
+        }
+        public static void ZipFile()
+        {
+            if (Program.currentdir == null)
+            {
+                FileUtils.NoDirSet();
+            }
+            string dirname = Program.command.Replace("file zip ", "");
+
+            try
+            {
+                System.IO.Compression.ZipFile.CreateFromDirectory(Program.currentdir + dirname, Program.currentdir + dirname + ".zip");
+                Console.WriteLine("Created zip archive at current");
+                Console.WriteLine(" " + Program.currentdir + dirname + ".zip");
+            }
+            catch(Exception ex)
+            {
+                Console.Write("Could not create zip archive");
+                OtherUtils.PrintException(ex);
+            }
+        }
+        public static void ZipFilePath()
+        {
+            string dirname = Program.command.Replace("file zip /p ", "");
+            try
+            {
+                System.IO.Compression.ZipFile.CreateFromDirectory(dirname, dirname + ".zip");
+                Console.WriteLine("Created zip archive from path");
+                Console.WriteLine(" " + dirname + ".zip");
+            }
+            catch (Exception ex)
+            {
+                Console.Write("Could not create zip archive");
+                OtherUtils.PrintException(ex);
+            }
+        }
+        public static void UnzipFile()
+        {
+            if (Program.currentdir == null)
+            {
+                FileUtils.NoDirSet();
+            }
+            string filename = Program.command.Replace("file unzip ", "");
+
+            if (File.Exists(Program.currentdir + filename))
+            {
+                try
+                {
+                    Directory.CreateDirectory(Program.currentdir + filename + "_extracted");
+                    System.IO.Compression.ZipFile.ExtractToDirectory(Program.currentdir + filename, Program.currentdir + filename + "_extracted");
+
+                    Console.WriteLine("Successfully unzipped file to");
+                    Console.WriteLine(" " + Program.currentdir + filename + "_extracted");
+                }
+                catch (Exception ex)
+                {
+                    Directory.Delete(Program.currentdir + filename + "_extracted");
+                    Console.Write("Could not unzip archive");
+                    OtherUtils.PrintException(ex);
+                }
+            }
+            else
+            {
+                Console.Write("File does not exist");
+            }
+        }
+        public static void UnzipFilePath()
+        {
+            string filename = Program.command.Replace("file unzip /p ", "");
+
+            if (File.Exists(filename))
+            {
+                try
+                {
+                    Directory.CreateDirectory(filename + "_extracted");
+                    System.IO.Compression.ZipFile.ExtractToDirectory(filename, filename + "_extracted");
+
+                    Console.WriteLine("Successfully unzipped file to");
+                    Console.WriteLine(" " + filename + "_extracted");
+                }
+                catch (Exception ex)
+                {
+                    Directory.Delete(filename + "_extracted");
+                    Console.Write("Could not unzip archive");
+                    OtherUtils.PrintException(ex);
+                }
+            }
+            else
+            {
+                Console.Write("File does not exist");
+            }
         }
     }
 }

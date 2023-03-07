@@ -5,6 +5,7 @@ namespace UniCMD
     static internal class Startup // this thing is such a mess, may cause brain damage just by looking at it
     {
         public static bool showExceptions = false;
+        public static bool doAutoexec = false;
         public static string[] config;
         public static void MainStartUp()
         {
@@ -17,6 +18,11 @@ namespace UniCMD
             {
                 Console.WriteLine("showExceptions > ENABLED");
                 showExceptions = true;
+            }
+            if (config.Contains("doAutoexec = y"))
+            {
+                Console.WriteLine("doAutoexec > ENABLED");
+                UniScript.ExecuteAutoexec();
             }
 
             Console.WriteLine("\n    Start-Up finished");
@@ -46,6 +52,31 @@ namespace UniCMD
                     Console.ReadKey();
                 }
             }
+            // autoexec file
+            if (File.Exists(@"UniCMD.data/autoexec.cfg"))
+            {
+                Console.WriteLine("autoexec.cfg > OK");
+            }
+            else
+            {
+                Console.WriteLine("\nautoexec.cfg does not exist");
+                Console.WriteLine("creating autoexec.cfg ..");
+                try
+                {
+                    var myFile = File.Create(@"UniCMD.data\autoexec.cfg");
+                    myFile.Close();
+                    Console.WriteLine("Restarting Start-Up process");
+                    MainStartUp();
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine("\nCould not create UniCMD.data");
+                    Console.WriteLine("Exception :\n\n" + ex + "\n");
+                    Console.WriteLine("Press any key to continue to UniCMD");
+                    Console.ReadKey();
+                }
+            }
+
             // config
             if (File.Exists(@"UniCMD.data/config.cfg"))
             {
@@ -61,13 +92,12 @@ namespace UniCMD
                     myFile.Close();
                     Console.WriteLine("writing config template..");
                     WriteTemplate();
-                    Console.WriteLine("UniCMD will restart now");                    
-                    Process.Start(@"UniCMD.exe");
-                    Environment.Exit(0);
+                    Console.WriteLine("Restarting Start-Up process");                    
+                    MainStartUp();
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine("\nCould not create UniCMD.data");
+                    Console.WriteLine("\nCould not create config.cfg");
                     Console.WriteLine("Exception :\n\n" + ex + "\n");
                     Console.WriteLine("Press any key to continue to UniCMD");
                     Console.ReadKey();
@@ -103,6 +133,7 @@ namespace UniCMD
                 sw.WriteLine("//this is used when UniCMD is booting (start-up)");
                 sw.WriteLine();
                 sw.WriteLine("showExceptions = n");
+                sw.WriteLine("doAutoexec = n");
                 sw.Close();
             }
         }

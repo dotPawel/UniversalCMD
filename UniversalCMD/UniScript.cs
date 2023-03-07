@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace UniCMD
 {
@@ -102,6 +103,22 @@ namespace UniCMD
             UniScriptExecuting = false;
             Console.WriteLine("\nUniScript file finished.");
             Program.Prompt();
+        }
+
+        public static void ExecuteAutoexec() 
+        {
+            UniScriptExecuting = true;
+            foreach (string line in File.ReadAllLines(@"UniCMD.data\autoexec.cfg"))
+            {
+                if (line.Length > 1)
+                {
+                    Program.uncvcommand = line;
+
+                    Program.Command(line);
+                }
+            }
+            Console.WriteLine("\nAutoexec finished");
+            UniScriptExecuting = false;
         }
     }
 }

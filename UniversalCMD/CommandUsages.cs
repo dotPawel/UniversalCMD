@@ -10,8 +10,8 @@ namespace UniCMD
     {
         public static void About()
         {
-            Console.WriteLine("   UniversalCMD / Codename Rainman / Build " + Program.version + "\n");
-            Console.WriteLine("  a better AeroCL & a easier command line solution");
+            Console.WriteLine("   UniversalCMD / Codename Neptune / Build " + Program.version + "\n");
+            Console.WriteLine("  a better AeroCL & a easy command line solution");
 
             Program.Prompt();
         }
@@ -42,6 +42,12 @@ namespace UniCMD
                   ╚File Rename
                    ╚File Rnm {name}
                    ╚File Rnm /P {path}
+                  ╚File Zip
+                   ╚File Zip {name}
+                   ╚File Zip /P {path}
+                  ╚File Unzip
+                   ╚File Unzip {name}
+                   ╚File Unzip /P {path}
                 
                  Directory Management
                   ╚Set/Clear Directory
@@ -74,7 +80,11 @@ namespace UniCMD
 
                  UniScript
                   ╚UniScript {name}
-                  ╚UniScript /P {path}
+                  ╚UniScript /P {path} 
+
+                 Networking
+                  ╚Network Ping
+                   ╚Net Ping {ip adress}
                
                  Other
                   ╚Clr
@@ -238,9 +248,31 @@ namespace UniCMD
                 Usage of 'file rename'
 
                   input : file rename {name}
-                          file rename path {path}
+                          file rename /p {path}
                   output : name/path is renamed
                 """);         
+            Program.Prompt();
+        }
+        public static void FileZipUsage()
+        {
+            Console.WriteLine("""
+                Usage of 'file zip'
+
+                  input : file zip {directory name}
+                          file zip /p {directory path}
+                  output : zip archive is created from directory
+                """);
+            Program.Prompt();
+        }
+        public static void FileUnzipUsage()
+        {
+            Console.WriteLine("""
+                Usage of 'file unzip'
+
+                  input : file unzip {name}
+                          file unzip /p {path}
+                  output : zip archive is extracted from name/path
+                """);
             Program.Prompt();
         }
 
@@ -307,6 +339,19 @@ namespace UniCMD
                   output : name/path is started
                 """);
             
+
+            Program.Prompt();
+        }
+        // network commands
+        public static void NetworkPingUsage()
+        {
+            Console.WriteLine("""
+                Usage of 'net ping'
+
+                  input : net ping {ip adress}
+                  output : ping is sent to ip adress
+                """);
+
 
             Program.Prompt();
         }

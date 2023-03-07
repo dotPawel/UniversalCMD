@@ -4,7 +4,7 @@ namespace UniCMD
 {
     static internal class Program
     {
-        public static string version = "v3.2r";
+        public static string version = "v4.0r";
         // r - release
         // rc - release candidate
         // d - debug
@@ -23,23 +23,21 @@ namespace UniCMD
         {
             Process proc = Process.GetCurrentProcess();
             Console.Title = "UniCMD (" + version + ")";
+            string cpu = "";
+            cpu = OtherUtils.ReturnCPUName(cpu);
 
             if (File.Exists(@"UniCMD.data\starttext.unicmd"))
             {
                 ConfigCommands.ParseStarttext();
             }
 
-            Console.WriteLine(" --------------------------------------------------");
-            Console.WriteLine(" UniversalCMD / Rainman / Build " + version + "\n");
-            Console.WriteLine("  Host OS");
-            Console.WriteLine("   └ " + Environment.OSVersion);
-            Console.WriteLine("  Memory");
-            Console.WriteLine("   └ " + proc.PrivateMemorySize64 + " (KB)");
-            Console.WriteLine("  CPU Name/Model");
-            OtherUtils.ReturnCPUName();
-            Console.WriteLine(" --------------------------------------------------");
-            Console.WriteLine("for command index run 'help'");
-            Console.WriteLine("in order to set current directory run 'sd'");
+            Console.WriteLine("""
+                     UniversalCMD / Neptune / {0}
+                  Host OS - {1}
+                  Memory - {2} (KB)
+                  CPU Name/model - {3}
+                     For command index execute "help"
+                """, version, Environment.OSVersion, proc.PrivateMemorySize64, cpu);
 
             Prompt();
         }
@@ -89,380 +87,427 @@ namespace UniCMD
         {
             // here the commands start
 
-            // Behold! the power of the great if/else monster
-            // how did it even get this bad
+            // Behold no more! the if/else monster is gone.
+            switch (command)
+            {
+                // Misc. commands
+                case "exit":
+                    Console.Write("Quitting UniCMD..");
+                    Environment.Exit(0);
+                    break;
 
-            // misc stuff
-            if (command == "exit")
-            {
-                Console.Write("Quitting UniCMD...");
-                Environment.Exit(0);
-            }
-            if (command == "about")
-            {
-                CommandUsages.About();
-            }
-            if (command == "clr")
-            {
-                OtherUtils.ClearConsole();
-            }
-            if (command.StartsWith("echo /ptm "))
-            {
-                OtherUtils.EchoPTM();
-            }
-            else if (command.StartsWith("echo "))
-            {
-                OtherUtils.Echo();
-            }
-            if (command == "pause")
-            {
-                Console.ReadKey();
-                Prompt();
-            }
-            if (command.StartsWith("sleep "))
-            {
-                OtherUtils.Sleep();
-            }
+                case "about":
+                    CommandUsages.About();
+                    break;
 
-            if (command.StartsWith(".$"))
-            {
-                UniScript.ExecuteMacro();
-            }
+                case "clr":
+                    OtherUtils.ClearConsole();
+                    break;
 
-            if (command == "help")
-            {
-                CommandUsages.CommandIndex();
-            }
+                case string s when s.StartsWith("echo /ptm "):
+                    OtherUtils.EchoPTM();
+                    break;
 
-            // directory commands
-            if (command == "sd")
-            {
-                FileUtils.SetDirectory();
-            }
-            if (command == "sd clr")
-            {
-                FileUtils.ClearSetDirectory();
-            }
-            if (command == "dir lst")
-            {
-                FileUtils.ListDir();
-            }
+                case string s when s.StartsWith("echo "):
+                    OtherUtils.Echo();
+                    break;
 
-            if (command == "dir make")
-            {
-                CommandUsages.DirMakeUsage();
-            }
-            if (command.StartsWith("dir make /p "))
-            {
-                FileUtils.CreateDirPath();
-            }
-            else if (command.StartsWith("dir make "))
-            {
-                FileUtils.CreateDir();
-            }
+                case "pause":
+                    Console.ReadKey();
+                    break;
 
-            if (command == "dir del")
-            {
-                CommandUsages.DirDeleteUsage();
-            }
-            if (command.StartsWith("dir del /p "))
-            {
-                FileUtils.DeleteDirPath();
-            }
-            else if (command.StartsWith("dir del "))
-            {
-                FileUtils.DeleteDir();
-            }
+                case string s when s.StartsWith("sleep "):
+                    OtherUtils.Sleep();
+                    break;
 
-            if (command == "dir cln")
-            {
-                CommandUsages.DirCloneUsage();
-            }
-            if (command.StartsWith("dir cln /p "))
-            {
-                FileUtils.CloneDirPath();
-            }
-            else if (command.StartsWith("dir cln "))
-            {
-                FileUtils.CloneDir();
-            }
+                case string s when s.StartsWith(".$ "):
+                    UniScript.ExecuteMacro();
+                    break;
 
-            if (command == "dir rnm")
-            {
-                CommandUsages.DirRenameUsage();
-            }
-            if (command.StartsWith("dir rnm /p "))
-            {
-                FileUtils.RenameDirPath();
-            }
-            else if (command.StartsWith("dir rnm "))
-            {
-                FileUtils.RenameDir();
-            }
+                case "help":
+                    CommandUsages.CommandIndex();
+                    break;
 
 
-            // file commands
-            if (command == "file make")
-            {
-                CommandUsages.FileCreateUsage();
-            }
-            if (command.StartsWith("file make /p "))
-            {
-                FileUtils.CreateFilePath();
-            }
-            else if (command.StartsWith("file make "))
-            {
-                FileUtils.CreateFile();
-            }
+                // Directory commands
+                case string s when s.StartsWith("sd "):
+                    FileUtils.SetDirectory();
+                    break;
 
-            if (command == "file del")
-            {
-                CommandUsages.FileDeleteUsage();
-            }
-            if (command.StartsWith("file del /p "))
-            {
-                FileUtils.DeleteDirPath();
-            }
-            else if (command.StartsWith("file del "))
-            {
-                FileUtils.DeleteFile();
-            }
+                case "sd clr":
+                    FileUtils.ClearSetDirectory();
+                    break;
 
-            if (command == "file rd")
-            {
-                CommandUsages.FileReadUsage();
-            }
-            if (command.StartsWith("file rd /p "))
-            {
-                FileUtils.ReadFilePath();
-            }
-            else if (command.StartsWith("file rd "))
-            {
-                FileUtils.ReadFile();
-            }
+                case "dir lst":
+                    FileUtils.ListDir();
+                    break;
 
-            if (command == "file wrt")
-            {
-                CommandUsages.FileWriteUsage();
-            }
-            if (command.StartsWith("file wrt /p "))
-            {
-                FileUtils.WriteFilePath();
-            }
-            else if (command.StartsWith("file wrt "))
-            {
-                FileUtils.WriteFile();
-            }
+                // dir make
+                case "dir make":
+                    CommandUsages.DirMakeUsage();
+                    break;
 
-            if (command == "file clr")
-            {
-                CommandUsages.FileClearUsage();
-            }
-            if (command.StartsWith("file clr /p "))
-            {
-                FileUtils.ClearFilePath();
-            }
-            else if (command.StartsWith("file clr "))
-            {
-                FileUtils.ClearFile();
-            }
+                case string s when s.StartsWith("dir make /p "):
+                    FileUtils.CreateDirPath();
+                    break;
 
-            if (command == "file cln")
-            {
-                CommandUsages.FileCloneUsage();
-            }
-            if (command.StartsWith("file cln /p "))
-            {
-                FileUtils.CloneFilePath();
-            }
-            else if (command.StartsWith("file cln "))
-            {
-                FileUtils.CloneFile();
-            }
+                case string s when s.StartsWith("dir make "):
+                    FileUtils.CreateDir();
+                    break;
 
-            if (command == "file rnm")
-            {
-                CommandUsages.FileRenameUsage();
-            }
-            if (command.StartsWith("file rnm /p "))
-            {
-                FileUtils.RenameFilePath();
-            }
-            else if (command.StartsWith("file rnm "))
-            {
-                FileUtils.RenameFile();
-            }
+                // dir del
+                case "dir del":
+                    CommandUsages.DirDeleteUsage();
+                    break;
 
-            // process commands
-            if (command == "proc lst")
-            {
-                ProcessUtils.ListProcess();
-            }
+                case string s when s.StartsWith("dir del /p "):
+                    FileUtils.DeleteDirPath();
+                    break;
 
-            if (command == "proc run")
-            {
-                CommandUsages.ProcessStartUsage();
-            }
-            if (command.StartsWith("proc run /p "))
-            {
-                ProcessUtils.RunProcessPath();
-            }
-            else if (command.StartsWith("proc run "))
-            {
-                ProcessUtils.RunProcess();
-            }
+                case string s when s.StartsWith("dir del "):
+                    FileUtils.DeleteDir();
+                    break;
 
-            if (command == "proc end")
-            {
-                CommandUsages.ProcessKillUsage();
-            }
-            if (command == "proc end /all")
-            {
-                ProcessUtils.KillAllProcess();
-            }
-            if (command.StartsWith("proc end "))
-            {
-                ProcessUtils.KillProcess();
-            }
+                // dir cln
+                case "dir cln":
+                    CommandUsages.DirCloneUsage();
+                    break;
 
-            // python commands
-            if (command == "ironpython")
-            {
-                CommandUsages.IronPythonUsage();
-            }
-            if (command.StartsWith("ironpython /p "))
-            {
-                IronPythonCommands.RunFilePath();
-            }
-            else if (command.StartsWith("ironpython "))
-            {
-                IronPythonCommands.RunFile();
-            }
+                case string s when s.StartsWith("dir cln /p "):
+                    FileUtils.CloneDirPath();
+                    break;
 
-            // backbridge
-            if (command == "acl_bb")
-            {
-                CommandUsages.BackbridgeUsage();
-            }
-            if (command == "acl_bb about")
-            {
-                CommandUsages.BackbridgeAbout();
-            }
-            if (command == "acl_bb start")
-            {
-                OtherUtils.AeroCL_Loader();
-            }
+                case string s when s.StartsWith("dir cln "):
+                    FileUtils.CloneDir();
+                    break;
 
-            // config commands
-            if (command == "config open")
-            {
-                ConfigCommands.OpenConfig();
-            }
-            if (command == "config rewrite")
-            {
-                ConfigCommands.RewriteConfig();
-            }
-            if (command == "config print")
-            {
-                ConfigCommands.PrintConfig();
-            }
+                // dir rnm
+                case "dir rnm":
+                    CommandUsages.DirRenameUsage();
+                    break;
 
-            // starttext commands
-            if (command == "starttext")
-            {
-                CommandUsages.StarttextHelp();
-            }
-            if (command == "starttext parse")
-            {
-                ConfigCommands.ParseStarttext();
-            }
-            if (command == "starttext create")
-            {
-                ConfigCommands.CreateStarttext();
-            }
-            if (command == "starttext open")
-            {
-                ConfigCommands.OpenStarttext();
-            }
-            if (command == "starttext write-template")
-            {
-                ConfigCommands.WriteTemplateStarttext();
-            }
+                case string s when s.StartsWith("dir rnm /p "):
+                    FileUtils.RenameDirPath();
+                    break;
 
-            // prompttext commands
-            if (command == "prompttext")
-            {
-                CommandUsages.PrompttextHelp();
-            }
-            if (command == "prompttext create")
-            {
-                ConfigCommands.CreatePromptText();
-            }
-            if (command == "prompttext open")
-            {
-                ConfigCommands.OpenPromptText();
-            }
-            if (command == "prompttext write-template")
-            {
-                ConfigCommands.WritePromptTextTemplate();
-            }
+                case string s when s.StartsWith("dir rnm "):
+                    FileUtils.RenameDir();
+                    break;
 
-            // textmodules
-            if (command == "textmodules")
-            {
-                CommandUsages.TextModulesHelp();
-            }
-            if (command == "textmodules example")
-            {
-                CommandUsages.TextModulesExample();
-            }
-            if (command == "[ptm-cmd]")
-            {
 
-            }
-            if (command.StartsWith("[ptm-cmd] "))
-            {
-                OtherUtils.PTMCommand();
-            }
 
-            // uniscript
-            if (command == "uniscript")
-            {
-                CommandUsages.UniScriptHelp();
+                // File commands
+
+                // file make
+                case "file make":
+                    CommandUsages.FileCreateUsage();
+                    break;
+
+                case string s when s.StartsWith("file make /p "):
+                    FileUtils.CreateFilePath();
+                    break;
+
+                case string s when s.StartsWith("file make "):
+                    FileUtils.CreateFile();
+                    break;
+
+                // file del
+                case "file del":
+                    CommandUsages.FileDeleteUsage();
+                    break;
+
+                case string s when s.StartsWith("file del /p "):
+                    FileUtils.DeleteFilePath();
+                    break;
+
+                case string s when s.StartsWith("file del "):
+                    FileUtils.DeleteFile();
+                    break;
+
+                // file rd
+                case "file rd":
+                    CommandUsages.FileReadUsage();
+                    break;
+
+                case string s when s.StartsWith("file rd /p "):
+                    FileUtils.ReadFilePath();
+                    break;
+
+                case string s when s.StartsWith("file rd "):
+                    FileUtils.ReadFile();
+                    break;
+
+                // file wrt
+                case "file wrt":
+                    CommandUsages.FileWriteUsage();
+                    break;
+
+                case string s when s.StartsWith("file wrt /p "):
+                    FileUtils.WriteFilePath();
+                    break;
+
+                case string s when s.StartsWith("file wrt "):
+                    FileUtils.WriteFile();
+                    break;
+
+                // file clr
+                case "file clr":
+                    CommandUsages.FileClearUsage();
+                    break;
+
+                case string s when s.StartsWith("file clr /p "):
+                    FileUtils.ClearFilePath();
+                    break;
+
+                case string s when s.StartsWith("file clr "):
+                    FileUtils.ClearFile();
+                    break; 
+
+                // file cln
+                case "file cln":
+                    CommandUsages.FileCloneUsage();
+                    break;
+
+                case string s when s.StartsWith("file cln /p "):
+                    FileUtils.CloneFilePath();
+                    break;
+
+                case string s when s.StartsWith("file cln "):
+                    FileUtils.CloneFile();
+                    break;
+
+                // file rnm
+                case "file rnm":
+                    CommandUsages.FileRenameUsage();
+                    break;
+
+                case string s when s.StartsWith("file rnm /p "):
+                    FileUtils.RenameFile();
+                    break;
+
+                case string s when s.StartsWith("file rnm "):
+                    FileUtils.RenameFile();
+                    break;
+ 
+                // file zip
+                case "file zip":
+                    CommandUsages.FileZipUsage();
+                    break;
+
+                case string s when s.StartsWith("file zip /p "):
+                    FileUtils.ZipFilePath();
+                    break;
+
+                case string s when s.StartsWith("file zip "):
+                    FileUtils.ZipFile();
+                    break;
+
+                // file zip
+                case "file unzip":
+                    CommandUsages.FileUnzipUsage();
+                    break;
+
+                case string s when s.StartsWith("file unzip /p "):
+                    FileUtils.UnzipFilePath();
+                    break;
+
+                case string s when s.StartsWith("file unzip "):
+                    FileUtils.UnzipFile();
+                    break;
+
+
+                // Process commands
+                case "proc lst":
+                    ProcessUtils.ListProcess();
+                    break;
+
+                // proc run
+                case "proc run":
+                    CommandUsages.FileClearUsage();
+                    break;
+
+                case string s when s.StartsWith("proc run /p "):
+                    ProcessUtils.RunProcessPath();
+                    break;
+
+                case string s when s.StartsWith("proc run "):
+                    ProcessUtils.RunProcess();
+                    break;
+
+                // proc end
+                case "proc end":
+                    CommandUsages.ProcessKillUsage();
+                    break;
+
+                case string s when s.StartsWith("proc end /all "):
+                    ProcessUtils.KillAllProcess();
+                    break;
+
+                case string s when s.StartsWith("proc end "):
+                    ProcessUtils.KillProcess();
+                    break;
+
+
+                // IronPython commands
+                case "ironpython":
+                    CommandUsages.IronPythonUsage();
+                    break;
+
+                case string s when s.StartsWith("ironpython /p "):
+                    IronPythonCommands.RunFilePath();
+                    break;
+
+                case string s when s.StartsWith("ironpython "):
+                    IronPythonCommands.RunFile();
+                    break;
+
+
+                // AeroCL backbridge commands
+                case "acl_bb":
+                    CommandUsages.BackbridgeUsage();
+                    break;
+
+                case string s when s.StartsWith("acl_bb about "):
+                    CommandUsages.BackbridgeAbout();
+                    break;
+
+                case string s when s.StartsWith("acl_bb start "):
+                    OtherUtils.AeroCL_Loader();
+                    break;
+
+
+                // Config commands
+                case "config open":
+                    ConfigCommands.OpenConfig();
+                    break;
+
+                case "config rewrite":
+                    ConfigCommands.RewriteConfig();
+                    break;
+
+                case "config print":
+                    ConfigCommands.PrintConfig();
+                    break;
+
+
+                // StartText commands
+                case "starttext":
+                    CommandUsages.StarttextHelp();
+                    break;
+
+                case "starttext parse":
+                    ConfigCommands.ParseStarttext();
+                    break;
+
+                case "starttext create":
+                    ConfigCommands.CreateStarttext();
+                    break;
+
+                case "starttext open":
+                    ConfigCommands.OpenStarttext();
+                    break;
+
+                case "starttext write-template":
+                    ConfigCommands.WriteTemplateStarttext();
+                    break;
+
+
+                // PromptText commands
+                case "prompttext":
+                    CommandUsages.StarttextHelp();
+                    break;
+
+                case "prompttext create":
+                    ConfigCommands.CreatePromptText();
+                    break;
+
+                case "prompttext open":
+                    ConfigCommands.OpenPromptText();
+                    break;
+
+                case "prompttext write-template":
+                    ConfigCommands.WriteTemplateStarttext();
+                    break;
+
+
+                // TextModules commands
+                case "textmodules":
+                    CommandUsages.TextModulesHelp();
+                    break;
+
+                case "textmodules example":
+                    CommandUsages.TextModulesExample();
+                    break;
+
+                case string s when s.StartsWith("[ptm-cmd] "):
+                    OtherUtils.PTMCommand();
+                    break;
+
+                case "[ptm-cmd]":
+                    CommandUsages.ParseCommandHelp();
+                    break;
+                
+                // UniScript commands
+                case "uniscript":
+                    CommandUsages.UniScriptHelp();
+                    break;
+
+                case string s when s.StartsWith("uniscript /p "):
+                    UniScript.ExecutePath();
+                    break;
+
+                case string s when s.StartsWith("uniscript "):
+                    UniScript.Execute();
+                    break;
+
+                // Networking commands
+
+                // net ping
+                case "net ping":
+                    CommandUsages.NetworkPingUsage();
+                    break;
+
+                case string s when s.StartsWith("net ping "):
+                    Networking.Ping();
+                    break;
+
+
+
+
+                case "dbg_start":
+                    Debug.dbg_start();
+                    break;
+
+                // Error messages
+                case "":
+                    Console.WriteLine("Command syntax error");
+                    Console.WriteLine("no command entered (null)");
+                    Prompt();
+                    break;
+
+                default:
+                    InvalidCommand();
+                    Prompt();
+                    break;
             }
-            if (command.StartsWith("uniscript /p "))
-            {
-                UniScript.ExecutePath();
-            }
-            else if (command.StartsWith("uniscript "))
-            {
-                UniScript.Execute();
-            }
+            Prompt();
 
             // debug
             if (command == "dbg_start")
             {
                 Debug.dbg_start();
             }          
-
-            // error messages
-            if (command == "")
+        }
+        public static void InvalidCommand()
+        {
+            if (UniScript.UniScriptExecuting == true)
             {
-                Console.WriteLine("Command syntax error");
-                Console.WriteLine("no command entered (null)");
-                Prompt();
-            } 
-            else
-            {
-                if (UniScript.UniScriptExecuting == true)
-                {
-                    return;
-                }
-                Console.WriteLine("Command syntax error");
-                Console.WriteLine("the entered command '" + uncvcommand + "'");
-                Console.WriteLine("isnt a valid UniCMD command");
-                Prompt();
+                return;
             }
+            Console.WriteLine("Command syntax error");
+            Console.WriteLine("the entered command '" + uncvcommand + "'");
+            Console.WriteLine("isnt a valid UniCMD command");
+            Prompt();
         }
     }
 }

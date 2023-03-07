@@ -10,13 +10,14 @@ namespace UniCMD
     {
         public static string unicmdName = System.AppDomain.CurrentDomain.FriendlyName;
         public static bool runningAsAdmin = WindowsIdentity.GetCurrent().Owner.IsWellKnown(WellKnownSidType.BuiltinAdministratorsSid);
-        public static void ReturnCPUName()
+        public static string ReturnCPUName(string cpu)
         {
             ManagementObjectSearcher mos = new ManagementObjectSearcher("root\\CIMV2", "SELECT * FROM Win32_Processor");
             foreach (ManagementObject mo in mos.Get())
             {
-                Console.WriteLine("   └ " + mo["Name"]);
+                cpu = mo["Name"].ToString();
             }
+            return cpu;
         }
         public static void ClearConsole()
         {
