@@ -130,12 +130,12 @@ namespace UniCMD
 
 
                 // Directory commands
-                case string s when s.StartsWith("sd "):
-                    FileUtils.SetDirectory();
-                    break;
-
                 case "sd clr":
                     FileUtils.ClearSetDirectory();
+                    break;
+
+                case string s when s.StartsWith("sd "):
+                    FileUtils.SetDirectory();
                     break;
 
                 case "dir lst":
