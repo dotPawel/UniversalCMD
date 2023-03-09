@@ -4,7 +4,7 @@ namespace UniCMD
 {
     static internal class Program
     {
-        public static string version = "v4.0r";
+        public static string version = "v4.1r";
         // r - release
         // rc - release candidate
         // d - debug
@@ -120,7 +120,7 @@ namespace UniCMD
                     OtherUtils.Sleep();
                     break;
 
-                case string s when s.StartsWith(".$ "):
+                case string s when s.StartsWith(".$"):
                     UniScript.ExecuteMacro();
                     break;
 
