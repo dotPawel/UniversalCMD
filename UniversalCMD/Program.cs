@@ -4,7 +4,7 @@ namespace UniCMD
 {
     static internal class Program
     {
-        public static string version = "v4.1r";
+        public static string version = "v4.2r";
         // r - release
         // rc - release candidate
         // d - debug
@@ -367,11 +367,11 @@ namespace UniCMD
                     CommandUsages.BackbridgeUsage();
                     break;
 
-                case string s when s.StartsWith("acl_bb about "):
+                case "acl_bb about":
                     CommandUsages.BackbridgeAbout();
                     break;
 
-                case string s when s.StartsWith("acl_bb start "):
+                case "acl_bb start":
                     OtherUtils.AeroCL_Loader();
                     break;
 
