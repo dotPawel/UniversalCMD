@@ -3,7 +3,7 @@
 # An easy to use command line utility & an AeroCL replacement
 <p align="center">
 get the latest release<br />
-https://github.com/PawelStuff/UniversalCMD/releases/latest<br />
+https://github.com/dotPawel/UniversalCMD/releases/latest<br />
 </p>
 
 
