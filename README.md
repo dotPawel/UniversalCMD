@@ -1,11 +1,6 @@
 ![Unicmd banner](https://user-images.githubusercontent.com/89011403/187036721-ad778434-1502-4378-b0e2-30aa343a8618.png)
   
 # An easy to use command line utility & an AeroCL replacement
-<p align="center">
-get the latest release<br />
-https://github.com/dotPawel/UniversalCMD/releases/latest<br />
-</p>
-
 
 
 ![unicmd banner 2](https://user-images.githubusercontent.com/89011403/187037623-80da1f7c-36ee-4d15-85b8-c71997c92c90.png)
