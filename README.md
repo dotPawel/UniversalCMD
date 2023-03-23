@@ -7,6 +7,10 @@ made to be portable and easy to use. Containing a full set of file management co
 
 (Windows terminal recommended)
 
+![.Net](https://img.shields.io/badge/.NET-5C2D91?style=for-the-badge&logo=.net&logoColor=white)
+![C#](https://img.shields.io/badge/c%23-%23239120.svg?style=for-the-badge&logo=c-sharp&logoColor=white)
+![Windows](https://img.shields.io/badge/Windows-0078D6?style=for-the-badge&logo=windows&logoColor=white)
+
 <p align="center">
   <img src="https://user-images.githubusercontent.com/89011403/226937038-d282ca1b-bd49-4abf-90d3-ba6612913322.png" />
 </p>
