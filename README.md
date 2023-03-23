@@ -40,7 +40,7 @@ If for any reason you need AeroCL it still can be started from UniversalCMD usin
 
 ![uniscript banner](https://user-images.githubusercontent.com/89011403/212897047-e1fa894b-6d0a-4eaf-8462-6ede8ec12310.png)
 
-UniScript is UniversalCMD's very simple scripting language, Made mainly for automating simple tasks
+UniScript is UniversalCMD's very simple scripting language, made mainly for automating simple tasks
 
 UniScript is also used by the macros feature
 
