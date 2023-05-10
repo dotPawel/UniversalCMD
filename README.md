@@ -36,12 +36,6 @@ UniversalCMD contains 3 customization features
 
 ![Zrzut ekranu 2023-03-23 133323](https://user-images.githubusercontent.com/89011403/227204910-cb475bc1-08df-4eee-8beb-32fa9673c8d8.png)
 
-![unicmd banner 3](https://user-images.githubusercontent.com/89011403/187044183-d36343db-e355-4354-a8bf-cd9ca39d2ee5.png)
-
-If for any reason you need AeroCL it still can be started from UniversalCMD using ``acl_bb start``
-
-![acl](https://user-images.githubusercontent.com/89011403/226953710-4cc5a571-4451-42ea-81ba-2bdb11b2165f.png)
-
 ![unipkgbanner](https://github.com/dotPawel/UniversalCMD/assets/89011403/f203be12-afd6-4e70-a5e9-4b03b58bbe75)
 
 UniPKG is UniversalCMD's package manager hosted at https://unipkg.vercel.app/ 
@@ -59,3 +53,9 @@ UniScript is UniversalCMD's very simple scripting language, made mainly for auto
 UniScript is also used by the macros feature
 
 ![uniscript example](https://user-images.githubusercontent.com/89011403/212900244-25629047-3298-45cb-8fd4-7a42e56bbcdf.png)
+
+![unicmd banner 3](https://user-images.githubusercontent.com/89011403/187044183-d36343db-e355-4354-a8bf-cd9ca39d2ee5.png)
+
+If for any reason you need AeroCL it still can be started from UniversalCMD using ``acl_bb start``
+
+![acl](https://user-images.githubusercontent.com/89011403/226953710-4cc5a571-4451-42ea-81ba-2bdb11b2165f.png)
