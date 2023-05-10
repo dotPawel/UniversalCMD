@@ -9,7 +9,7 @@ namespace UniCMD
     static internal class AeroCL_BB
     {
         public static string currentDir = "";
-        public static string bbver = "0.6";
+        public static string bbver = "0.7";
         internal static void acl_main()
         {
             Console.Clear();
@@ -19,7 +19,7 @@ namespace UniCMD
 
                 static void welcomeScreen()
                 {
-                    string currentDir;                
+                    string currentDir = Program.currentdir;                
                     string userName = Environment.UserName;
                     ManagementObjectSearcher mos =
                     new ManagementObjectSearcher("root\\CIMV2", "SELECT * FROM Win32_Processor");

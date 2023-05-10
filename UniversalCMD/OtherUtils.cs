@@ -2,6 +2,7 @@
 using System.Diagnostics;
 using System.Management;
 using System.Security.Principal;
+using static Community.CsharpSqlite.Sqlite3;
 using static IronPython.Modules._ast;
 
 namespace UniCMD
@@ -78,6 +79,32 @@ namespace UniCMD
             Program.Command(input);
 
             Program.Prompt();
+        }
+        public static void RootCheck()
+        {
+            if (runningAsAdmin == false)
+            {
+                Console.WriteLine("This operation requires administrator privileges, continue without?");
+                Console.WriteLine("(Errors may occur)\n");
+                Console.Write("  (Y)es / (N)o ");
+                ConsoleKeyInfo result = Console.ReadKey();
+                
+                if (result.Key == ConsoleKey.Y)
+                {
+                    Console.WriteLine("");
+                    return;
+                }
+                if (result.Key == ConsoleKey.N)
+                {
+                    Console.WriteLine("\nReturning to main prompt..");
+                    Program.Prompt();
+                }
+                else
+                {
+                    Console.WriteLine("\nReturning to main prompt..");
+                    Program.Prompt();
+                }
+            }
         }
     }
 }

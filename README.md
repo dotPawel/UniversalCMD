@@ -50,3 +50,10 @@ UniScript is also used by the macros feature
 
 ![uniscript example](https://user-images.githubusercontent.com/89011403/212900244-25629047-3298-45cb-8fd4-7a42e56bbcdf.png)
 
+![unipkgbanner](https://github.com/dotPawel/UniversalCMD/assets/89011403/f203be12-afd6-4e70-a5e9-4b03b58bbe75)
+
+UniPKG is UniversalCMD's package manager hosted at https://unipkg.vercel.app/ (5.0r and up)
+
+![unifet](https://github.com/dotPawel/UniversalCMD/assets/89011403/63e4d0b5-f728-40d0-8705-9375ab844fd9)
+
+Documentation at https://unipkg.vercel.app/how2pkg.html

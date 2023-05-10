@@ -48,7 +48,7 @@ namespace UniCMD
                 {
                     Console.WriteLine("\nCould not create UniCMD.data");
                     Console.WriteLine("Exception :\n\n" + ex + "\n");
-                    Console.WriteLine("Press any key to continue to UniCMD");
+                    Console.WriteLine("Press any key to continue");
                     Console.ReadKey();
                 }
             }
@@ -72,7 +72,7 @@ namespace UniCMD
                 {
                     Console.WriteLine("\nCould not create UniCMD.data");
                     Console.WriteLine("Exception :\n\n" + ex + "\n");
-                    Console.WriteLine("Press any key to continue to UniCMD");
+                    Console.WriteLine("Press any key to continue");
                     Console.ReadKey();
                 }
             }
@@ -99,19 +99,19 @@ namespace UniCMD
                 {
                     Console.WriteLine("\nCould not create config.cfg");
                     Console.WriteLine("Exception :\n\n" + ex + "\n");
-                    Console.WriteLine("Press any key to continue to UniCMD");
+                    Console.WriteLine("Press any key to continue");
                     Console.ReadKey();
                 }              
             }
             // macros folder
             if (Directory.Exists(@"UniCMD.data\Macros"))
             {
-                Console.WriteLine("UniCMD > OK");
+                Console.WriteLine("UniCMD/Macros > OK");
             }
             else
             {
                 Console.WriteLine("\nUniCMD.data/Macros does not exist");
-                Console.WriteLine("creating UniCMD.data ..");
+                Console.WriteLine("creating /UniPKG..");
                 try
                 {
                     Directory.CreateDirectory(@"UniCMD.data\Macros");
@@ -120,7 +120,50 @@ namespace UniCMD
                 {
                     Console.WriteLine("\nCould not create UniCMD.data/Macros");
                     Console.WriteLine("Exception :\n\n" + ex + "\n");
-                    Console.WriteLine("Press any key to continue to UniCMD");
+                    Console.WriteLine("Press any key to continue");
+                    Console.ReadKey();
+                }
+            }
+
+            // unipkg folder
+            if (Directory.Exists(@"UniCMD.data\UniPKG"))
+            {
+                Console.WriteLine("UniCMD/UniPKG > OK");
+            }
+            else
+            {
+                Console.WriteLine("\nUniCMD.data/UniPKG does not exist");
+                Console.WriteLine("creating /UniPKG ..");
+                try
+                {
+                    Directory.CreateDirectory(@"UniCMD.data\UniPKG");
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine("\nCould not create UniCMD.data/UniPKG");
+                    Console.WriteLine("Exception :\n\n" + ex + "\n");
+                    Console.WriteLine("Press any key to continue");
+                    Console.ReadKey();
+                }
+            }
+            // unipkg\pkginfo folder
+            if (Directory.Exists(@"UniCMD.data\UniPKG\pkginfo"))
+            {
+                Console.WriteLine("UniCMD/UniPKG/pkginfo > OK");
+            }
+            else
+            {
+                Console.WriteLine("\nUniCMD.data/UniPKG/pkginfo does not exist");
+                Console.WriteLine("creating /UniPKG/pkginfo ..");
+                try
+                {
+                    Directory.CreateDirectory(@"UniCMD.data\UniPKG\pkginfo");
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine("\nCould not create UniCMD.data/UniPKG/pkginfo");
+                    Console.WriteLine("Exception :\n\n" + ex + "\n");
+                    Console.WriteLine("Press any key to continue");
                     Console.ReadKey();
                 }
             }

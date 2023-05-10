@@ -4,7 +4,7 @@ namespace UniCMD
 {
     static internal class Program
     {
-        public static string version = "v4.2r";
+        public static string version = "v5.0";
         // r - release
         // rc - release candidate
         // d - debug
@@ -458,6 +458,55 @@ namespace UniCMD
 
                 case string s when s.StartsWith("uniscript "):
                     UniScript.Execute();
+                    break;
+
+                // UniPKG commands
+                case "unipkg":
+                    CommandUsages.UniPKGHelp();
+                    break;
+
+                case "unipkg /inst":
+                    CommandUsages.UniPKGInstallUsage();
+                    break;
+
+                case string s when s.StartsWith("unipkg /inst "):
+                    UniPKG.InstallOnlinePackage();
+                    break;
+
+                case "unipkg /dpkg":
+                    CommandUsages.UniPKGDepackageUsage();
+                    break;
+
+                case string s when s.StartsWith("unipkg /dpkg "):
+                    UniPKG.Depackage();
+                    break;
+
+                case "unipkg /foinfo":
+                    CommandUsages.UniPKGFetchOnlineInfoUsage();
+                    break;
+
+                case string s when s.StartsWith("unipkg /foinfo "):
+                    UniPKG.FetchOnlineInfo();
+                    break;
+
+                case "unipkg /finfo":
+                    CommandUsages.UniPKGFetchInfoUsage();
+                    break;
+
+                case string s when s.StartsWith("unipkg /finfo "):
+                    UniPKG.FetchInfo();
+                    break;
+
+                case "unipkg /uinst":
+                    CommandUsages.UniPKGUninstallUsage();
+                    break;
+
+                case string s when s.StartsWith("unipkg /uinst "):
+                    UniPKG.Uninstall();
+                    break;
+
+                case "unipkg /list":
+                    UniPKG.ListInstalledPackages();
                     break;
 
                 // Networking commands

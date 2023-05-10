@@ -82,6 +82,16 @@ namespace UniCMD
                   ╚UniScript {name}
                   ╚UniScript /P {path} 
 
+                 UniPKG
+                  ╚Online
+                   ╚unipkg /inst {package name}
+                   ╚unipkg /foinfo {package name}
+                  ╚Local
+                   ╚unipkg /dpkg {package name}
+                   ╚unipkg /foinfo {package name}
+                   ╚unipkg /uinst {package name}
+                   ╚unipkg /list
+
                  Networking
                   ╚Network Ping
                    ╚Net Ping {ip adress}
@@ -472,6 +482,76 @@ namespace UniCMD
                   To apply TextModules to a command run :
                   '[ptm-cmd] {command}'
                 """);
+            Program.Prompt();
+        }
+        // unipkg
+        public static void UniPKGHelp()
+        {
+            string ver = UniPKG.Version;
+            Console.WriteLine("""
+                UniPKG ver. {0}
+                is UniCMD's default package manager.
+                
+                All UniPKG packages are hosted on;
+                https://unipkg.vercel.app/
+                """, ver);
+            Program.Prompt();
+        }
+        public static void UniPKGInstallUsage()
+        {
+            Console.WriteLine("""
+                Usage of 'unipkg /inst'
+
+                  input : unipkg /inst {package name}
+                  output : package is downloaded and installed from server
+                """);
+
+            Program.Prompt();
+        }
+        public static void UniPKGDepackageUsage()
+        {
+            Console.WriteLine("""
+                Usage of 'unipkg /dpkg'
+
+                  input : unipkg /dpkg {package name}
+                  output : package from current directory is installed
+                """);
+
+            Program.Prompt();
+        }
+        public static void UniPKGUninstallUsage()
+        {
+            Console.WriteLine("""
+                Usage of 'unipkg /uinst'
+
+                  input : unipkg /uinst {package name}
+                  output : package is uninstalled using .uninst data
+
+                To list installed packages use 'unipkg /list'
+                """);
+
+            Program.Prompt();
+        }
+        public static void UniPKGFetchInfoUsage()
+        {
+            Console.WriteLine("""
+                Usage of 'unipkg /finfo'
+
+                  input : unipkg /finfo {package name}
+                  output : package info is fetched from .pkginfo file
+                """);
+
+            Program.Prompt();
+        }
+        public static void UniPKGFetchOnlineInfoUsage()
+        {
+            Console.WriteLine("""
+                Usage of 'unipkg /foinfo'
+
+                  input : unipkg /foinfo {package name}
+                  output : package info is fetched unipkg server
+                """);
+
             Program.Prompt();
         }
     }

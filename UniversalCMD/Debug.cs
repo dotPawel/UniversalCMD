@@ -92,9 +92,18 @@ namespace UniCMD
                 }
                 dbg_prompt();
             }
-            if (dbg == "wpkg")
+            if (dbg == "unipkg.deltemp")
             {
-                Console.WriteLine("Dawid idź pisać koparke");
+                try
+                {
+                    Console.WriteLine("Deleted UniPKG/TEMP");
+                    Directory.Delete(@"UniCMD.data\UniPKG\TEMP", true);
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine("Cannot delete UniPKG/TEMP");
+                    OtherUtils.PrintException(ex);
+                }
                 dbg_prompt();
             }
 
