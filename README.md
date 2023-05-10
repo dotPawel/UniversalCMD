@@ -54,6 +54,6 @@ UniScript is also used by the macros feature
 
 UniPKG is UniversalCMD's package manager hosted at https://unipkg.vercel.app/ (5.0r and up)
 
-![unifet](https://github.com/dotPawel/UniversalCMD/assets/89011403/63e4d0b5-f728-40d0-8705-9375ab844fd9)
+![image](https://github.com/dotPawel/UniversalCMD/assets/89011403/ceda03b2-b456-4870-8fa4-cae3d85bdacc)
 
 Documentation at https://unipkg.vercel.app/how2pkg.html
