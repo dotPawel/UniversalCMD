@@ -12,7 +12,7 @@ namespace UniCMD
 {
     internal class UniPKG
     {
-        public static string Version = "1.0";
+        public static string Version = "1.1";
         // online
         public static void InstallOnlinePackage()
         {
@@ -278,7 +278,6 @@ namespace UniCMD
                 OtherUtils.PrintException(ex);
                 Program.Prompt();
             }
-            Program.Prompt();
         }
         static void CheckPackageInfo(string PackageName)
         {
