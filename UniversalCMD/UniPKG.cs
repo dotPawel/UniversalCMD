@@ -278,7 +278,6 @@ namespace UniCMD
                 OtherUtils.PrintException(ex);
                 Program.Prompt();
             }
-            Program.Prompt();
         }
         static void CheckPackageInfo(string PackageName)
         {
