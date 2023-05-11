@@ -88,7 +88,7 @@ namespace UniCMD
                    ╚unipkg /foinfo {package name}
                   ╚Local
                    ╚unipkg /dpkg {package name}
-                   ╚unipkg /foinfo {package name}
+                   ╚unipkg /finfo {package name}
                    ╚unipkg /uinst {package name}
                    ╚unipkg /list
 
