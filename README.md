@@ -44,8 +44,6 @@ Complete with documentation at https://unipkg.vercel.app/how2pkg.html
 
 ![image](https://github.com/dotPawel/UniversalCMD/assets/89011403/ceda03b2-b456-4870-8fa4-cae3d85bdacc)
 
-(5.0r and up)
-
 ![uniscript banner](https://user-images.githubusercontent.com/89011403/212897047-e1fa894b-6d0a-4eaf-8462-6ede8ec12310.png)
 
 UniScript is UniversalCMD's very simple scripting language, made mainly for automating simple tasks
