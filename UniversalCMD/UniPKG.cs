@@ -12,14 +12,14 @@ namespace UniCMD
 {
     internal class UniPKG
     {
-        public static string Version = "1.1";
+        public static string Version = "1.2";
         // online
         public static void InstallOnlinePackage()
         {
             // were so back
             OtherUtils.RootCheck();
-            string pkgname = Program.command.Replace("unipkg /inst ", "");
-            if (File.Exists(@"UniCMD.data\UniPKG\pkginfo\" + pkgname + ".pkginfo"))
+            string[] pkgname = Program.uncvcommand.Split(" ");
+            if (File.Exists(@"UniCMD.data\UniPKG\pkginfo\" + pkgname[2] + ".pkginfo"))
             {
                 Console.WriteLine("Package entry already exists");
                 Program.Prompt();
@@ -28,8 +28,8 @@ namespace UniCMD
             {
                 using (var client = new WebClient())
                 {
-                    Console.WriteLine("Fetching package : https://unipkg.vercel.app/unipkg/" + pkgname + ".unipkg");
-                    client.DownloadFile("https://unipkg.vercel.app/unipkg/" + pkgname + ".unipkg", @"UniCMD.data\UniPKG\" + pkgname + ".unipkg");
+                    Console.WriteLine("Fetching package : https://unipkg.vercel.app/unipkg/" + pkgname[2] + ".unipkg");
+                    client.DownloadFile("https://unipkg.vercel.app/unipkg/" + pkgname[2] + ".unipkg", @"UniCMD.data\UniPKG\" + pkgname[2] + ".unipkg");
                 }
                 Console.WriteLine("Package downloaded successfully");
 
@@ -42,16 +42,16 @@ namespace UniCMD
                 Directory.CreateDirectory(@"UniCMD.data\UniPKG\TEMP");
 
                 Console.WriteLine("Extracting package to TEMP..");
-                System.IO.Compression.ZipFile.ExtractToDirectory(@"UniCMD.data\UniPKG\" + pkgname + ".unipkg", @"UniCMD.data\UniPKG\TEMP");
+                System.IO.Compression.ZipFile.ExtractToDirectory(@"UniCMD.data\UniPKG\" + pkgname[2] + ".unipkg", @"UniCMD.data\UniPKG\TEMP");
 
                 Console.WriteLine("Deleting package image..");
-                File.Delete(@"UniCMD.data\UniPKG\" + pkgname + ".unipkg");
+                File.Delete(@"UniCMD.data\UniPKG\" + pkgname[2] + ".unipkg");
 
                 Console.WriteLine("Fetching .pkginfo");
 
-                CheckPackageInfo(pkgname);
-                ReadInfo(pkgname, true);
-                InstallFiles(pkgname);
+                CheckPackageInfo(pkgname[2]);
+                ReadInfo(pkgname[2], true);
+                InstallFiles(pkgname[2]);
 
                 DeleteTemp();
 
@@ -80,7 +80,7 @@ namespace UniCMD
         }
         public static void FetchOnlineInfo()
         {
-            string pkgname = Program.command.Replace("unipkg /foinfo ", "");
+            string[] pkgname = Program.uncvcommand.Split(" ");
             try
             {
                 Console.WriteLine(@"Making TEMP ..");
@@ -88,9 +88,9 @@ namespace UniCMD
 
                 using (var client = new WebClient())
                 {
-                    client.DownloadFile("https://unipkg.vercel.app/unipkg/" + pkgname + ".pkginfo", @"UniCMD.data\UniPKG\TEMP\" + pkgname + ".pkginfo");
+                    client.DownloadFile("https://unipkg.vercel.app/unipkg/" + pkgname[2] + ".pkginfo", @"UniCMD.data\UniPKG\TEMP\" + pkgname[2] + ".pkginfo");
                 }
-                ReadInfo(pkgname, true);
+                ReadInfo(pkgname[2], true);
 
                 Console.WriteLine(@"Deleting TEMP ..");
                 Directory.Delete(@"UniCMD.data\UniPKG\TEMP", true);
@@ -123,13 +123,13 @@ namespace UniCMD
                 FileUtils.NoDirSet();
             }
             OtherUtils.RootCheck();
-            string file = Program.command.Replace("unipkg /dpkg ", "");
-            if (!File.Exists(Program.currentdir + file))
+            string[] pkgname = Program.uncvcommand.Split(" ");
+            if (!File.Exists(Program.currentdir + pkgname[2]))
             {
                 Console.WriteLine("Selected file does not exist");
                 Program.Prompt();
             }
-            if (!file.EndsWith(".unipkg"))
+            if (!pkgname[2].EndsWith(".unipkg"))
             {
                 Console.WriteLine("Selected file is not an UniPKG package");
                 Program.Prompt();
@@ -145,10 +145,10 @@ namespace UniCMD
                 Directory.CreateDirectory(@"UniCMD.data\UniPKG\TEMP");
 
                 Console.WriteLine("Extracting package to TEMP..");
-                System.IO.Compression.ZipFile.ExtractToDirectory(Program.currentdir + file, @"UniCMD.data\UniPKG\TEMP");
+                System.IO.Compression.ZipFile.ExtractToDirectory(Program.currentdir + pkgname[2], @"UniCMD.data\UniPKG\TEMP");
 
                 Console.WriteLine("Fetching .pkginfo");
-                string PackageName = file.Replace(".unipkg", "");
+                string PackageName = pkgname[2].Replace(".unipkg", "");
 
                 CheckPackageInfo(PackageName);
                 ReadInfo(PackageName, true);
@@ -169,18 +169,18 @@ namespace UniCMD
         }
         public static void Uninstall()
         {
-            string package = Program.command.Replace("unipkg /uinst ", "");
+            string[] pkgname = Program.uncvcommand.Split(" ");
             OtherUtils.RootCheck();
-            if (!File.Exists(@"UniCMD.data\UniPKG\pkginfo\" + package + ".uninst"))
+            if (!File.Exists(@"UniCMD.data\UniPKG\pkginfo\" + pkgname[2] + ".uninst"))
             {
-                Console.WriteLine("No .uninst file found for " + package);
+                Console.WriteLine("No .uninst file found for " + pkgname[2]);
                 Program.Prompt();
             }
 
             try
             {
-                Console.WriteLine("Uninstalling " + package);
-                foreach (string line in File.ReadAllLines(@"UniCMD.data\UniPKG\pkginfo\" + package + ".uninst"))
+                Console.WriteLine("Uninstalling " + pkgname[2]);
+                foreach (string line in File.ReadAllLines(@"UniCMD.data\UniPKG\pkginfo\" + pkgname[2] + ".uninst"))
                 {
                     if (line.EndsWith(@"\"))
                     {
@@ -193,9 +193,9 @@ namespace UniCMD
                         Console.WriteLine(" [DEL] " + line);
                     }
                 }
-                File.Delete(@"UniCMD.data\UniPKG\pkginfo\" + package + ".uninst");
-                File.Delete(@"UniCMD.data\UniPKG\pkginfo\" + package + ".pkginfo");
-                Console.WriteLine("Successfully uninstalled " + package);
+                File.Delete(@"UniCMD.data\UniPKG\pkginfo\" + pkgname[2] + ".uninst");
+                File.Delete(@"UniCMD.data\UniPKG\pkginfo\" + pkgname[2] + ".pkginfo");
+                Console.WriteLine("Successfully uninstalled " + pkgname[2]);
             }
             catch (Exception ex)
             {
@@ -206,14 +206,14 @@ namespace UniCMD
         }
         public static void FetchInfo()
         {
-            string package = Program.command.Replace("unipkg /finfo ", "");
-            if (!File.Exists(@"UniCMD.data\UniPKG\pkginfo\" + package + ".pkginfo"))
+            string[] pkgname = Program.uncvcommand.Split(" ");
+            if (!File.Exists(@"UniCMD.data\UniPKG\pkginfo\" + pkgname[2] + ".pkginfo"))
             {
-                Console.WriteLine("No .pkginfo file found for " + package);
+                Console.WriteLine("No .pkginfo file found for " + pkgname[2]);
                 Program.Prompt();
             }
 
-            ReadInfo(package, false);
+            ReadInfo(pkgname[2], false);
             Program.Prompt();
         }
         public static void ListInstalledPackages()
