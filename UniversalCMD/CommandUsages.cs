@@ -73,6 +73,8 @@ namespace UniCMD
                   ╚Process End
                    ╚Proc End {name}
                    ╚Proc End /All
+                  ╚Process List
+                   ╚Proc Lst
 
                  IronPython Execution
                   ╚IronPython {name}
