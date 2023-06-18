@@ -4,7 +4,7 @@ namespace UniCMD
 {
     static internal class Program
     {
-        public static string version = "v5.4r";
+        public static string version = "v6.0r";
         // r - release
         // rc - release candidate
         // d - debug
@@ -32,7 +32,7 @@ namespace UniCMD
             }
 
             Console.WriteLine("""
-                     UniversalCMD / Neptune / {0}
+                     UniversalCMD / Stardust / {0}
                   Host OS - {1}
                   Memory - {2} (KB)
                   CPU Name/model - {3}
@@ -349,15 +349,15 @@ namespace UniCMD
 
 
                 // IronPython commands
-                case "ironpython":
+                case "irpy":
                     CommandUsages.IronPythonUsage();
                     break;
 
-                case string s when s.StartsWith("ironpython /p "):
+                case string s when s.StartsWith("irpy /p "):
                     IronPythonCommands.RunFilePath();
                     break;
 
-                case string s when s.StartsWith("ironpython "):
+                case string s when s.StartsWith("irpy "):
                     IronPythonCommands.RunFile();
                     break;
 
@@ -377,65 +377,65 @@ namespace UniCMD
 
 
                 // Config commands
-                case "config open":
+                case "cfg open":
                     ConfigCommands.OpenConfig();
                     break;
 
-                case "config rewrite":
+                case "cfg wrt":
                     ConfigCommands.RewriteConfig();
                     break;
 
-                case "config print":
+                case "cfg rd":
                     ConfigCommands.PrintConfig();
                     break;
 
 
                 // StartText commands
-                case "starttext":
+                case "stxt":
                     CommandUsages.StarttextHelp();
                     break;
 
-                case "starttext parse":
+                case "stxt parse":
                     ConfigCommands.ParseStarttext();
                     break;
 
-                case "starttext create":
+                case "stxt make":
                     ConfigCommands.CreateStarttext();
                     break;
 
-                case "starttext open":
+                case "stxt open":
                     ConfigCommands.OpenStarttext();
                     break;
 
-                case "starttext write-template":
+                case "stxt wrt-template":
                     ConfigCommands.WriteTemplateStarttext();
                     break;
 
 
                 // PromptText commands
-                case "prompttext":
-                    CommandUsages.StarttextHelp();
+                case "ptxt":
+                    CommandUsages.PrompttextHelp();
                     break;
 
-                case "prompttext create":
+                case "ptxt make":
                     ConfigCommands.CreatePromptText();
                     break;
 
-                case "prompttext open":
+                case "ptxt open":
                     ConfigCommands.OpenPromptText();
                     break;
 
-                case "prompttext write-template":
+                case "ptxt wrt-template":
                     ConfigCommands.WriteTemplateStarttext();
                     break;
 
 
                 // TextModules commands
-                case "textmodules":
+                case "tmdl":
                     CommandUsages.TextModulesHelp();
                     break;
 
-                case "textmodules example":
+                case "tmdl example":
                     CommandUsages.TextModulesExample();
                     break;
 

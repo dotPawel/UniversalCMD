@@ -10,7 +10,7 @@ namespace UniCMD
     {
         public static void About()
         {
-            Console.WriteLine("   UniversalCMD / Codename Neptune / Build " + Program.version + "\n");
+            Console.WriteLine("   UniversalCMD / Codename Stardust / Build " + Program.version + "\n");
             Console.WriteLine("  a better AeroCL & a easy command line solution");
 
             Program.Prompt();
@@ -77,8 +77,8 @@ namespace UniCMD
                    ╚Proc Lst
 
                  IronPython Execution
-                  ╚IronPython {name}
-                  ╚IronPython /P {path}
+                  ╚Irpy {name}
+                  ╚Irpy /P {path}
 
                  UniScript
                   ╚UniScript {name}
@@ -110,22 +110,22 @@ namespace UniCMD
                  User preferences & customization
                   ╚Customization
                     ╚StartText
-                     ╚StartText Open
-                     ╚StartText Create
-                     ╚StartText Parse
-                     ╚StartText Write-Template
+                     ╚STXT Open
+                     ╚STXT Make
+                     ╚STXT Parse
+                     ╚STXT Wrt-Template
                    ╚Prompttext
-                    ╚Prompttext Open
-                    ╚Prompttext Create
-                    ╚Prompttext Write-Template
+                    ╚PTXT Open
+                    ╚PTXT Make
+                    ╚PTXT Wrt-Template
                    ╚TextModules
-                    ╚TextModules Example
+                    ╚TMDL Example
                     ╚Parse Command
                      ╚[ptm-cmd] {command}
                   ╚Configuration File
-                   ╚Config Open
-                   ╚Config Rewrite
-                   ╚Config Print
+                   ╚Cfg Open
+                   ╚Cfg Wrt
+                   ╚Cfg Rd
                 
                  AeroCL Backbridge
                   ╚ACL_BB
@@ -257,10 +257,10 @@ namespace UniCMD
         public static void FileRenameUsage()
         {
             Console.WriteLine("""
-                Usage of 'file rename'
+                Usage of 'file rnm'
 
-                  input : file rename {name}
-                          file rename /p {path}
+                  input : file rnm {name}
+                          file rnm /p {path}
                   output : name/path is renamed
                 """);         
             Program.Prompt();
@@ -292,12 +292,12 @@ namespace UniCMD
         public static void IronPythonUsage()
         {
             Console.WriteLine("""
-                Usage of 'ironpython'
+                Usage of 'irpy'
 
                   Python execution using IronPython
                   IronPython version : 2.7.11
-                  input : ironpython {name}
-                          ironpython /p {path}
+                  input : irpy {name}
+                          irpy /p {path}
                   output : name/path is executed with IronPython (*must be a .py file)
                 """);
             Program.Prompt();
@@ -376,9 +376,9 @@ namespace UniCMD
                 to be displayed when UniCMD is opened.
                 To restore default StartText delete your custom file in
                   UniCMD.data\starttext.unicmd
-                To create an StartText file simply enter 'starttext create'
+                To create an StartText file simply enter 'stxt make'
 
-                This feature supports TextModules, learn more by entering 'textmodules help'
+                This feature supports TextModules, learn more by entering 'tmdl'
                 """);
             Program.Prompt();
         }
@@ -390,9 +390,9 @@ namespace UniCMD
                 The contents of prompttext.unicmd replaces your default prompt bar
                 To restore default prompt bar delete your custom file in
                   UniCMD.data\prompttext.unicmd
-                To create an Prompttext file simply enter 'prompttext create'
+                To create an Prompttext file simply enter 'ptxt make'
 
-                This feature supports TextModules, learn more by entering 'textmodules help'
+                This feature supports TextModules, learn more by entering 'tmdl'
                 """);
              
             Program.Prompt();
@@ -403,7 +403,7 @@ namespace UniCMD
             Console.WriteLine("""
                 TextModules is a feature that allows for inserting UniCMD-side data into text
                 This is feature can by used in StartText or PromptText
-                Enter 'TextModule Example' for an example of using TextModules
+                Enter 'TMDL Example' for an example of using TextModules
 
                  All TextModules are listed bellow
                 -- Data modules
@@ -437,7 +437,7 @@ namespace UniCMD
         }
         public static void TextModulesExample()
         {
-            Console.WriteLine("TextModules example, for more refer to 'textmodules help'\n");
+            Console.WriteLine("TextModules example, for more refer to 'TMDL help'\n");
             Console.WriteLine(" -- Unparsed text\n");
             Console.WriteLine(" :[red]: this text is red :[]:");
             Console.WriteLine(" :[green]: this text is green :[]:");
@@ -492,7 +492,7 @@ namespace UniCMD
             string ver = UniPKG.Version;
             Console.WriteLine("""
                 UniPKG ver. {0}
-                is UniCMD's default package manager.
+                UniCMD's offical package manager.
                 
                 All UniPKG packages are hosted on;
                 https://unipkg.vercel.app/

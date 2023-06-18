@@ -12,7 +12,7 @@ namespace UniCMD
 {
     internal class UniPKG
     {
-        public static string Version = "1.2";
+        public static string Version = "1.3";
         // online
         public static void InstallOnlinePackage()
         {
@@ -262,6 +262,12 @@ namespace UniCMD
                         string[] path = line.Split(" [->] ");
                         File.Move(path[0], path[1]);
                         Console.WriteLine(" {0} [->] {1}", path[0], path[1]);
+                    }
+                    if (line.Contains(" [=>] "))
+                    {
+                        string[] path = line.Split(" [=>] ");
+                        Directory.Move(path[0], path[1]);
+                        Console.WriteLine(" {0} [=>] {1}", path[0], path[1]);
                     }
                     if (line.EndsWith(" [CR]"))
                     {
