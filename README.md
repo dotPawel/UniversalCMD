@@ -21,6 +21,7 @@ Upon start up UniversalCMD checks for the following data, if missing UniversalCM
 ```
 UniCMD.data\  
   ╚ Macros\ - Macros folder
+  ╚ UniPKG\ - UniPKG data (Package manager)
   ╚ autoexec.cfg - Commands executed after startup
   ╚ config.cfg - User config
 ```
