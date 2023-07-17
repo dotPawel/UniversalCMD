@@ -59,7 +59,7 @@ UniDKIT is the officall development kit for UniCMD, it comes complete with synta
 
 ![unidkit_screenshot](https://github.com/dotPawel/UniversalCMD/assets/89011403/ed95b88d-39cd-4bcc-b0b4-d2e2fde34d29)
 
-Get it via UniPKG using ``unipkg /inst UniDKIT`` or [here](https://github.com/dotPawel/UniDKIT/releases/latest) to get it manually
+Get it via UniPKG using ``unipkg /inst UniDKIT`` or click [here](https://github.com/dotPawel/UniDKIT/releases/latest) to get it manually
 
 
 # ![aclbb_banner](https://user-images.githubusercontent.com/89011403/187044183-d36343db-e355-4354-a8bf-cd9ca39d2ee5.png)
