@@ -12,42 +12,29 @@ namespace UniCMD
     {
         public static void RunFile()
         {
-            string filename = Program.command.Replace("irpy ", "");
-            if (File.Exists(Program.currentdir + filename) && filename.EndsWith(".py"))
+            string file = Program.Command.Replace("irpy ", "");
+            if (file.StartsWith("/p "))
             {
-                try
-                {
-                    ScriptEngine engine = Python.CreateEngine();
-                    Console.WriteLine("Initialized engine..");
-                    Console.WriteLine("Executing " + filename);
-                    Console.WriteLine("----------------------------------------------");
-                    engine.ExecuteFile(Program.currentdir + filename);
-                    Console.WriteLine("----------------------------------------------");
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine("Python execution crashed");
-                    Console.WriteLine("Exception :" + ex);
-                }
+                file = file.Replace("/p ", "");
             }
             else
             {
-                Console.WriteLine("File does not exist or isnt a .py file");
+                if (Program.CurrentDir == null)
+                {
+                    FileUtils.NoDirSet();
+                }
+                file = Program.CurrentDir + file;
             }
-            Program.Prompt();
-        }
-        public static void RunFilePath()
-        {
-            string filename = Program.command.Replace("irpy /p ", "");
-            if (File.Exists(filename) && filename.EndsWith(".py"))
+
+            if (File.Exists(file) && file.EndsWith(".py"))
             {
                 try
                 {
                     ScriptEngine engine = Python.CreateEngine();
                     Console.WriteLine("Initialized engine..");
-                    Console.WriteLine("Executing " + filename);
+                    Console.WriteLine("Executing " + file);
                     Console.WriteLine("----------------------------------------------");
-                    engine.ExecuteFile(filename);
+                    engine.ExecuteFile(file);
                     Console.WriteLine("----------------------------------------------");
                 }
                 catch (Exception ex)

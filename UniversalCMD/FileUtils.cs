@@ -1,4 +1,5 @@
 ﻿using System.Text;
+using static Community.CsharpSqlite.Sqlite3;
 
 namespace UniCMD
 {
@@ -7,17 +8,17 @@ namespace UniCMD
         //dir
         public static void SetDirectory()
         {
-            string dir = Program.uncvcommand.Replace("sd ", "");
+            string dir = Program.UserCommand.Replace("sd ", "");
 
-            if (Program.currentdir != null && dir == "..")
+            if (Program.CurrentDir != null && dir == "..")
             {
                 try
                 {
-                    string backonedir = Directory.GetParent(Program.currentdir).ToString();
+                    string backonedir = Directory.GetParent(Program.CurrentDir).ToString();
                     string backtwodir = Directory.GetParent(backonedir).ToString();
-                    Program.currentdir = backtwodir;
+                    Program.CurrentDir = backtwodir;
                     Console.WriteLine("Successfully edited directory");
-                    Console.WriteLine(" " + Program.currentdir);
+                    Console.WriteLine(" " + Program.CurrentDir);
                 }
                 catch (Exception ex)
                 {
@@ -33,19 +34,19 @@ namespace UniCMD
                 Program.Prompt();
             }
 
-            if (Program.currentdir == null && Directory.Exists(dir))
+            if (Program.CurrentDir == null && Directory.Exists(dir))
             {
-                Program.currentdir = dir;
+                Program.CurrentDir = dir;
 
                 Console.WriteLine("Successfully set directory");
-                Console.WriteLine(" " + Program.currentdir);
+                Console.WriteLine(" " + Program.CurrentDir);
                 Program.Prompt();
             }
-            if (Program.currentdir != null && Directory.Exists(Program.currentdir + dir))
+            if (Program.CurrentDir != null && Directory.Exists(Program.CurrentDir + dir))
             {
-                Program.currentdir = Program.currentdir + dir;
+                Program.CurrentDir = Program.CurrentDir + dir;
                 Console.WriteLine("Successfully edited directory");
-                Console.WriteLine(" " + Program.currentdir);
+                Console.WriteLine(" " + Program.CurrentDir);
                 Program.Prompt();
             }
             else
@@ -128,26 +129,26 @@ namespace UniCMD
         }
         public static void ClearSetDirectory()
         {
-            Program.currentdir = null;
+            Program.CurrentDir = null;
             Console.WriteLine("Cleared set directory");
             Program.Prompt();
         }
         public static void ListDir()
         {
-            if (Program.currentdir == null)
+            if (Program.CurrentDir == null)
             {
                 FileUtils.NoDirSet();
             }
             else
             {
-                Console.WriteLine("  Contents of " + Program.currentdir);
+                Console.WriteLine("  Contents of " + Program.CurrentDir);
                 Console.WriteLine("----------------------------------------------");
-                var directories = Directory.GetDirectories(Program.currentdir);
+                var directories = Directory.GetDirectories(Program.CurrentDir);
                 foreach (var d in directories)
                 {
                     Console.WriteLine(" " + d + @"\");
                 }
-                var files = Directory.GetFiles(Program.currentdir);
+                var files = Directory.GetFiles(Program.CurrentDir);
                 foreach (var d in files)
                 {
                     Console.WriteLine(" " + d);
@@ -161,41 +162,23 @@ namespace UniCMD
             Console.WriteLine("the command for it is 'sd'");
             Program.Prompt();
         }
-
         public static void CreateDir()
         {
-            if (Program.currentdir == null)
+            string dirname = Program.Command.Replace("dir make ", "");
+
+            if (dirname.StartsWith("/p "))
             {
-                FileUtils.NoDirSet();
+                dirname = dirname.Replace("/p ", "");
             }
-            string dirname = Program.command.Replace("dir make ", "");
-            try
+            else
             {
-                if (Directory.Exists(Program.currentdir + dirname))
+                if (Program.CurrentDir == null)
                 {
-                    Console.WriteLine("Directory already exists");
-                    Program.Prompt();
+                    FileUtils.NoDirSet();
                 }
-                Directory.CreateDirectory(Program.currentdir + dirname);
-                Console.WriteLine("Directory created at current");
-                Console.WriteLine(" " + Program.currentdir + dirname);
+                dirname = Program.CurrentDir + dirname;
             }
-            catch (Exception ex)
-            {
-                if (OtherUtils.runningAsAdmin == false)
-                {
-                    Console.WriteLine("Could not create directory, access denied");
-                    OtherUtils.PrintException(ex);
-                    Program.Prompt();
-                }
-                Console.WriteLine("Could not create directory.");
-                OtherUtils.PrintException(ex);
-            }
-            Program.Prompt();
-        }
-        public static void CreateDirPath()
-        {
-            string dirname = Program.command.Replace("dir make /p ", "");
+
             try
             {
                 if (Directory.Exists(dirname))
@@ -205,16 +188,10 @@ namespace UniCMD
                 }
                 Directory.CreateDirectory(dirname);
                 Console.WriteLine("Directory created from path");
-                Console.WriteLine(" " + Program.currentdir + dirname);
+                Console.WriteLine(" " + dirname);
             }
             catch (Exception ex)
             {
-                if (OtherUtils.runningAsAdmin == false)
-                {
-                    Console.WriteLine("Could not create directory, access denied");
-                    OtherUtils.PrintException(ex);
-                    Program.Prompt();
-                }
                 Console.WriteLine("Could not create directory.");
                 OtherUtils.PrintException(ex);
             }
@@ -222,42 +199,21 @@ namespace UniCMD
         }
         public static void DeleteDir()
         {
-            if (Program.currentdir == null)
+            string dirname = Program.Command.Replace("dir del ", "");
+
+            if (dirname.StartsWith("/p "))
             {
-                FileUtils.NoDirSet();
-            }
-            string dirname = Program.command.Replace("dir del ", "");
-            if (Directory.Exists(Program.currentdir + dirname))
-            {
-                try
-                {
-                    Directory.Delete(Program.currentdir + dirname, true);
-                    Console.WriteLine("Deleted directory from current");
-                    Console.WriteLine(" " + Program.currentdir + dirname);
-                }
-                catch (Exception ex)
-                {
-                    if (OtherUtils.runningAsAdmin == false)
-                    {
-                        Console.WriteLine("Could not delete directory, access denied");
-                        OtherUtils.PrintException(ex);
-                        Program.Prompt();
-                    }
-                    Console.WriteLine("Cannot delete directory");
-                    OtherUtils.PrintException(ex);
-                    Program.Prompt();
-                }
+                dirname = dirname.Replace("/p ", "");
             }
             else
             {
-                Console.WriteLine("Directory does not exist");
-                Program.Prompt();
+                if (Program.CurrentDir == null)
+                {
+                    FileUtils.NoDirSet();
+                }
+                dirname = Program.CurrentDir + dirname;
             }
-            Program.Prompt();
-        }
-        public static void DeleteDirPath()
-        {
-            string dirname = Program.command.Replace("dir del /p ", "");
+
             if (Directory.Exists(dirname))
             {
                 try
@@ -268,12 +224,6 @@ namespace UniCMD
                 }
                 catch (Exception ex)
                 {
-                    if (OtherUtils.runningAsAdmin == false)
-                    {
-                        Console.WriteLine("Could not delete directory, access denied");
-                        OtherUtils.PrintException(ex);
-                        Program.Prompt();
-                    }
                     Console.WriteLine("Cannot delete directory");
                     OtherUtils.PrintException(ex);
                     Program.Prompt();
@@ -288,72 +238,33 @@ namespace UniCMD
         }
         public static void CloneDir()
         {
-            if (Program.currentdir == null)
+            string dirname = Program.Command.Replace("dir cln ", "");
+            bool overwrite = false;
+            if (dirname.StartsWith("/p "))
             {
-                FileUtils.NoDirSet();
-            }
-            string filename = Program.command.Replace("dir cln ", "");
-            if (Directory.Exists(Program.currentdir + filename))
-            {
-                string clone = Path.Combine(Program.currentdir, filename + "_(copy)");
-
-                try
-                {
-                    if (File.Exists(clone))
-                    {
-                        Console.WriteLine(" Directory copy already exists, overwrite?\n");
-                        Console.Write("  (Y)es / (N)o ");
-                        ConsoleKeyInfo result = Console.ReadKey();
-                        Console.WriteLine("\n");
-                        if (result.Key == ConsoleKey.Y)
-                        {
-
-                        }
-                        else
-                        {
-                            Program.Prompt();
-                        }
-                    }
-                    else
-                    {
-
-                    }
-                    Console.WriteLine("Cloning directory.. (might freeze with bigger directories)");
-                    // why did microsoft make File.Copy but not Directory.Copy, anyways here's some wierd visual basic shit
-                    Microsoft.VisualBasic.FileIO.FileSystem.CopyDirectory(Program.currentdir + filename, clone);
-                    Console.WriteLine("Sucessfully cloned directory");
-                }
-                catch (Exception ex)
-                {
-                    if (OtherUtils.runningAsAdmin == false)
-                    {
-                        Console.WriteLine("Could not clone directory, access denied");
-                        OtherUtils.PrintException(ex);
-                    }
-                    else
-                    {
-                        Console.WriteLine("Could not clone directory");
-                        OtherUtils.PrintException(ex);
-                    }
-                }
-                Program.Prompt();
+                dirname = dirname.Replace("/p ", "");
             }
             else
             {
-                Console.WriteLine("Directory not found");
+                if (Program.CurrentDir == null)
+                {
+                    FileUtils.NoDirSet();
+                }
+                dirname = Program.CurrentDir + dirname;
             }
-            Program.Prompt();
-        }
-        public static void CloneDirPath()
-        {
-            string filename = Program.command.Replace("dir cln /p ", "");
-            if (Directory.Exists(filename))
-            {
-                string clone = Path.Combine(filename + "_(copy)");
 
+            if (dirname.Contains(" /frc"))
+            {
+                dirname = dirname.Replace(" /frc", "");
+                overwrite = true;
+            }
+
+            if (Directory.Exists(dirname))
+            {
                 try
                 {
-                    if (File.Exists(clone))
+                    string clone = dirname + "_clone";
+                    if (Directory.Exists(clone) && !overwrite)
                     {
                         Console.WriteLine(" Directory copy already exists, overwrite?\n");
                         Console.Write("  (Y)es / (N)o ");
@@ -361,34 +272,20 @@ namespace UniCMD
                         Console.WriteLine("\n");
                         if (result.Key == ConsoleKey.Y)
                         {
-
+                            overwrite = true;
                         }
                         else
                         {
                             Program.Prompt();
                         }
                     }
-                    else
-                    {
-
-                    }
-                    Console.WriteLine("Cloning directory.. (might freeze with bigger directories)");
-                    // why tf did microsoft make File.Copy but not Directory.Copy, anyways here's some wierd visual basic shit
-                    Microsoft.VisualBasic.FileIO.FileSystem.CopyDirectory(filename, clone);
+                    Microsoft.VisualBasic.FileIO.FileSystem.CopyDirectory(dirname, clone, overwrite);
                     Console.WriteLine("Sucessfully cloned directory");
                 }
                 catch (Exception ex)
                 {
-                    if (OtherUtils.runningAsAdmin == false)
-                    {
-                        Console.WriteLine("Could not clone directory, access denied");
-                        OtherUtils.PrintException(ex);
-                    }
-                    else
-                    {
-                        Console.WriteLine("Could not clone directory");
-                        OtherUtils.PrintException(ex);
-                    }
+                    Console.WriteLine("Could not clone directory");
+                    OtherUtils.PrintException(ex);
                 }
                 Program.Prompt();
             }
@@ -400,81 +297,45 @@ namespace UniCMD
         }
         public static void RenameDir()
         {
-            if (Program.currentdir == null)
+            string dirname = Program.Command.Replace("dir rnm ", "");
+            if (dirname.StartsWith("/p "))
             {
-                FileUtils.NoDirSet();
-            }
-            string filename = Program.command.Replace("dir rnm ", "");
-            if (Directory.Exists(Program.currentdir + filename))
-            {
-                Console.WriteLine(" Enter new directory name");
-                Console.WriteLine(" to cancel enter empty\n");
-                Console.Write("   >");
-                string newname = Console.ReadLine();
-                Console.WriteLine();
-                if (newname == null)
-                {
-                    Console.WriteLine("Returning to main prompt..");
-                    Program.Prompt();
-                }
-                try
-                {
-                    Directory.Move(Program.currentdir + filename, Program.currentdir + newname);
-                    Console.Write("Successfully renamed {0} to {1}", filename, newname);
-                }
-                catch (Exception ex)
-                {
-                    if (OtherUtils.runningAsAdmin == false)
-                    {
-                        Console.Write("Could not rename directory, access denied");
-                        OtherUtils.PrintException(ex);
-                    }
-                    else
-                    {
-                        Console.Write("Could not rename directory");
-                        OtherUtils.PrintException(ex);
-                    }
-                }
+                dirname = dirname.Replace("/p ", "");
             }
             else
             {
-                Console.Write("Directory does not exist");
+                if (Program.CurrentDir == null)
+                {
+                    FileUtils.NoDirSet();
+                }
+                dirname = Program.CurrentDir + dirname;
             }
-            Program.Prompt();
-        }
-        public static void RenameDirPath()
-        {
-            string filename = Program.command.Replace("dir rnm /p ", "");
-            if (Directory.Exists(filename))
+
+            if (dirname.Contains(" /name "))
             {
-                Console.WriteLine(" Enter new directory name");
-                Console.WriteLine(" to cancel enter empty\n");
-                Console.Write("   >");
-                string newname = Console.ReadLine();
-                string pardir = Directory.GetParent(filename).FullName; 
-                Console.WriteLine();
-                if (newname == null)
+                dirname = dirname.Split(" /name ")[0];
+            }
+            string[] newname = Program.UserCommand.Split(" /name ");
+
+            if (Directory.Exists(dirname))
+            {
+                if (newname.Length > 1)
                 {
-                    Console.WriteLine("Returning to main prompt..");
-                    Program.Prompt();
-                }
-                try
-                {
-                    Directory.Move(filename, pardir + @"\" + newname);
-                    Console.Write("Successfully renamed {0} to {1}", filename, newname);
-                }
-                catch (Exception ex)
-                {
-                    if (OtherUtils.runningAsAdmin == false)
+                    try
                     {
-                        Console.Write("Could not rename directory, access denied");
-                        OtherUtils.PrintException(ex);
+                        Directory.Move(dirname, Path.GetDirectoryName(dirname) + "\\" + newname[1]);
+                        Console.Write("Successfully renamed {0} to {1}", dirname, newname[1]);
                     }
-                    else
+                    catch (Exception ex)
                     {
                         Console.Write("Could not rename directory");
                         OtherUtils.PrintException(ex);
                     }
+                }
+                else
+                {
+                    Console.WriteLine("No new name provided (/name argument)");
+                    Program.Prompt();
                 }
             }
             else
@@ -487,38 +348,20 @@ namespace UniCMD
         //file
         public static void CreateFile()
         {
-            if (Program.currentdir == null)
+            string filename = Program.Command.Replace("file make ", "");
+            if (filename.StartsWith("/p "))
             {
-                FileUtils.NoDirSet();
+                filename = filename.Replace("/p ", "");
             }
             else
             {
-                string filename = Program.command.Replace("file make ", "");
-                try
+                if (Program.CurrentDir == null)
                 {
-                    var myFile = File.Create(Program.currentdir + filename);
-                    myFile.Close();
-                    Console.WriteLine("Created file at current");
-                    Console.WriteLine(" " + Program.currentdir + filename);
+                    FileUtils.NoDirSet();
                 }
-                catch (Exception ex)
-                {
-                    if (OtherUtils.runningAsAdmin == false)
-                    {
-                        Console.WriteLine("Could not create file, access denied");
-                        OtherUtils.PrintException(ex);
-                        Program.Prompt();
-                    }
-                    Console.WriteLine("Cannot create file");
-                    OtherUtils.PrintException(ex);
-                    Program.Prompt();
-                }
+                filename = Program.CurrentDir + filename;
             }
-            Program.Prompt();
-        }
-        public static void CreateFilePath()
-        {
-            string filename = Program.command.Replace("file make /p ", "");
+
             if (File.Exists(filename))
             {
                 Console.WriteLine("File already exists.");
@@ -535,12 +378,6 @@ namespace UniCMD
                 }
                 catch (Exception ex)
                 {
-                    if (OtherUtils.runningAsAdmin == false)
-                    {
-                        Console.WriteLine("Could not create file, access denied");
-                        OtherUtils.PrintException(ex);
-                        Program.Prompt();
-                    }
                     Console.WriteLine("Cannot create file..");
                     OtherUtils.PrintException(ex);
                     Program.Prompt();
@@ -548,55 +385,32 @@ namespace UniCMD
             }
             Program.Prompt();
         }
-        public static void DeleteFilePath()
+        public static void DeleteFile()
         {
-            string filename = Program.command.Replace("file del /p ", "");
+            string filename = Program.Command.Replace("file del ", "");
+            if (filename.StartsWith("/p "))
+            {
+                filename = filename.Replace("/p ", "");
+            }
+            else
+            {
+                if (Program.CurrentDir == null)
+                {
+                    FileUtils.NoDirSet();
+                }
+                filename = Program.CurrentDir + filename;
+            }
             if (File.Exists(filename))
             {
                 try
                 {
-                    
-                    Console.WriteLine("Deleted file from path");
+                    File.Delete(filename);
+                    Console.WriteLine("Deleted file from current");
                     Console.WriteLine(" " + filename);
                 }
                 catch (Exception ex)
                 {
-                    if (OtherUtils.runningAsAdmin == false)
-                    {
-                        Console.WriteLine("Could not delete file, access denied");
-                        OtherUtils.PrintException(ex);
-                        Program.Prompt();
-                    }
-                    Console.WriteLine("Cannot delete file");
-                    OtherUtils.PrintException(ex);
-                    Program.Prompt();
-                }
-            }
-            else
-            {
-                Console.WriteLine("File does not exist");
-                Program.Prompt();
-            }
-            Program.Prompt();
-        }
-        public static void DeleteFile()
-        {
-            if (Program.currentdir == null)
-            {
-                FileUtils.NoDirSet();
-            }
-            string filename = Program.command.Replace("file del ", "");
-            if (File.Exists(Program.currentdir + filename))
-            {
-                try
-                {
-                    File.Delete(Program.currentdir + filename);
-                    Console.WriteLine("Deleted file from current");
-                    Console.WriteLine(" " + Program.currentdir + filename);
-                }
-                catch (Exception ex)
-                {
-                    if (OtherUtils.runningAsAdmin == false)
+                    if (OtherUtils.IsAdmin == false)
                     {
                         Console.WriteLine("Could not delete file, access denied");
                         OtherUtils.PrintException(ex);
@@ -616,30 +430,19 @@ namespace UniCMD
         }
         public static void ReadFile()
         {
-            if (Program.currentdir == null)
+            string filename = Program.Command.Replace("file rd ", "");
+            if (filename.StartsWith("/p "))
             {
-                FileUtils.NoDirSet();
-            }
-            string filename = Program.command.Replace("file rd ", "");
-            if (File.Exists(Program.currentdir + filename))
-            {
-                string file = File.ReadAllText(Program.currentdir + filename, Encoding.UTF8);
-
-                Console.WriteLine("  Contents of " + filename);
-                Console.WriteLine("----------------------------------------------");
-                Console.WriteLine(file);
-                Program.Prompt();
+                filename = filename.Replace("/p ", "");
             }
             else
             {
-                Console.WriteLine("File does not exist");
+                if (Program.CurrentDir == null)
+                {
+                    FileUtils.NoDirSet();
+                }
+                filename = Program.CurrentDir + filename;
             }
-
-            Program.Prompt();
-        }
-        public static void ReadFilePath()
-        {
-            string filename = Program.command.Replace("file rd /p ", "");
 
             if (File.Exists(filename))
             {
@@ -659,50 +462,20 @@ namespace UniCMD
         }
         public static void WriteFile()
         {
-            string filename = Program.command.Replace("file wrt ", "");
-            if (File.Exists(Program.currentdir + filename))
+            string filename = Program.Command.Replace("file wrt ", "");
+            if (filename.StartsWith("/p "))
             {
-                Console.WriteLine("  Writing to " + Program.currentdir + filename);
-                Console.WriteLine(" To stop writing enter '__!!stop'");
-                Console.WriteLine("----------------------------------------------");
-                writeline();
-                void writeline()
-                {
-                    try
-                    {
-                        string line;
-                        line = Console.ReadLine();
-                        if (line == "__!!stop")
-                        {
-                            Console.WriteLine("\n    Stopping writing process..");
-                            Program.Prompt();
-                        }
-                        else
-                        {
-                            using (StreamWriter sw = File.AppendText(Program.currentdir + filename))
-                            {
-                                sw.WriteLine(line);
-                            }
-                            line = null;
-                            writeline();
-                        }
-                    }
-                    catch (Exception ex)
-                    {
-                        Console.WriteLine("\n    Cant write to file");
-                        OtherUtils.PrintException(ex);
-                        Program.Prompt();
-                    }
-                }
+                filename = filename.Replace("/p ", "");
             }
             else
             {
-                Console.WriteLine("File does not exist");
+                if (Program.CurrentDir == null)
+                {
+                    FileUtils.NoDirSet();
+                }
+                filename = Program.CurrentDir + filename;
             }
-        }
-        public static void WriteFilePath() // https://cdn.discordapp.com/attachments/992907489853054976/996056313526239242/nnfreuiownfrelw1231fds.mp4
-        {
-            string filename = Program.command.Replace("file wrt /p ", "");
+
             if (File.Exists(filename))
             {
                 Console.WriteLine("  Writing to " + filename);
@@ -745,103 +518,31 @@ namespace UniCMD
         }
         public static void ClearFile()
         {
-            string filename = Program.command.Replace("file clr ", "");
-            if (Program.currentdir == null)
+            string filename = Program.Command.Replace("file clr ", "");
+            bool skipask = false;
+            if (filename.StartsWith("/p "))
             {
-                FileUtils.NoDirSet();
-            }
-            if (File.Exists(Program.currentdir + filename))
-            {
-                FileInfo fileinfo = new FileInfo(Program.currentdir + filename);
-                var bytes = fileinfo.Length;
-                var inMb = (bytes / 1024 / 1024);
-                if (inMb > 10)
-                {
-                    Console.WriteLine("  Larger file size disclaimer");
-                    Console.WriteLine("----------------------------------------------\n");
-                    Console.WriteLine("  The file selected {0}", filename);
-                    Console.WriteLine("  has the size of above 10 MB");
-                    Console.WriteLine("  Actual size : {0} MB\n", inMb);
-                    Console.WriteLine("   Are you sure?\n");
-                    Console.Write("      (Y)es / (N)o  ");
-                    choice();
-                    void choice()
-                    {
-                        ConsoleKeyInfo result = Console.ReadKey();
-                        Console.WriteLine("\b\b");
-                        if (result.Key == ConsoleKey.Y)
-                        {
-                            Console.WriteLine("\nWiping all data in {0}.. (might freeze on larger files)");
-                            try
-                            {
-                                System.IO.File.WriteAllBytes(Program.currentdir + filename, new byte[0]);
-                                Console.WriteLine("Sucessfully wiped all data from file..");
-                                Program.Prompt();
-                            }
-                            catch (Exception ex)
-                            {
-                                if (OtherUtils.runningAsAdmin == true)
-                                {
-                                    Console.WriteLine("Cannot wipe");
-                                    OtherUtils.PrintException(ex);
-                                }
-                                else
-                                {
-                                    Console.WriteLine("Cannot wipe (access denied)");
-                                    OtherUtils.PrintException(ex);
-                                }
-                            }
-                        }
-                        if (result.Key == ConsoleKey.N)
-                        {
-                            Console.WriteLine("\nReturning to main prompt..");
-                            Program.Prompt();
-                        }
-                        else
-                        {
-                            choice();
-                        }
-                    }
-                }
-                else
-                {
-                    Console.WriteLine("Wiping all data in {0} .. (might freeze on larger files)", filename);
-                    try
-                    {
-                        System.IO.File.WriteAllBytes(filename, new byte[0]);
-                        Console.WriteLine("Sucessfully wiped all data from file..");
-                        Program.Prompt();
-                    }
-                    catch (Exception ex)
-                    {
-                        if (OtherUtils.runningAsAdmin == true)
-                        {
-                            Console.WriteLine("Cannot wipe");
-                            OtherUtils.PrintException(ex);
-                        }
-                        else
-                        {
-                            Console.WriteLine("Cannot wipe (access denied)");
-                            OtherUtils.PrintException(ex);
-                        }
-                    }
-                }
+                filename = filename.Replace("/p ", "");
             }
             else
             {
-                Console.WriteLine("File does not exist");
+                if (Program.CurrentDir == null)
+                {
+                    FileUtils.NoDirSet();
+                }
+                filename = Program.CurrentDir + filename;
             }
-            Program.Prompt();
-        }
-        public static void ClearFilePath()
-        {
-            string filename = Program.command.Replace("file clr /p ", "");
+            if (filename.Contains(" /frc"))
+            {
+                filename = filename.Replace(" /frc", "");
+                skipask = true;
+            }
             if (File.Exists(filename))
             {
                 FileInfo fileinfo = new FileInfo(filename);
                 var bytes = fileinfo.Length;
                 var inMb = (bytes / 1024 / 1024);
-                if (inMb > 10)
+                if (inMb > 10  && !skipask)
                 {
                     Console.WriteLine("  Larger file size disclaimer");
                     Console.WriteLine("----------------------------------------------\n");
@@ -850,68 +551,31 @@ namespace UniCMD
                     Console.WriteLine("  Actual size : {0} MB\n", inMb);
                     Console.WriteLine("   Are you sure?\n");
                     Console.Write("      (Y)es / (N)o  ");
-                    choice();
-                    void choice()
+                    ConsoleKeyInfo result = Console.ReadKey();
+                    Console.WriteLine("\n");
+                    if (result.Key == ConsoleKey.Y)
                     {
-                        ConsoleKeyInfo result = Console.ReadKey();
-                        Console.WriteLine("\b\b");
-                        if (result.Key == ConsoleKey.Y)
-                        {
-                            Console.WriteLine("\nWiping all data in {0}.. (might freeze on larger files)");
-                            try
-                            {
-                                System.IO.File.WriteAllBytes(filename, new byte[0]);
-                                Console.WriteLine("Sucessfully wiped all data from file..");
-                                Program.Prompt();
-                            }
-                            catch (Exception ex)
-                            {
-                                if (OtherUtils.runningAsAdmin == true)
-                                {
-                                    Console.WriteLine("Cannot wipe");
-                                    OtherUtils.PrintException(ex);
-                                }
-                                else
-                                {
-                                    Console.WriteLine("Cannot wipe (access denied)");
-                                    OtherUtils.PrintException(ex);
-                                }
-                            }
-                        }
-                        if (result.Key == ConsoleKey.N)
-                        {
-                            Console.WriteLine("\nReturning to main prompt..");
-                            Program.Prompt();
-                        }
-                        else
-                        {
-                            choice();
-                        }
+                        
                     }
-                }
-                else
-                {
-                    Console.WriteLine("Wiping all data in {0} .. (might freeze on larger files)", filename);
-                    try
+                    else
                     {
-                        System.IO.File.WriteAllBytes(filename, new byte[0]);
-                        Console.WriteLine("Sucessfully wiped all data from file..");
                         Program.Prompt();
                     }
-                    catch (Exception ex)
-                    {
-                        if (OtherUtils.runningAsAdmin == true)
-                        {
-                            Console.WriteLine("Cannot wipe");
-                            OtherUtils.PrintException(ex);
-                        }
-                        else
-                        {
-                            Console.WriteLine("Cannot wipe (access denied)");
-                            OtherUtils.PrintException(ex);
-                        }
-                    }
                 }
+
+                Console.WriteLine("Wiping all data in {0} ..", filename);
+                try
+                {
+                    System.IO.File.WriteAllBytes(filename, new byte[0]);
+                    Console.WriteLine("Sucessfully wiped all data from file..");
+                    Program.Prompt();
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine("Cannot wipe");
+                    OtherUtils.PrintException(ex);
+                }
+
             }
             else
             {
@@ -921,78 +585,34 @@ namespace UniCMD
         }
         public static void CloneFile()
         {
-            if (Program.currentdir == null)
+            string filename = Program.Command.Replace("file cln ", "");
+            bool overwrite = false;
+            if (filename.StartsWith("/p "))
             {
-                FileUtils.NoDirSet();
-            }
-            string filename = Program.command.Replace("file cln ", "");
-            if (File.Exists(Program.currentdir + filename))
-            {
-                string extension = Path.GetExtension(Program.currentdir + filename);
-                string filenoex = filename.Replace(extension, "");
-                string clone1 = Path.Combine(Program.currentdir, filenoex + "_(copy)" + extension); 
-                 
-                try
-                {
-                    if (File.Exists(clone1))
-                    {
-                        Console.WriteLine(" File copy already exists, overwrite?\n");
-                        Console.Write("  (Y)es / (N)o ");
-                        ConsoleKeyInfo result = Console.ReadKey();
-                        Console.WriteLine("\n");
-                        if (result.Key == ConsoleKey.Y)
-                        {
-
-                        }
-                        else
-                        {
-                            Program.Prompt();
-                        }
-                    }
-                    else
-                    {
-
-                    }
-                    File.Copy(Program.currentdir + filename, clone1);
-                    Console.WriteLine("Sucessfully cloned file");
-                }
-                catch (Exception ex)
-                {
-                    if (OtherUtils.runningAsAdmin == false)
-                    {
-                        Console.WriteLine("Could not clone file, access denied");
-                        OtherUtils.PrintException(ex);
-                    }
-                    else
-                    {
-                        Console.WriteLine("Could not clone file");
-                        OtherUtils.PrintException(ex);
-                    }                  
-                }
-                Program.Prompt();
+                filename = filename.Replace("/p ", "");
             }
             else
             {
-                Console.WriteLine("File not found");
+                if (Program.CurrentDir == null)
+                {
+                    FileUtils.NoDirSet();
+                }
+                filename = Program.CurrentDir + filename;
             }
-            Program.Prompt();
-        }
-        public static void CloneFilePath()
-        {
-            if (Program.currentdir == null)
-            {
-                FileUtils.NoDirSet();
-            }
-            string filename = Program.command.Replace("file cln /p ", "");
-            if (File.Exists(filename))
-            {
-                string extension = Path.GetExtension(filename);
-                string filenoex = filename.Replace(extension, "");
-                string clone1 = Path.Combine(filenoex + "_(copy)" + extension);
 
+            if (filename.Contains(" /frc"))
+            {
+                filename = filename.Replace(" /frc", "");
+                overwrite = true;
+            }
+
+            if (File.Exists(filename))
+            {            
                 try
                 {
-                    if (File.Exists(clone1))
+                    string clone = Path.GetFileNameWithoutExtension(filename) + "_clone" + Path.GetExtension(filename);
+
+                    if (File.Exists(Path.GetDirectoryName(filename) + "\\" + clone) && !overwrite)
                     {
                         Console.WriteLine(" File copy already exists, overwrite?\n");
                         Console.Write("  (Y)es / (N)o ");
@@ -1000,32 +620,20 @@ namespace UniCMD
                         Console.WriteLine("\n");
                         if (result.Key == ConsoleKey.Y)
                         {
-
+                            overwrite = true;
                         }
                         else
                         {
                             Program.Prompt();
                         }
                     }
-                    else
-                    {
-
-                    }
-                    File.Copy(filename, clone1);
+                    File.Copy(filename, Path.GetDirectoryName(filename) + "\\" + clone, overwrite);
                     Console.WriteLine("Sucessfully cloned file");
                 }
                 catch (Exception ex)
                 {
-                    if (OtherUtils.runningAsAdmin == false)
-                    {
-                        Console.WriteLine("Could not clone file, access denied");
-                        OtherUtils.PrintException(ex);
-                    }
-                    else
-                    {
-                        Console.WriteLine("Could not clone file");
-                        OtherUtils.PrintException(ex);
-                    }
+                    Console.WriteLine("Could not clone file");
+                    OtherUtils.PrintException(ex);
                 }
                 Program.Prompt();
             }
@@ -1037,83 +645,45 @@ namespace UniCMD
         }
         public static void RenameFile()
         {
-            if (Program.currentdir == null)
+            string file = Program.Command.Replace("file rnm ", "");
+            if (file.StartsWith("/p "))
             {
-                FileUtils.NoDirSet();
-            }
-            string filename = Program.command.Replace("file rnm ", "");
-            if (File.Exists(Program.currentdir + filename))
-            {
-                Console.WriteLine(" Enter new file name (extension included)");
-                Console.WriteLine(" to cancel enter empty\n");
-                Console.Write("   >");
-                string newname = Console.ReadLine();
-                Console.WriteLine();
-                if (newname == null)
-                {
-                    Console.WriteLine("Returning to main prompt..");
-                    Program.Prompt();
-                }
-                try
-                {
-                    File.Move(Program.currentdir + filename, Program.currentdir + newname);
-                    Console.Write("Successfully renamed {0} to {1}", filename, newname);
-                }
-                catch (Exception ex)
-                {
-                    if (OtherUtils.runningAsAdmin == false)
-                    {
-                        Console.Write("Could not rename file, access denied");
-                        OtherUtils.PrintException(ex);
-                    }
-                    else
-                    {
-                        Console.Write("Could not rename file");
-                        OtherUtils.PrintException(ex);
-                    }
-                }
+                file = file.Replace("/p ", "");
             }
             else
             {
-                Console.Write("File does not exist");
+                if (Program.CurrentDir == null)
+                {
+                    FileUtils.NoDirSet();
+                }
+                file = Program.CurrentDir + file;
             }
-            Program.Prompt();
-        }
-        public static void RenameFilePath()
-        {
-            string filename = Program.command.Replace("file rnm /p ", "");
-            if (File.Exists(filename))
+
+            if (file.Contains(" /name "))
             {
-                string filedir1 = Path.GetDirectoryName(filename);
-                string filedir = filedir1 + @"\";
-                
-                Console.WriteLine(" Enter new file name (extension included)");
-                Console.WriteLine(" to cancel enter empty\n");
-                Console.Write("   >");
-                string newname = Console.ReadLine();
-                Console.WriteLine();
-                if (newname == null)
+                file = file.Split(" /name ")[0];
+            }
+            string[] newname = Program.UserCommand.Split(" /name ");
+
+            if (File.Exists(file))
+            {
+                if (newname.Length > 1) 
                 {
-                    Console.WriteLine("Returning to main prompt..");
-                    Program.Prompt();
-                }
-                try
-                {
-                    File.Move(filename, filedir + newname);
-                    Console.WriteLine("Successfully renamed {0} to {1}", filename, newname);
-                }
-                catch (Exception ex)
-                {
-                    if (OtherUtils.runningAsAdmin == false)
+                    try
                     {
-                        Console.Write("Could not rename file, access denied");
-                        OtherUtils.PrintException(ex);
+                        File.Move(file, Path.GetDirectoryName(file) + "\\" + newname[1]);
+                        Console.Write("Successfully renamed {0} to {1}", file, newname[1]);
                     }
-                    else
+                    catch (Exception ex)
                     {
                         Console.Write("Could not rename file");
                         OtherUtils.PrintException(ex);
                     }
+                }
+                else
+                {
+                    Console.WriteLine("No new name provided (/name argument)");
+                    Program.Prompt();
                 }
             }
             else
@@ -1124,17 +694,25 @@ namespace UniCMD
         }
         public static void ZipFile()
         {
-            if (Program.currentdir == null)
+            string dirname = Program.Command.Replace("file zip ", "");
+            if (dirname.StartsWith("/p "))
             {
-                FileUtils.NoDirSet();
+                dirname = dirname.Replace("/p ", "");
             }
-            string dirname = Program.command.Replace("file zip ", "");
+            else
+            {
+                if (Program.CurrentDir == null)
+                {
+                    FileUtils.NoDirSet();
+                }
+                dirname = Program.CurrentDir + dirname;
+            }
 
             try
             {
-                System.IO.Compression.ZipFile.CreateFromDirectory(Program.currentdir + dirname, Program.currentdir + dirname + ".zip");
+                System.IO.Compression.ZipFile.CreateFromDirectory(Program.CurrentDir + dirname, Program.CurrentDir + dirname + ".zip");
                 Console.WriteLine("Created zip archive at current");
-                Console.WriteLine(" " + Program.currentdir + dirname + ".zip");
+                Console.WriteLine(" " + Program.CurrentDir + dirname + ".zip");
             }
             catch(Exception ex)
             {
@@ -1142,68 +720,35 @@ namespace UniCMD
                 OtherUtils.PrintException(ex);
             }
         }
-        public static void ZipFilePath()
-        {
-            string dirname = Program.command.Replace("file zip /p ", "");
-            try
-            {
-                System.IO.Compression.ZipFile.CreateFromDirectory(dirname, dirname + ".zip");
-                Console.WriteLine("Created zip archive from path");
-                Console.WriteLine(" " + dirname + ".zip");
-            }
-            catch (Exception ex)
-            {
-                Console.Write("Could not create zip archive");
-                OtherUtils.PrintException(ex);
-            }
-        }
         public static void UnzipFile()
         {
-            if (Program.currentdir == null)
+            string file = Program.Command.Replace("file unzip ", "");
+            if (file.StartsWith("/p "))
             {
-                FileUtils.NoDirSet();
-            }
-            string filename = Program.command.Replace("file unzip ", "");
-
-            if (File.Exists(Program.currentdir + filename))
-            {
-                try
-                {
-                    Directory.CreateDirectory(Program.currentdir + filename + "_extracted");
-                    System.IO.Compression.ZipFile.ExtractToDirectory(Program.currentdir + filename, Program.currentdir + filename + "_extracted");
-
-                    Console.WriteLine("Successfully unzipped file to");
-                    Console.WriteLine(" " + Program.currentdir + filename + "_extracted");
-                }
-                catch (Exception ex)
-                {
-                    Directory.Delete(Program.currentdir + filename + "_extracted");
-                    Console.Write("Could not unzip archive");
-                    OtherUtils.PrintException(ex);
-                }
+                file = file.Replace("/p ", "");
             }
             else
             {
-                Console.Write("File does not exist");
+                if (Program.CurrentDir == null)
+                {
+                    FileUtils.NoDirSet();
+                }
+                file = Program.CurrentDir + file;
             }
-        }
-        public static void UnzipFilePath()
-        {
-            string filename = Program.command.Replace("file unzip /p ", "");
 
-            if (File.Exists(filename))
+            if (File.Exists(file))
             {
                 try
                 {
-                    Directory.CreateDirectory(filename + "_extracted");
-                    System.IO.Compression.ZipFile.ExtractToDirectory(filename, filename + "_extracted");
+                    Directory.CreateDirectory(file + "_extracted");
+                    System.IO.Compression.ZipFile.ExtractToDirectory(file, file + "_extracted");
 
                     Console.WriteLine("Successfully unzipped file to");
-                    Console.WriteLine(" " + filename + "_extracted");
+                    Console.WriteLine(" " + file + "_extracted");
                 }
                 catch (Exception ex)
                 {
-                    Directory.Delete(filename + "_extracted");
+                    Directory.Delete(file + "_extracted");
                     Console.Write("Could not unzip archive");
                     OtherUtils.PrintException(ex);
                 }

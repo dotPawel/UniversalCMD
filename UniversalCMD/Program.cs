@@ -4,15 +4,14 @@ namespace UniCMD
 {
     static internal class Program
     {
-        public static string version = "v6.0r";
+        public static string Version = "v6.2r";
         // r - release
         // rc - release candidate
         // d - debug
 
-        public static string currentdir;
-        public static string command;
-        public static string uncvcommand;
-        internal static object filename;
+        public static string CurrentDir;
+        public static string Command;
+        public static string UserCommand;
 
         public static void Main()
         {
@@ -22,7 +21,7 @@ namespace UniCMD
         static void StartupText()
         {
             Process proc = Process.GetCurrentProcess();
-            Console.Title = "UniCMD (" + version + ")";
+            Console.Title = "UniCMD (" + Version + ")";
             string cpu = "";
             cpu = OtherUtils.ReturnCPUName(cpu);
 
@@ -37,7 +36,7 @@ namespace UniCMD
                   Memory - {2} (KB)
                   CPU Name/model - {3}
                      For command index execute "help"
-                """, version, Environment.OSVersion, proc.PrivateMemorySize64, cpu);
+                """, Version, Environment.OSVersion, proc.PrivateMemorySize64, cpu);
 
             Prompt();
         }
@@ -56,34 +55,34 @@ namespace UniCMD
             }
             else
             {
-                if (OtherUtils.runningAsAdmin == true)
+                if (OtherUtils.IsAdmin == true)
                 {
                     Console.Write("(#) ");
                 }
 
-                if (currentdir == null)
+                if (CurrentDir == null)
                 {
                     Console.Write("@ NULL >");
                 }
                 else
                 {
-                    Console.Write("@ {0} >", currentdir);
+                    Console.Write("@ {0} >", CurrentDir);
                 }
             }
 
             try
             {
-                uncvcommand = Console.ReadLine();
-                command = uncvcommand.ToLower();
+                UserCommand = Console.ReadLine();
+                Command = UserCommand.ToLower();
             }
             catch { } // for preventing wierd crashes
             Console.WriteLine();
 
-            Console.Title = "UniCMD (" + version + ") - " + command;
+            Console.Title = "UniCMD (" + Version + ") - " + Command;
 
-            Command(command);
+            CommandParser(Command);
         }
-        public static void Command(string command)
+        public static void CommandParser(string command)
         {
             // here the commands start
 
@@ -102,10 +101,6 @@ namespace UniCMD
 
                 case "clr":
                     OtherUtils.ClearConsole();
-                    break;
-
-                case string s when s.StartsWith("echo /ptm "):
-                    OtherUtils.EchoPTM();
                     break;
 
                 case string s when s.StartsWith("echo "):
@@ -147,10 +142,6 @@ namespace UniCMD
                     CommandUsages.DirMakeUsage();
                     break;
 
-                case string s when s.StartsWith("dir make /p "):
-                    FileUtils.CreateDirPath();
-                    break;
-
                 case string s when s.StartsWith("dir make "):
                     FileUtils.CreateDir();
                     break;
@@ -158,10 +149,6 @@ namespace UniCMD
                 // dir del
                 case "dir del":
                     CommandUsages.DirDeleteUsage();
-                    break;
-
-                case string s when s.StartsWith("dir del /p "):
-                    FileUtils.DeleteDirPath();
                     break;
 
                 case string s when s.StartsWith("dir del "):
@@ -173,10 +160,6 @@ namespace UniCMD
                     CommandUsages.DirCloneUsage();
                     break;
 
-                case string s when s.StartsWith("dir cln /p "):
-                    FileUtils.CloneDirPath();
-                    break;
-
                 case string s when s.StartsWith("dir cln "):
                     FileUtils.CloneDir();
                     break;
@@ -184,10 +167,6 @@ namespace UniCMD
                 // dir rnm
                 case "dir rnm":
                     CommandUsages.DirRenameUsage();
-                    break;
-
-                case string s when s.StartsWith("dir rnm /p "):
-                    FileUtils.RenameDirPath();
                     break;
 
                 case string s when s.StartsWith("dir rnm "):
@@ -203,10 +182,6 @@ namespace UniCMD
                     CommandUsages.FileCreateUsage();
                     break;
 
-                case string s when s.StartsWith("file make /p "):
-                    FileUtils.CreateFilePath();
-                    break;
-
                 case string s when s.StartsWith("file make "):
                     FileUtils.CreateFile();
                     break;
@@ -214,10 +189,6 @@ namespace UniCMD
                 // file del
                 case "file del":
                     CommandUsages.FileDeleteUsage();
-                    break;
-
-                case string s when s.StartsWith("file del /p "):
-                    FileUtils.DeleteFilePath();
                     break;
 
                 case string s when s.StartsWith("file del "):
@@ -229,10 +200,6 @@ namespace UniCMD
                     CommandUsages.FileReadUsage();
                     break;
 
-                case string s when s.StartsWith("file rd /p "):
-                    FileUtils.ReadFilePath();
-                    break;
-
                 case string s when s.StartsWith("file rd "):
                     FileUtils.ReadFile();
                     break;
@@ -240,10 +207,6 @@ namespace UniCMD
                 // file wrt
                 case "file wrt":
                     CommandUsages.FileWriteUsage();
-                    break;
-
-                case string s when s.StartsWith("file wrt /p "):
-                    FileUtils.WriteFilePath();
                     break;
 
                 case string s when s.StartsWith("file wrt "):
@@ -255,10 +218,6 @@ namespace UniCMD
                     CommandUsages.FileClearUsage();
                     break;
 
-                case string s when s.StartsWith("file clr /p "):
-                    FileUtils.ClearFilePath();
-                    break;
-
                 case string s when s.StartsWith("file clr "):
                     FileUtils.ClearFile();
                     break; 
@@ -266,10 +225,6 @@ namespace UniCMD
                 // file cln
                 case "file cln":
                     CommandUsages.FileCloneUsage();
-                    break;
-
-                case string s when s.StartsWith("file cln /p "):
-                    FileUtils.CloneFilePath();
                     break;
 
                 case string s when s.StartsWith("file cln "):
@@ -281,10 +236,6 @@ namespace UniCMD
                     CommandUsages.FileRenameUsage();
                     break;
 
-                case string s when s.StartsWith("file rnm /p "):
-                    FileUtils.RenameFile();
-                    break;
-
                 case string s when s.StartsWith("file rnm "):
                     FileUtils.RenameFile();
                     break;
@@ -294,10 +245,6 @@ namespace UniCMD
                     CommandUsages.FileZipUsage();
                     break;
 
-                case string s when s.StartsWith("file zip /p "):
-                    FileUtils.ZipFilePath();
-                    break;
-
                 case string s when s.StartsWith("file zip "):
                     FileUtils.ZipFile();
                     break;
@@ -305,10 +252,6 @@ namespace UniCMD
                 // file zip
                 case "file unzip":
                     CommandUsages.FileUnzipUsage();
-                    break;
-
-                case string s when s.StartsWith("file unzip /p "):
-                    FileUtils.UnzipFilePath();
                     break;
 
                 case string s when s.StartsWith("file unzip "):
@@ -326,10 +269,6 @@ namespace UniCMD
                     CommandUsages.FileClearUsage();
                     break;
 
-                case string s when s.StartsWith("proc run /p "):
-                    ProcessUtils.RunProcessPath();
-                    break;
-
                 case string s when s.StartsWith("proc run "):
                     ProcessUtils.RunProcess();
                     break;
@@ -339,7 +278,7 @@ namespace UniCMD
                     CommandUsages.ProcessKillUsage();
                     break;
 
-                case string s when s.StartsWith("proc end /all "):
+                case "proc end /all":
                     ProcessUtils.KillAllProcess();
                     break;
 
@@ -351,10 +290,6 @@ namespace UniCMD
                 // IronPython commands
                 case "irpy":
                     CommandUsages.IronPythonUsage();
-                    break;
-
-                case string s when s.StartsWith("irpy /p "):
-                    IronPythonCommands.RunFilePath();
                     break;
 
                 case string s when s.StartsWith("irpy "):
@@ -372,7 +307,7 @@ namespace UniCMD
                     break;
 
                 case "acl_bb start":
-                    OtherUtils.AeroCL_Loader();
+                    AeroCL_BB.acl_main();
                     break;
 
 
@@ -452,10 +387,6 @@ namespace UniCMD
                     CommandUsages.UniScriptHelp();
                     break;
 
-                case string s when s.StartsWith("uniscript /p "):
-                    UniScript.ExecutePath();
-                    break;
-
                 case string s when s.StartsWith("uniscript "):
                     UniScript.Execute();
                     break;
@@ -522,7 +453,6 @@ namespace UniCMD
 
 
 
-
                 case "dbg_start":
                     Debug.dbg_start();
                     break;
@@ -554,7 +484,7 @@ namespace UniCMD
                 return;
             }
             Console.WriteLine("Command syntax error");
-            Console.WriteLine("the entered command '" + uncvcommand + "'");
+            Console.WriteLine("the entered command '" + UserCommand + "'");
             Console.WriteLine("isnt a valid UniCMD command");
             Prompt();
         }

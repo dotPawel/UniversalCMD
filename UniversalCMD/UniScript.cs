@@ -12,7 +12,7 @@ namespace UniCMD
 
         public static void ExecuteMacro()
         {
-            string text = Program.command.Replace(".$", "");
+            string text = Program.Command.Replace(".$", "");
 
             if (File.Exists(@"UniCMD.data\Macros\" + text + ".unsc"))
             {
@@ -21,9 +21,9 @@ namespace UniCMD
                 {
                     if (line.Length > 1)
                     {
-                        Program.command = line;
+                        Program.Command = line;
 
-                        Program.Command(line);
+                        Program.CommandParser(line);
                     }
                 }
 
@@ -39,55 +39,33 @@ namespace UniCMD
         }
         public static void Execute()
         {
-            if (Program.currentdir == null)
+            string file = Program.Command.Replace("uniscript ", "");
+            if (file.StartsWith("/p "))
             {
-                FileUtils.NoDirSet();
-            }
-            string text = Program.command.Replace("uniscript ", "");
-            if (File.Exists(Program.currentdir + text))
-            {
-                if (text.EndsWith(".unsc"))
-                {
-                    UniScriptExecuting = true;
-                    foreach (string line in File.ReadAllLines(Program.currentdir + text))
-                    {
-                        if (line.Length > 1)
-                        {
-                            Program.command = line;
-
-                            Program.Command(line);
-                        }      
-                    }
-                }
-                else
-                {
-                    Console.WriteLine("File is not an UniScript file (.unsc)");
-                }
+                file = file.Replace("/p ", "");
             }
             else
             {
-                Console.WriteLine("File does not exist.");
+                if (Program.CurrentDir == null)
+                {
+                    FileUtils.NoDirSet();
+                }
+                file = Program.CurrentDir + file;
             }
-            UniScriptExecuting = false;
-            Console.WriteLine("\nUniScript file finished.");
-            Program.Prompt();
-        }
-        public static void ExecutePath()
-        {
-            string text = Program.command.Replace("uniscript /p ", "");
-            if (File.Exists(text))
+            
+            if (File.Exists(file))
             {
-                if (text.EndsWith(".unsc"))
+                if (file.EndsWith(".unsc"))
                 {
                     UniScriptExecuting = true;
-                    foreach (string line in File.ReadAllLines(Program.currentdir + text))
+                    foreach (string line in File.ReadAllLines(file))
                     {
                         if (line.Length > 1)
                         {
-                            Program.command = line;
+                            Program.Command = line;
 
-                            Program.Command(line);
-                        }
+                            Program.CommandParser(line);
+                        }      
                     }
                 }
                 else
@@ -111,9 +89,9 @@ namespace UniCMD
             {
                 if (line.Length > 1)
                 {
-                    Program.uncvcommand = line;
+                    Program.UserCommand = line;
 
-                    Program.Command(line);
+                    Program.CommandParser(line);
                 }
             }
             Console.WriteLine("\nAutoexec finished");

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Media;
 using System.Text;
 using System.Threading.Tasks;
 using static Community.CsharpSqlite.Sqlite3;
@@ -15,8 +16,8 @@ namespace UniCMD
             Console.WriteLine("   Debug mode");
             Console.WriteLine();
             Console.WriteLine(" Using this mode may make UniCMD unstable");
-            Console.WriteLine(" Use with cauction.");
-            Console.WriteLine(" Execute 'exit' if you dont know what you are doing.");
+            Console.WriteLine(" Use with cauction");
+            Console.WriteLine(" Execute 'exit' if you dont know what you are doing");
             Console.WriteLine();
             dbg_prompt();
         }
@@ -38,7 +39,7 @@ namespace UniCMD
             }
             if (dbg == "isroot_?")
             {
-                if (OtherUtils.runningAsAdmin == true)
+                if (OtherUtils.IsAdmin == true)
                 {
                     Console.WriteLine("runningAsAdmin == True");
                 }
@@ -54,22 +55,22 @@ namespace UniCMD
             }
             if (dbg == "cdir_?")
             {
-                if (Program.currentdir == null)
+                if (Program.CurrentDir == null)
                 {
                     Console.WriteLine("null");
                     dbg_prompt();
                 }
-                Console.WriteLine("Program.currentdir == " + Program.currentdir);
+                Console.WriteLine("Program.currentdir == " + Program.CurrentDir);
                 dbg_prompt();
             }
             if (dbg == "clr_cdir")
             {
-                if (Program.currentdir == null)
+                if (Program.CurrentDir == null)
                 {
                     Console.WriteLine("already null");
                     dbg_prompt();
                 }
-                Program.currentdir = null;
+                Program.CurrentDir = null;
                 Console.WriteLine("Sucessfully set currentdir to null (cleared)");
                 Console.WriteLine("Program.currentdir = null");
                 dbg_prompt();
@@ -104,6 +105,17 @@ namespace UniCMD
                     Console.WriteLine("Cannot delete UniPKG/TEMP");
                     OtherUtils.PrintException(ex);
                 }
+                dbg_prompt();
+            }
+            if (dbg == "temple")
+            {
+                string text = ":{cyan}::[white]:An idiot admires complexity, a genius admires simplicity:[]:";
+                text = ConfigCommands.ApplyTextModules(text);
+
+                Console.WriteLine(text);
+                SoundPlayer hymn = new SoundPlayer(Properties.Resources.risen);
+                hymn.Play();
+
                 dbg_prompt();
             }
 

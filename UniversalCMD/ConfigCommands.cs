@@ -212,7 +212,7 @@ namespace UniCMD
         {
             Process proc = Process.GetCurrentProcess();
 
-            text = text.Replace("::ver::", Program.version)
+            text = text.Replace("::ver::", Program.Version)
                 .Replace("::osver::", Environment.OSVersion.ToString())
                 .Replace("::ram::", proc.PrivateMemorySize64.ToString())
                 .Replace("::time::", DateTime.Now.ToString("hh:mm tt"))
@@ -223,11 +223,11 @@ namespace UniCMD
                 .Replace("::tick::", Environment.TickCount.ToString())
                 .Replace("::sysp::", Environment.SystemPageSize.ToString());
 
-            if (OtherUtils.runningAsAdmin) { text = text.Replace("::root::", "(#)");  }
+            if (OtherUtils.IsAdmin) { text = text.Replace("::root::", "(#)");  }
             else { text = text.Replace("::root::", "   "); }
 
-            if (Program.currentdir == null) { text = text.Replace("::cdir::", "NULL"); }
-            else { text = text.Replace("::cdir::", Program.currentdir); }
+            if (Program.CurrentDir == null) { text = text.Replace("::cdir::", "NULL"); }
+            else { text = text.Replace("::cdir::", Program.CurrentDir); }
 
             text = text.Replace(":[red]:", "\u001B[31m") // text colors
                 .Replace(":[green]:", "\u001B[32m")

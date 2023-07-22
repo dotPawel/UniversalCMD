@@ -14,7 +14,7 @@ namespace UniCMD
     {
         public static void Ping()
         {
-            string ip = Program.command.Replace("net ping ", "");
+            string ip = Program.Command.Replace("net ping ", "");
             try
             {
                 Ping ping = new Ping();

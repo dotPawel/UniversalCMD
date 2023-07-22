@@ -19,7 +19,7 @@ namespace UniCMD
 
                 static void welcomeScreen()
                 {
-                    string currentDir = Program.currentdir;                
+                    string currentDir = Program.CurrentDir;                
                     string userName = Environment.UserName;
                     ManagementObjectSearcher mos =
                     new ManagementObjectSearcher("root\\CIMV2", "SELECT * FROM Win32_Processor");

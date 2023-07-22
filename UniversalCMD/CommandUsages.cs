@@ -10,7 +10,7 @@ namespace UniCMD
     {
         public static void About()
         {
-            Console.WriteLine("   UniversalCMD / Codename Stardust / Build " + Program.version + "\n");
+            Console.WriteLine("   UniversalCMD / Codename Stardust / Build " + Program.Version + "\n");
             Console.WriteLine("  a better AeroCL & a easy command line solution");
 
             Program.Prompt();
@@ -162,11 +162,11 @@ namespace UniCMD
         public static void DirCloneUsage()
         {
             Console.WriteLine("""
-                Usage of 'directory clone'
+                Usage of 'dir cln'
 
-                  input : dir cln {name}
-                        dir cln /p {path}
-                  output : name/path is cloned (a copy is made)
+                  input : dir cln {name} /frc
+                        dir cln /p {path} /frc
+                  output : a copy of name/path is made, overwritten if optional /frc argument used
                 """);
             
             Program.Prompt();
@@ -176,9 +176,9 @@ namespace UniCMD
             Console.WriteLine("""
                 Usage of 'dir rnm'
 
-                  input : dir rnm {name}
-                          dir rnm /p {path}
-                  output : a renaming wizard for name/path is started
+                  input : dir rnm {name} /name {new name}
+                          dir rnm /p {path} /name {new name}
+                  output : name/path is renamed to provided new name
                 """);
             
             Program.Prompt();
@@ -248,9 +248,9 @@ namespace UniCMD
             Console.WriteLine("""
                 Usage of 'file cln'
 
-                  input : file cln {name}
-                          file cln /p {path}
-                  output : a copy of name/path is made
+                  input : file cln {name} /frc
+                          file cln /p {path} /frc
+                  output : a copy of name/path is made, overwritten if optional /frc argument used
                 """);   
             Program.Prompt();
         }
@@ -259,9 +259,9 @@ namespace UniCMD
             Console.WriteLine("""
                 Usage of 'file rnm'
 
-                  input : file rnm {name}
-                          file rnm /p {path}
-                  output : name/path is renamed
+                  input : file rnm {name} /name {new name}
+                          file rnm /p {path} /name {new name}
+                  output : name/path is renamed to provided new name
                 """);         
             Program.Prompt();
         }
@@ -332,9 +332,9 @@ namespace UniCMD
         public static void ProcessKillUsage()
         {
             Console.WriteLine("""
-                Usage of 'process end'
+                Usage of 'proc end'
 
-                  input : process end {name}
+                  input : proc end {name}
                   output : every process with name is killed
                 """);
             
@@ -344,11 +344,12 @@ namespace UniCMD
         public static void ProcessStartUsage()
         {
             Console.WriteLine("""
-                Usage of 'process run'
+                Usage of 'proc run'
 
-                  input : process run {name}
-                          process run /p {path}
+                  input : proc run {name} /args {optional arguments}
+                          proc run /p {path} /args {optional arguments}
                   output : name/path is started
+                           (with arguments if provided at the end of command)
                 """);
             
 
@@ -458,7 +459,7 @@ namespace UniCMD
             Console.WriteLine(" \u001b[44m the background of this text is blue\u001b[0m");
             Console.WriteLine();
             Console.WriteLine(" the current time is " + DateTime.Now.ToString("hh:mm tt"));
-            Console.WriteLine(" you are using UniCMD version " + Program.version);
+            Console.WriteLine(" you are using UniCMD version " + Program.Version);
             Console.WriteLine(" your os version is " + Environment.OSVersion.ToString());
             Program.Prompt();
         }

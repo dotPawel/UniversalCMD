@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static Community.CsharpSqlite.Sqlite3;
 
 namespace UniCMD
 {
@@ -24,7 +25,7 @@ namespace UniCMD
         {
             var failed = 0;
             var success = 0;
-            if (OtherUtils.runningAsAdmin == false)
+            if (OtherUtils.IsAdmin == false)
             {
                 Console.WriteLine("Due to lack of admin permissions this is likely to fail at most");
             }
@@ -39,9 +40,11 @@ namespace UniCMD
                 {
                     try
                     {
-                        if (process.ProcessName == OtherUtils.unicmdName)
+                        if (process.ProcessName == OtherUtils.UniCMD_Name)
                         {
+                            // this does not work lol
                             Console.WriteLine("SKIPPING : UniCMD exit prevention");
+                            return;
                         }
                         process.Kill();
                         Console.WriteLine("SUCCESS : " + process.ProcessName + " | " + process.Id);
@@ -66,7 +69,7 @@ namespace UniCMD
         public static void KillProcess()
         {
             var killed = 0;
-            string filename = Program.command.Replace("proc end ", "");
+            string filename = Program.Command.Replace("proc end ", "");
             Process[] process = Process.GetProcessesByName(filename);
             try
             {
@@ -86,47 +89,45 @@ namespace UniCMD
         }
         public static void RunProcess()
         {
-            if (Program.currentdir == null)
+            string file = Program.Command.Replace("proc run ", "");
+            if (file.StartsWith("/p "))
             {
-                FileUtils.NoDirSet();
-            }
-            string file = Program.command.Replace("proc run ", "");
-            if (File.Exists(Program.currentdir + file))
-            {
-                try
-                {
-                    Process proc = new Process();
-                    proc.StartInfo.FileName = Program.currentdir + file;
-                    proc.Start();
-
-                    Console.WriteLine("Started process..");
-                    Console.WriteLine("File : " + Program.currentdir + file);
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine("Could not start process");
-                    OtherUtils.PrintException(ex);
-                }
+                file = file.Replace("/p ", "");
             }
             else
             {
-                Console.WriteLine("File does not exist");
+                if (Program.CurrentDir == null)
+                {
+                    FileUtils.NoDirSet();
+                }
+                file = Program.CurrentDir + file;
             }
-            Program.Prompt();
-        }
-        public static void RunProcessPath()
-        {
-            string file = Program.command.Replace("proc run /p ", "");
+
+            if (file.Contains(" /args "))
+            {
+                file = file.Split(" /args ")[0];
+            }
+
+            string[] args = Program.UserCommand.Split(" /args ");
             if (File.Exists(file))
             {
                 try
                 {
                     Process proc = new Process();
                     proc.StartInfo.FileName = file;
+                    if (args.Length > 1)
+                    {
+                        proc.StartInfo.Arguments = args[1];
+                    }
+
                     proc.Start();
 
                     Console.WriteLine("Started process..");
                     Console.WriteLine("File : " + file);
+                    if (args.Length > 1)
+                    {
+                        Console.WriteLine("Args : " + args[1]);
+                    }
                 }
                 catch (Exception ex)
                 {
