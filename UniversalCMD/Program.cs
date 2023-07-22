@@ -266,7 +266,7 @@ namespace UniCMD
 
                 // proc run
                 case "proc run":
-                    CommandUsages.FileClearUsage();
+                    CommandUsages.ProcessStartUsage();
                     break;
 
                 case string s when s.StartsWith("proc run "):
