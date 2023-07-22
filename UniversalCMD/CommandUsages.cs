@@ -40,8 +40,8 @@ namespace UniCMD
                    ╚File Cln {name}
                    ╚File Cln /P {path}
                   ╚File Rename
-                   ╚File Rnm {name}
-                   ╚File Rnm /P {path}
+                   ╚File Rnm {name} /name {new_name}
+                   ╚File Rnm /P {path} /name {new_name}
                   ╚File Zip
                    ╚File Zip {name}
                    ╚File Zip /P {path}
@@ -63,8 +63,8 @@ namespace UniCMD
                    ╚Dir Cln {name}
                    ╚Dir Cln /P {path}
                   ╚Dir Rnm
-                   ╚Dir Rnm {name}
-                   ╚Dir Rnm /P {path}
+                   ╚Dir Rnm {name} /name {new_name}
+                   ╚Dir Rnm /P {path} /name {new_name}
                 
                  Process Commands
                   ╚Process Run
