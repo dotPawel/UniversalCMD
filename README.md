@@ -57,6 +57,8 @@ UniScript is also used by the macros feature
 
 UniDKIT is the officall development kit for UniCMD, it comes complete with syntax highlighting, autocomplete and a set of tools for UniPKG
 
+https://github.com/dotPawel/UniDKIT
+
 ![unidkit_screenshot](https://github.com/dotPawel/UniversalCMD/assets/89011403/ed95b88d-39cd-4bcc-b0b4-d2e2fde34d29)
 
 Get it via UniPKG using ``unipkg /inst UniDKIT`` or click [here](https://github.com/dotPawel/UniDKIT/releases/latest) to get it manually
