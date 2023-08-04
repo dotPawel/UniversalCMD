@@ -158,8 +158,8 @@ namespace UniCMD
         }
         public static void NoDirSet()
         {
-            Console.WriteLine("in order to use this command set a directory first");
-            Console.WriteLine("the command for it is 'sd'");
+            Console.WriteLine("In order to use this command set a directory first");
+            Console.WriteLine("Using the 'sd' command");
             Program.Prompt();
         }
         public static void CreateDir()
@@ -710,9 +710,9 @@ namespace UniCMD
 
             try
             {
-                System.IO.Compression.ZipFile.CreateFromDirectory(Program.CurrentDir + dirname, Program.CurrentDir + dirname + ".zip");
+                System.IO.Compression.ZipFile.CreateFromDirectory(dirname, dirname + ".zip");
                 Console.WriteLine("Created zip archive at current");
-                Console.WriteLine(" " + Program.CurrentDir + dirname + ".zip");
+                Console.WriteLine(" " + dirname + ".zip");
             }
             catch(Exception ex)
             {

@@ -213,6 +213,7 @@ namespace UniCMD
             Process proc = Process.GetCurrentProcess();
 
             text = text.Replace("::ver::", Program.Version)
+                .Replace("::cdnm::", Program.Codename)
                 .Replace("::osver::", Environment.OSVersion.ToString())
                 .Replace("::ram::", proc.PrivateMemorySize64.ToString())
                 .Replace("::time::", DateTime.Now.ToString("hh:mm tt"))
@@ -221,7 +222,11 @@ namespace UniCMD
                 .Replace("::proc::", Environment.ProcessorCount.ToString())
                 .Replace("::mmem::", Environment.WorkingSet.ToString())
                 .Replace("::tick::", Environment.TickCount.ToString())
-                .Replace("::sysp::", Environment.SystemPageSize.ToString());
+                .Replace("::sysp::", Environment.SystemPageSize.ToString())
+                .Replace("::sysd::", Environment.SystemDirectory.ToString() + "\\")  
+                .Replace("::appd::", Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\") 
+                .Replace("::desk::", Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory) + "\\")
+                .Replace("::usrd::", Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) + "\\");
 
             if (OtherUtils.IsAdmin) { text = text.Replace("::root::", "(#)");  }
             else { text = text.Replace("::root::", "   "); }

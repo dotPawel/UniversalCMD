@@ -1,15 +1,21 @@
 ﻿using System.Diagnostics;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace UniCMD
 {
-    static internal class Startup // this thing is such a mess, may cause brain damage just by looking at it
+    static internal class Startup // https://cdn.discordapp.com/attachments/754607880359116824/1135948757280768000/gems.mp4
     {
         public static bool showExceptions = false;
         public static bool doAutoexec = false;
         public static string[] config;
         public static void MainStartUp()
         {
-            Console.WriteLine("   UniCMD Start-Up\n");
+            Console.WriteLine("  UniCMD Start-Up\n");
+
+            // Set working directory to where the UniCMD executeable is located
+            // Helps avoiding situations where startup creates files and folders outside the main app directory
+            Environment.CurrentDirectory = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location) + @"\";
+
             CheckData();
 
             string[] config = System.IO.File.ReadAllLines(@"UniCMD.data/config.cfg");
@@ -25,146 +31,79 @@ namespace UniCMD
                 UniScript.ExecuteAutoexec();
             }
 
-            Console.WriteLine("\n    Start-Up finished");
+            Console.WriteLine("  Start-Up finished");
             Console.Clear();
             // after this unicmd boots into the main prompt
         }
         public static void CheckData()
         {
-            // data folder
-            if (Directory.Exists(@"UniCMD.data"))
+            string[] ToCheckDir = 
             {
-                Console.WriteLine("UniCMD > OK");
-            }
-            else
+                "UniCMD.data", "UniCMD.data/Macros", "UniCMD.data/UniPKG", "UniCMD.data/UniPKG/pkginfo"
+            };
+            string[] ToCheckFile = 
+            { 
+                "UniCMD.data/config.cfg", "UniCMD.data/autoexec.cfg"
+            };
+
+            foreach (string dir in ToCheckDir)
             {
-                Console.WriteLine("\nUniCMD.data does not exist");
-                Console.WriteLine("creating UniCMD.data ..");
-                try
+                if (Directory.Exists(dir))
                 {
-                    Directory.CreateDirectory(@"UniCMD.data");
+                    Console.WriteLine("OK -> " + dir);
                 }
-                catch (Exception ex)
+                else
                 {
-                    Console.WriteLine("\nCould not create UniCMD.data");
-                    Console.WriteLine("Exception :\n\n" + ex + "\n");
-                    Console.WriteLine("Press any key to continue");
-                    Console.ReadKey();
-                }
-            }
-            // autoexec file
-            if (File.Exists(@"UniCMD.data/autoexec.cfg"))
-            {
-                Console.WriteLine("autoexec.cfg > OK");
-            }
-            else
-            {
-                Console.WriteLine("\nautoexec.cfg does not exist");
-                Console.WriteLine("creating autoexec.cfg ..");
-                try
-                {
-                    var myFile = File.Create(@"UniCMD.data\autoexec.cfg");
-                    myFile.Close();
-                    Console.WriteLine("Restarting Start-Up process");
-                    MainStartUp();
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine("\nCould not create UniCMD.data");
-                    Console.WriteLine("Exception :\n\n" + ex + "\n");
-                    Console.WriteLine("Press any key to continue");
-                    Console.ReadKey();
+                    try
+                    {
+                        Directory.CreateDirectory(dir);
+                        Console.WriteLine("MAKE -> " + dir);
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine("ERR -> " + dir);
+
+                        Console.WriteLine("\n Attempt to create " + dir + " failed");
+                        Console.WriteLine(" Exception : " + ex.Message);
+                        Console.WriteLine(" ----- Press any key to exit -----");
+                        Console.ReadKey();
+                        Environment.Exit(0);
+                    }
                 }
             }
 
-            // config
-            if (File.Exists(@"UniCMD.data/config.cfg"))
+            foreach (string file in ToCheckFile)
             {
-                Console.WriteLine("config.cfg > OK");
-            }
-            else
-            {
-                Console.WriteLine("\nconfig.cfg does not exist");
-                Console.WriteLine("creating config.cfg ..");
-                try
+                if (File.Exists(file))
                 {
-                    var myFile = File.Create(@"UniCMD.data\config.cfg");
-                    myFile.Close();
-                    Console.WriteLine("writing config template..");
-                    WriteTemplate();
-                    Console.WriteLine("Restarting Start-Up process");                    
-                    MainStartUp();
+                    Console.WriteLine("OK -> " + file);
                 }
-                catch (Exception ex)
+                else
                 {
-                    Console.WriteLine("\nCould not create config.cfg");
-                    Console.WriteLine("Exception :\n\n" + ex + "\n");
-                    Console.WriteLine("Press any key to continue");
-                    Console.ReadKey();
-                }              
-            }
-            // macros folder
-            if (Directory.Exists(@"UniCMD.data\Macros"))
-            {
-                Console.WriteLine("UniCMD/Macros > OK");
-            }
-            else
-            {
-                Console.WriteLine("\nUniCMD.data/Macros does not exist");
-                Console.WriteLine("creating /UniPKG..");
-                try
-                {
-                    Directory.CreateDirectory(@"UniCMD.data\Macros");
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine("\nCould not create UniCMD.data/Macros");
-                    Console.WriteLine("Exception :\n\n" + ex + "\n");
-                    Console.WriteLine("Press any key to continue");
-                    Console.ReadKey();
-                }
-            }
+                    try
+                    {
+                        File.Create(file).Close();
+                        Console.WriteLine("MAKE -> " + file);
 
-            // unipkg folder
-            if (Directory.Exists(@"UniCMD.data\UniPKG"))
-            {
-                Console.WriteLine("UniCMD/UniPKG > OK");
-            }
-            else
-            {
-                Console.WriteLine("\nUniCMD.data/UniPKG does not exist");
-                Console.WriteLine("creating /UniPKG ..");
-                try
-                {
-                    Directory.CreateDirectory(@"UniCMD.data\UniPKG");
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine("\nCould not create UniCMD.data/UniPKG");
-                    Console.WriteLine("Exception :\n\n" + ex + "\n");
-                    Console.WriteLine("Press any key to continue");
-                    Console.ReadKey();
-                }
-            }
-            // unipkg\pkginfo folder
-            if (Directory.Exists(@"UniCMD.data\UniPKG\pkginfo"))
-            {
-                Console.WriteLine("UniCMD/UniPKG/pkginfo > OK");
-            }
-            else
-            {
-                Console.WriteLine("\nUniCMD.data/UniPKG/pkginfo does not exist");
-                Console.WriteLine("creating /UniPKG/pkginfo ..");
-                try
-                {
-                    Directory.CreateDirectory(@"UniCMD.data\UniPKG\pkginfo");
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine("\nCould not create UniCMD.data/UniPKG/pkginfo");
-                    Console.WriteLine("Exception :\n\n" + ex + "\n");
-                    Console.WriteLine("Press any key to continue");
-                    Console.ReadKey();
+                        if (file == "UniCMD.data/config.cfg")
+                        {
+                            WriteTemplate();
+                            Console.WriteLine("Restarting Start-Up");
+                            Console.Clear();
+                            MainStartUp();
+                        }
+                        Console.WriteLine(file + " -> TEMPLATE");
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine("ERR -> " + file);
+
+                        Console.WriteLine("\n Attempt to create " + file + " failed");
+                        Console.WriteLine(" Exception : " + ex.Message);
+                        Console.WriteLine(" ----- Press any key to exit -----");
+                        Console.ReadKey();
+                        Environment.Exit(0);
+                    }
                 }
             }
         }       

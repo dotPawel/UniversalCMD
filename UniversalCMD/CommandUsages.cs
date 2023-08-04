@@ -10,7 +10,7 @@ namespace UniCMD
     {
         public static void About()
         {
-            Console.WriteLine("   UniversalCMD / Codename Stardust / Build " + Program.Version + "\n");
+            Console.WriteLine("     UniversalCMD / Codename {0} / Build {1}", Program.Codename, Program.Version);
             Console.WriteLine("  a better AeroCL & a easy command line solution");
 
             Program.Prompt();
@@ -97,6 +97,11 @@ namespace UniCMD
                  Networking
                   ╚Network Ping
                    ╚Net Ping {ip adress}
+                  ╚Network Download
+                   ╚Net Dload {file url}
+                   ╚Net Dload {file url} /p {path}
+                  ╚Network FetchContents
+                   ╚Net Fc {url}
                
                  Other
                   ╚Clr
@@ -368,6 +373,31 @@ namespace UniCMD
 
             Program.Prompt();
         }
+        public static void NetworkDownloadUsage()
+        {
+            Console.WriteLine("""
+                Usage of 'net dload'
+
+                  input : net dload {file url}
+                          net dload {file url} /p {path}
+                  output : file is downloaded from url to current directory or path if provided
+                """);
+
+
+            Program.Prompt();
+        }
+        public static void NetworkFetchContentUsage()
+        {
+            Console.WriteLine("""
+                Usage of 'net fc'
+
+                  input : net fc {url}
+                  output : url page contents are fetched
+                """);
+
+
+            Program.Prompt();
+        }
 
         // starttext & prompttext commands
         public static void StarttextHelp()
@@ -409,6 +439,7 @@ namespace UniCMD
                  All TextModules are listed bellow
                 -- Data modules
                  ::ver:: - UniCMD version
+                 ::cdnm:: - Version codename
                  ::osver:: - OS version
                  ::ram:: - RAM memory
                  ::time:: - System time
@@ -420,6 +451,10 @@ namespace UniCMD
                  ::mmem:: - Memory mapped to UniCMD
                  ::tick:: - Tick count
                  ::sysp:: - System page size
+                 ::sysd:: - System directory
+                 ::appd:: - Application directory (%appdata%)
+                 ::desk:: - Desktop directory
+                 ::usrd:: - User directory
                 -- Color modules
                  :[red]:
                  :[green]:

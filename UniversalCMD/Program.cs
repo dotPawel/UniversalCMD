@@ -4,7 +4,8 @@ namespace UniCMD
 {
     static internal class Program
     {
-        public static string Version = "v6.2r";
+        public static string Version = "v7.0r";
+        public static string Codename = "Stardust";
         // r - release
         // rc - release candidate
         // d - debug
@@ -31,12 +32,12 @@ namespace UniCMD
             }
 
             Console.WriteLine("""
-                     UniversalCMD / Stardust / {0}
-                  Host OS - {1}
-                  Memory - {2} (KB)
-                  CPU Name/model - {3}
+                     UniversalCMD / {0} / {1}
+                  Host OS - {2}
+                  Memory - {3} (KB)
+                  CPU Name/model - {4}
                      For command index execute "help"
-                """, Version, Environment.OSVersion, proc.PrivateMemorySize64, cpu);
+                """, Codename, Version, Environment.OSVersion, proc.PrivateMemorySize64, cpu);
 
             Prompt();
         }
@@ -89,6 +90,10 @@ namespace UniCMD
             // Behold no more! the if/else monster is gone.
             switch (command)
             {
+                case string s when s.StartsWith("[ptm-cmd] "):
+                    OtherUtils.PTMCommand();
+                    break;
+
                 // Misc. commands
                 case "exit":
                     Console.Write("Quitting UniCMD..");
@@ -374,13 +379,10 @@ namespace UniCMD
                     CommandUsages.TextModulesExample();
                     break;
 
-                case string s when s.StartsWith("[ptm-cmd] "):
-                    OtherUtils.PTMCommand();
-                    break;
-
                 case "[ptm-cmd]":
                     CommandUsages.ParseCommandHelp();
                     break;
+
                 
                 // UniScript commands
                 case "uniscript":
@@ -390,6 +392,7 @@ namespace UniCMD
                 case string s when s.StartsWith("uniscript "):
                     UniScript.Execute();
                     break;
+
 
                 // UniPKG commands
                 case "unipkg":
@@ -440,6 +443,7 @@ namespace UniCMD
                     UniPKG.ListInstalledPackages();
                     break;
 
+
                 // Networking commands
 
                 // net ping
@@ -451,7 +455,26 @@ namespace UniCMD
                     Networking.Ping();
                     break;
 
+                // net dload
+                case "net dload":
+                    CommandUsages.NetworkDownloadUsage();
+                    break;
 
+                case string s when s.StartsWith("net dload "):
+                    Networking.Download();
+                    break;
+
+                // net dload
+                case "net fc":
+                    CommandUsages.NetworkFetchContentUsage();
+                    break;
+
+                case string s when s.StartsWith("net fc "):
+                    Networking.FetchContents();
+                    break;
+
+
+                // Misc.
 
                 case "dbg_start":
                     Debug.dbg_start();

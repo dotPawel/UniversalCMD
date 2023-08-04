@@ -34,7 +34,7 @@ namespace UniCMD
         }
         public static void Echo()
         {
-            string text = Program.Command.Replace("echo ", "");
+            string text = Program.UserCommand.Replace("echo ", "");
 
             if (text.StartsWith("/ptm "))
             {
@@ -65,11 +65,12 @@ namespace UniCMD
             string input = Program.Command.Replace("[ptm-cmd] ", "");
 
             input = ConfigCommands.ApplyTextModules(input);
-
+            
+            // this is a really retarded solution but it works. With the catch being that UserCommand goes lowercase :)
+            Program.UserCommand = input;
             Program.Command = input;
-            Program.CommandParser(input);
 
-            Program.Prompt();
+            Program.CommandParser(input);
         }
         public static void RootCheck()
         {
@@ -84,11 +85,6 @@ namespace UniCMD
                 {
                     Console.WriteLine("");
                     return;
-                }
-                if (result.Key == ConsoleKey.N)
-                {
-                    Console.WriteLine("\nReturning to main prompt..");
-                    Program.Prompt();
                 }
                 else
                 {

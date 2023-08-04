@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Media;
+﻿using System.Media;
 using System.Text;
-using System.Threading.Tasks;
-using static Community.CsharpSqlite.Sqlite3;
 
 namespace UniCMD
 {
@@ -37,7 +32,7 @@ namespace UniCMD
                 Console.WriteLine(file);
                 dbg_prompt();
             }
-            if (dbg == "isroot_?")
+            if (dbg == "isroot?")
             {
                 if (OtherUtils.IsAdmin == true)
                 {
@@ -53,7 +48,7 @@ namespace UniCMD
             {
                 Program.Prompt();
             }
-            if (dbg == "cdir_?")
+            if (dbg == "cdir")
             {
                 if (Program.CurrentDir == null)
                 {
@@ -93,7 +88,7 @@ namespace UniCMD
                 }
                 dbg_prompt();
             }
-            if (dbg == "unipkg.deltemp")
+            if (dbg == "unipkg_deltemp")
             {
                 try
                 {

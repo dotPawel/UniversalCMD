@@ -21,7 +21,8 @@ namespace UniCMD
                 {
                     if (line.Length > 1)
                     {
-                        Program.Command = line;
+                        Program.Command = line.ToLower();
+                        Program.UserCommand = line;
 
                         Program.CommandParser(line);
                     }
@@ -62,7 +63,8 @@ namespace UniCMD
                     {
                         if (line.Length > 1)
                         {
-                            Program.Command = line;
+                            Program.Command = line.ToLower();
+                            Program.UserCommand = line;
 
                             Program.CommandParser(line);
                         }      
