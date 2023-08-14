@@ -7,6 +7,7 @@ namespace UniCMD
     {
         public static bool showExceptions = false;
         public static bool doAutoexec = false;
+        public static bool printMacroInIndex = false;
         public static string[] config;
         public static void MainStartUp()
         {
@@ -29,6 +30,11 @@ namespace UniCMD
             {
                 Console.WriteLine("doAutoexec > ENABLED");
                 UniScript.ExecuteAutoexec();
+            }
+            if (config.Contains("printMacroInIndex = y"))
+            {
+                Console.WriteLine("printMacroInIndex > ENABLED");
+                printMacroInIndex = true;
             }
 
             Console.WriteLine("  Start-Up finished");
@@ -111,11 +117,12 @@ namespace UniCMD
         {
             using (StreamWriter sw = File.AppendText(@"UniCMD.data/config.cfg"))
             {
-                sw.WriteLine("//UniveralCMD Config File");
-                sw.WriteLine("//this is used when UniCMD is booting (start-up)");
+                sw.WriteLine("// UniveralCMD Config File");
+                sw.WriteLine("// this is used when UniCMD is booting (start-up)");
                 sw.WriteLine();
                 sw.WriteLine("showExceptions = n");
                 sw.WriteLine("doAutoexec = n");
+                sw.WriteLine("printMacroInIndex = y");
                 sw.Close();
             }
         }

@@ -14,6 +14,14 @@ namespace UniCMD
         {
             string text = Program.Command.Replace(".$", "");
 
+            if (text.Contains(" /in "))
+            {
+                string[] SplitCommand = text.Split(" /in ");
+                text = SplitCommand[0];
+
+                ConfigCommands.UnscUserArg = SplitCommand[1];
+            }
+
             if (File.Exists(@"UniCMD.data\Macros\" + text + ".unsc"))
             {
                 UniScriptExecuting = true;
@@ -41,6 +49,7 @@ namespace UniCMD
         public static void Execute()
         {
             string file = Program.Command.Replace("uniscript ", "");
+
             if (file.StartsWith("/p "))
             {
                 file = file.Replace("/p ", "");
@@ -53,7 +62,15 @@ namespace UniCMD
                 }
                 file = Program.CurrentDir + file;
             }
-            
+
+            if (file.Contains(" /in "))
+            {
+                string[] SplitCommand = file.Split(" /in ");
+                file = SplitCommand[0];
+
+                ConfigCommands.UnscUserArg = SplitCommand[1];
+            }
+
             if (File.Exists(file))
             {
                 if (file.EndsWith(".unsc"))

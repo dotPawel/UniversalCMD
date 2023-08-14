@@ -4,7 +4,7 @@ namespace UniCMD
 {
     static internal class Program
     {
-        public static string Version = "v7.0r";
+        public static string Version = "v7.2r";
         public static string Codename = "Stardust";
         // r - release
         // rc - release candidate

@@ -9,6 +9,7 @@ namespace UniCMD
 {
     internal class ConfigCommands
     {
+        public static string UnscUserArg;
         // config commands
         public static void OpenConfig()
         {
@@ -226,7 +227,8 @@ namespace UniCMD
                 .Replace("::sysd::", Environment.SystemDirectory.ToString() + "\\")  
                 .Replace("::appd::", Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\") 
                 .Replace("::desk::", Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory) + "\\")
-                .Replace("::usrd::", Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) + "\\");
+                .Replace("::usrd::", Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) + "\\")
+                .Replace("::unsc:input::", UnscUserArg);
 
             if (OtherUtils.IsAdmin) { text = text.Replace("::root::", "(#)");  }
             else { text = text.Replace("::root::", "   "); }

@@ -81,8 +81,8 @@ namespace UniCMD
                   ╚Irpy /P {path}
 
                  UniScript
-                  ╚UniScript {name}
-                  ╚UniScript /P {path} 
+                  ╚UniScript {name} /in {optional user argument}
+                  ╚UniScript /P {path} /in {optional user argument}
 
                  UniPKG
                   ╚Online
@@ -137,6 +137,22 @@ namespace UniCMD
                    ╚ACL_BB start
                    ╚ACL_BB about
                 """);
+
+            if (Startup.printMacroInIndex)
+            {
+                Console.WriteLine("\n Your macros (execute via .${macro name})");
+                string[] Macros = Directory.GetFiles("UniCMD.data\\Macros\\");
+                if (Macros.Length > 0)
+                {
+                    foreach (string macro in Macros)
+                        Console.WriteLine("  ╚" + Path.GetFileNameWithoutExtension(macro));
+                }
+                else
+                {
+                    Console.WriteLine(" ╚No macros found");
+                }
+            }
+
             Program.Prompt();
         }
         //filesystem commands usage
@@ -455,6 +471,7 @@ namespace UniCMD
                  ::appd:: - Application directory (%appdata%)
                  ::desk:: - Desktop directory
                  ::usrd:: - User directory
+                 ::unsc:input:: - User argument for UniScript set using the /in argument, see 'uniscript' for more
                 -- Color modules
                  :[red]:
                  :[green]:
@@ -507,8 +524,10 @@ namespace UniCMD
                 for simple automation of tasks.
 
                   To run a UniScript file enter :
-                  'uniscript {name}'
-                  'uniscript /p {path}'
+                  'uniscript {name} /in {optional argument}'
+                  'uniscript /p {path} /in {optional argument}'
+
+                The '/in' argument sets the ::unsc:input:: TextModule
                 """);
             Program.Prompt();
         }

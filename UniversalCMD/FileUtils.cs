@@ -371,8 +371,7 @@ namespace UniCMD
             {
                 try
                 {
-                    var myFile = File.Create(filename);
-                    myFile.Close();
+                    File.Create(filename).Close();
                     Console.WriteLine("Created file from path");
                     Console.WriteLine(" " + filename);
                 }
@@ -462,6 +461,8 @@ namespace UniCMD
         }
         public static void WriteFile()
         {
+            // replace or remove this some time
+            
             string filename = Program.Command.Replace("file wrt ", "");
             if (filename.StartsWith("/p "))
             {
@@ -685,6 +686,7 @@ namespace UniCMD
                     Console.WriteLine("No new name provided (/name argument)");
                     Program.Prompt();
                 }
+                Console.WriteLine();
             }
             else
             {
