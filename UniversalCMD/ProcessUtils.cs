@@ -19,10 +19,12 @@ namespace UniCMD
             {
                 Console.WriteLine(" " + process.ProcessName + " | " + process.Id);
             }
-            Program.Prompt();
         }
         public static void KillAllProcess()
         {
+            // this is so fucking stupid lol
+            // why does this exist in the first place
+
             var failed = 0;
             var success = 0;
             if (OtherUtils.IsAdmin == false)
@@ -40,12 +42,6 @@ namespace UniCMD
                 {
                     try
                     {
-                        if (process.ProcessName == OtherUtils.UniCMD_Name)
-                        {
-                            // this does not work lol
-                            Console.WriteLine("SKIPPING : UniCMD exit prevention");
-                            return;
-                        }
                         process.Kill();
                         Console.WriteLine("SUCCESS : " + process.ProcessName + " | " + process.Id);
                         success =+ 1;
@@ -59,17 +55,16 @@ namespace UniCMD
             }
             else
             {
-                Program.Prompt();
+                return;
             }
             Console.WriteLine("Task finished");
             Console.WriteLine("Success : " + success);
             Console.WriteLine("Failed : " + failed);
-            Program.Prompt();
         }
         public static void KillProcess()
         {
             var killed = 0;
-            string filename = Program.Command.Replace("proc end ", "");
+            var filename = string.Join(" ", Program.UserCommand.Split(' ').Skip(2));
             Process[] process = Process.GetProcessesByName(filename);
             try
             {
@@ -85,11 +80,10 @@ namespace UniCMD
                 Console.WriteLine("Could not kill process");
                 OtherUtils.PrintException(ex);
             }
-            Program.Prompt();
         }
         public static void RunProcess()
         {
-            string file = Program.Command.Replace("proc run ", "");
+            var file = string.Join(" ", Program.UserCommand.Split(' ').Skip(2));
             if (file.StartsWith("/p "))
             {
                 file = file.Replace("/p ", "");
@@ -139,7 +133,6 @@ namespace UniCMD
             {
                 Console.WriteLine("File does not exist");
             }
-            Program.Prompt();
         }
     }
 }

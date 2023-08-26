@@ -47,7 +47,6 @@ namespace UniCMD
             {
                 Console.WriteLine("File does not exist or isnt a .py file");
             }
-            Program.Prompt();
         }
     }
 }

@@ -22,7 +22,7 @@ namespace UniCMD
             if (File.Exists(@"UniCMD.data\UniPKG\pkginfo\" + pkgname[2] + ".pkginfo"))
             {
                 Console.WriteLine("Package entry already exists");
-                Program.Prompt();
+                return;
             }
             try
             {
@@ -76,8 +76,6 @@ namespace UniCMD
                 File.Delete(@"UniCMD.data\UniPKG\" + pkgname + ".unipkg");
                 DeleteTemp();
             }
-
-            Program.Prompt();
         }
         public static void FetchOnlineInfo()
         {
@@ -113,7 +111,6 @@ namespace UniCMD
                 Console.WriteLine(@"Deleting TEMP ..");
                 Directory.Delete(@"UniCMD.data\UniPKG\TEMP", true);
             }
-            Program.Prompt();
         }
 
         // local
@@ -128,12 +125,12 @@ namespace UniCMD
             if (!File.Exists(Program.CurrentDir + pkgname[2]))
             {
                 Console.WriteLine("Selected file does not exist");
-                Program.Prompt();
+                return;
             }
             if (!pkgname[2].EndsWith(".unipkg"))
             {
                 Console.WriteLine("Selected file is not an UniPKG package");
-                Program.Prompt();
+                return;
             }
             try
             {
@@ -166,7 +163,6 @@ namespace UniCMD
                 Directory.Delete(@"UniCMD.data\UniPKG\TEMP", true);
                 OtherUtils.PrintException(ex);
             }
-            Program.Prompt();
         }
         public static void Uninstall()
         {
@@ -175,7 +171,7 @@ namespace UniCMD
             if (!File.Exists(@"UniCMD.data\UniPKG\pkginfo\" + pkgname[2] + ".uninst"))
             {
                 Console.WriteLine("No .uninst file found for " + pkgname[2]);
-                Program.Prompt();
+                return;
             }
 
             try
@@ -203,7 +199,6 @@ namespace UniCMD
                 Console.WriteLine("Uninstalling failed.");
                 OtherUtils.PrintException(ex);
             }
-            Program.Prompt();
         }
         public static void FetchInfo()
         {
@@ -211,11 +206,10 @@ namespace UniCMD
             if (!File.Exists(@"UniCMD.data\UniPKG\pkginfo\" + pkgname[2] + ".pkginfo"))
             {
                 Console.WriteLine("No .pkginfo file found for " + pkgname[2]);
-                Program.Prompt();
+                return;
             }
 
             ReadInfo(pkgname[2], false);
-            Program.Prompt();
         }
         public static void ListInstalledPackages()
         {
@@ -238,9 +232,8 @@ namespace UniCMD
             {
                 Console.WriteLine("Listing packages failed");
                 OtherUtils.PrintException(ex);
-                Program.Prompt();
+                return;
             }
-            Program.Prompt();
         }
 
         // Installation modules
@@ -283,7 +276,7 @@ namespace UniCMD
             {
                 Console.WriteLine("Installing files failed");
                 OtherUtils.PrintException(ex);
-                Program.Prompt();
+                return;
             }
         }
         static void CheckPackageInfo(string PackageName)
@@ -313,7 +306,7 @@ namespace UniCMD
             {
                 Console.WriteLine("Checking package info failed");
                 OtherUtils.PrintException(ex);
-                Program.Prompt();
+                return;
             }
 
             Console.WriteLine("All package files OK");
@@ -355,7 +348,7 @@ namespace UniCMD
             {
                 Console.WriteLine("Reading info failed");
                 OtherUtils.PrintException(ex);
-                Program.Prompt();
+                return;
             }
             Console.WriteLine();
         }
@@ -370,7 +363,6 @@ namespace UniCMD
             {
                 Console.WriteLine("Deleting TEMP failed");
                 OtherUtils.PrintException(ex);
-                Program.Prompt();
             }
         }
         static void ConfirmInstall()

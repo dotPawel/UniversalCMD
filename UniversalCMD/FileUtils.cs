@@ -1,5 +1,7 @@
-﻿using System.Text;
+﻿using System.Runtime.CompilerServices;
+using System.Text;
 using static Community.CsharpSqlite.Sqlite3;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace UniCMD
 {
@@ -9,7 +11,6 @@ namespace UniCMD
         public static void SetDirectory()
         {
             string dir = Program.UserCommand.Replace("sd ", "");
-
             if (Program.CurrentDir != null && dir == "..")
             {
                 try
@@ -25,13 +26,13 @@ namespace UniCMD
                     Console.WriteLine("Cannot edit directory");
                     OtherUtils.PrintException(ex);
                 }
-                Program.Prompt();
+                return;
             }
 
             if (!dir.EndsWith(@"\"))
             {
                 Console.WriteLine("Path does not end with backslash");
-                Program.Prompt();
+                return;
             }
 
             if (Program.CurrentDir == null && Directory.Exists(dir))
@@ -40,20 +41,19 @@ namespace UniCMD
 
                 Console.WriteLine("Successfully set directory");
                 Console.WriteLine(" " + Program.CurrentDir);
-                Program.Prompt();
+                return;
             }
             if (Program.CurrentDir != null && Directory.Exists(Program.CurrentDir + dir))
             {
                 Program.CurrentDir = Program.CurrentDir + dir;
                 Console.WriteLine("Successfully edited directory");
                 Console.WriteLine(" " + Program.CurrentDir);
-                Program.Prompt();
+                return;
             }
             else
             {
                 Console.WriteLine("Cannot access directory.");
             }
-            Program.Prompt();
 
             /* Old version
             if (Program.currentdir == null)
@@ -131,7 +131,6 @@ namespace UniCMD
         {
             Program.CurrentDir = null;
             Console.WriteLine("Cleared set directory");
-            Program.Prompt();
         }
         public static void ListDir()
         {
@@ -153,7 +152,6 @@ namespace UniCMD
                 {
                     Console.WriteLine(" " + d);
                 }
-                Program.Prompt();
             }
         }
         public static void NoDirSet()
@@ -164,8 +162,9 @@ namespace UniCMD
         }
         public static void CreateDir()
         {
-            string dirname = Program.Command.Replace("dir make ", "");
-
+            // this is how we ball
+            var dirname = string.Join(" ", Program.UserCommand.Split(' ').Skip(2));
+            
             if (dirname.StartsWith("/p "))
             {
                 dirname = dirname.Replace("/p ", "");
@@ -184,7 +183,7 @@ namespace UniCMD
                 if (Directory.Exists(dirname))
                 {
                     Console.WriteLine("Directory already exists");
-                    Program.Prompt();
+                    return;
                 }
                 Directory.CreateDirectory(dirname);
                 Console.WriteLine("Directory created from path");
@@ -195,11 +194,10 @@ namespace UniCMD
                 Console.WriteLine("Could not create directory.");
                 OtherUtils.PrintException(ex);
             }
-            Program.Prompt();
         }
         public static void DeleteDir()
         {
-            string dirname = Program.Command.Replace("dir del ", "");
+            var dirname = string.Join(" ", Program.UserCommand.Split(' ').Skip(2));
 
             if (dirname.StartsWith("/p "))
             {
@@ -226,19 +224,16 @@ namespace UniCMD
                 {
                     Console.WriteLine("Cannot delete directory");
                     OtherUtils.PrintException(ex);
-                    Program.Prompt();
                 }
             }
             else
             {
                 Console.WriteLine("Directory does not exist");
-                Program.Prompt();
             }
-            Program.Prompt();
         }
         public static void CloneDir()
         {
-            string dirname = Program.Command.Replace("dir cln ", "");
+            var dirname = string.Join(" ", Program.UserCommand.Split(' ').Skip(2));
             bool overwrite = false;
             if (dirname.StartsWith("/p "))
             {
@@ -276,7 +271,7 @@ namespace UniCMD
                         }
                         else
                         {
-                            Program.Prompt();
+                            return;
                         }
                     }
                     Microsoft.VisualBasic.FileIO.FileSystem.CopyDirectory(dirname, clone, overwrite);
@@ -287,17 +282,15 @@ namespace UniCMD
                     Console.WriteLine("Could not clone directory");
                     OtherUtils.PrintException(ex);
                 }
-                Program.Prompt();
             }
             else
             {
                 Console.WriteLine("Directory not found");
             }
-            Program.Prompt();
         }
         public static void RenameDir()
         {
-            string dirname = Program.Command.Replace("dir rnm ", "");
+            var dirname = string.Join(" ", Program.UserCommand.Split(' ').Skip(2));
             if (dirname.StartsWith("/p "))
             {
                 dirname = dirname.Replace("/p ", "");
@@ -335,20 +328,19 @@ namespace UniCMD
                 else
                 {
                     Console.WriteLine("No new name provided (/name argument)");
-                    Program.Prompt();
+                    return;
                 }
             }
             else
             {
                 Console.Write("Directory does not exist");
             }
-            Program.Prompt();
         }
 
         //file
         public static void CreateFile()
         {
-            string filename = Program.Command.Replace("file make ", "");
+            var filename = string.Join(" ", Program.UserCommand.Split(' ').Skip(2));
             if (filename.StartsWith("/p "))
             {
                 filename = filename.Replace("/p ", "");
@@ -365,7 +357,6 @@ namespace UniCMD
             if (File.Exists(filename))
             {
                 Console.WriteLine("File already exists.");
-                Program.Prompt();
             }
             else
             {
@@ -379,14 +370,12 @@ namespace UniCMD
                 {
                     Console.WriteLine("Cannot create file..");
                     OtherUtils.PrintException(ex);
-                    Program.Prompt();
                 }
             }
-            Program.Prompt();
         }
         public static void DeleteFile()
         {
-            string filename = Program.Command.Replace("file del ", "");
+            var filename = string.Join(" ", Program.UserCommand.Split(' ').Skip(2));
             if (filename.StartsWith("/p "))
             {
                 filename = filename.Replace("/p ", "");
@@ -409,27 +398,24 @@ namespace UniCMD
                 }
                 catch (Exception ex)
                 {
-                    if (OtherUtils.IsAdmin == false)
+                    if (OtherUtils.IsAdmin == false) // lololoololoolol this is so retarded why did i even write this, anyway its staying like that
                     {
                         Console.WriteLine("Could not delete file, access denied");
                         OtherUtils.PrintException(ex);
-                        Program.Prompt();
+                        return;
                     }
                     Console.WriteLine("Cannot delete file");
                     OtherUtils.PrintException(ex);
-                    Program.Prompt();
                 }
             }
             else
             {
                 Console.WriteLine("File does not exist");
-                Program.Prompt();
             }
-            Program.Prompt();
         }
         public static void ReadFile()
         {
-            string filename = Program.Command.Replace("file rd ", "");
+            var filename = string.Join(" ", Program.UserCommand.Split(' ').Skip(2));
             if (filename.StartsWith("/p "))
             {
                 filename = filename.Replace("/p ", "");
@@ -450,20 +436,17 @@ namespace UniCMD
                 Console.WriteLine("  Contents of " + filename);
                 Console.WriteLine("----------------------------------------------");
                 Console.WriteLine(file);
-                Program.Prompt();
             }
             else
             {
                 Console.WriteLine("File does not exist");
             }
-
-            Program.Prompt();
         }
         public static void WriteFile()
         {
-            // replace or remove this some time
+            // use file wrtln instead of this for uniscript
             
-            string filename = Program.Command.Replace("file wrt ", "");
+            var filename = string.Join(" ", Program.UserCommand.Split(' ').Skip(2));
             if (filename.StartsWith("/p "))
             {
                 filename = filename.Replace("/p ", "");
@@ -482,6 +465,10 @@ namespace UniCMD
                 Console.WriteLine("  Writing to " + filename);
                 Console.WriteLine(" To stop writing enter '__!!stop'");
                 Console.WriteLine("----------------------------------------------");
+                foreach (string fileline in File.ReadAllLines(filename))
+                {
+                    Console.WriteLine(fileline);
+                }
                 writeline();
                 void writeline()
                 {
@@ -492,7 +479,7 @@ namespace UniCMD
                         if (line == "__!!stop")
                         {
                             Console.WriteLine("\n    Stopping writing process..");
-                            Program.Prompt();
+                            return;
                         }
                         else
                         {
@@ -508,7 +495,6 @@ namespace UniCMD
                     {
                         Console.WriteLine("\n    Cant write to file");
                         OtherUtils.PrintException(ex);
-                        Program.Prompt();
                     }
                 }
             }
@@ -517,9 +503,50 @@ namespace UniCMD
                 Console.WriteLine("File does not exist");
             }
         }
+        public static void WriteLineFile()
+        {
+            var filename = string.Join(" ", Program.UserCommand.Split(' ').Skip(2));
+            if (filename.StartsWith("/p "))
+            {
+                filename = filename.Replace("/p ", "");
+            }
+            else
+            {
+                if (Program.CurrentDir == null)
+                {
+                    FileUtils.NoDirSet();
+                }
+                filename = Program.CurrentDir + filename;
+            }
+
+            if (filename.Contains(" /s "))
+            {
+                filename = filename.Split(" /s ")[0];
+            }
+            else
+            {
+                Console.WriteLine("No input string provided (/s)");
+                return;
+            }
+            string[] userstring = Program.UserCommand.Split(" /s "); // userstring[1] is the user input
+
+            if (File.Exists(filename))
+            {
+                using (StreamWriter sw = File.AppendText(filename)) 
+                {
+                    sw.WriteLine(userstring[1]);
+                    sw.Close();
+                }
+                Console.WriteLine("Wrote '{0}' to '{1}'", userstring[1], filename);
+            }
+            else
+            {
+                Console.WriteLine("File does not exist");
+            }
+        }
         public static void ClearFile()
         {
-            string filename = Program.Command.Replace("file clr ", "");
+            var filename = string.Join(" ", Program.UserCommand.Split(' ').Skip(2));
             bool skipask = false;
             if (filename.StartsWith("/p "))
             {
@@ -560,7 +587,7 @@ namespace UniCMD
                     }
                     else
                     {
-                        Program.Prompt();
+                        return;
                     }
                 }
 
@@ -569,7 +596,6 @@ namespace UniCMD
                 {
                     System.IO.File.WriteAllBytes(filename, new byte[0]);
                     Console.WriteLine("Sucessfully wiped all data from file..");
-                    Program.Prompt();
                 }
                 catch (Exception ex)
                 {
@@ -582,11 +608,10 @@ namespace UniCMD
             {
                 Console.WriteLine("File does not exist");
             }
-            Program.Prompt();
         }
         public static void CloneFile()
         {
-            string filename = Program.Command.Replace("file cln ", "");
+            var filename = string.Join(" ", Program.UserCommand.Split(' ').Skip(2));
             bool overwrite = false;
             if (filename.StartsWith("/p "))
             {
@@ -625,7 +650,7 @@ namespace UniCMD
                         }
                         else
                         {
-                            Program.Prompt();
+                            return;
                         }
                     }
                     File.Copy(filename, Path.GetDirectoryName(filename) + "\\" + clone, overwrite);
@@ -636,17 +661,15 @@ namespace UniCMD
                     Console.WriteLine("Could not clone file");
                     OtherUtils.PrintException(ex);
                 }
-                Program.Prompt();
             }
             else
             {
                 Console.WriteLine("File not found");
             }
-            Program.Prompt();
         }
         public static void RenameFile()
         {
-            string file = Program.Command.Replace("file rnm ", "");
+            var file = string.Join(" ", Program.UserCommand.Split(' ').Skip(2));
             if (file.StartsWith("/p "))
             {
                 file = file.Replace("/p ", "");
@@ -684,7 +707,7 @@ namespace UniCMD
                 else
                 {
                     Console.WriteLine("No new name provided (/name argument)");
-                    Program.Prompt();
+                    return;
                 }
                 Console.WriteLine();
             }
@@ -692,11 +715,10 @@ namespace UniCMD
             {
                 Console.Write("File does not exist");
             }
-            Program.Prompt();
         }
         public static void ZipFile()
         {
-            string dirname = Program.Command.Replace("file zip ", "");
+            var dirname = string.Join(" ", Program.UserCommand.Split(' ').Skip(2));
             if (dirname.StartsWith("/p "))
             {
                 dirname = dirname.Replace("/p ", "");
@@ -724,7 +746,7 @@ namespace UniCMD
         }
         public static void UnzipFile()
         {
-            string file = Program.Command.Replace("file unzip ", "");
+            var file = string.Join(" ", Program.UserCommand.Split(' ').Skip(2));
             if (file.StartsWith("/p "))
             {
                 file = file.Replace("/p ", "");

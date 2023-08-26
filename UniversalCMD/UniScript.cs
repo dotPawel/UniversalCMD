@@ -10,7 +10,7 @@ namespace UniCMD
     {
         public static bool UniScriptExecuting;
 
-        public static void ExecuteMacro()
+        public async static void ExecuteMacro()
         {
             string text = Program.Command.Replace(".$", "");
 
@@ -33,6 +33,11 @@ namespace UniCMD
                         Program.UserCommand = line;
 
                         Program.CommandParser(line);
+
+                        while (!Program.ReadyToExecute)
+                        {
+                            await Task.Delay(1);
+                        }
                     }
                 }
 
@@ -46,7 +51,7 @@ namespace UniCMD
                 Program.Prompt();
             }
         }
-        public static void Execute()
+        public async static void Execute()
         {
             string file = Program.Command.Replace("uniscript ", "");
 
@@ -84,6 +89,11 @@ namespace UniCMD
                             Program.UserCommand = line;
 
                             Program.CommandParser(line);
+
+                            while (!Program.ReadyToExecute)
+                            {
+                                await Task.Delay(1);
+                            }
                         }      
                     }
                 }
@@ -98,10 +108,9 @@ namespace UniCMD
             }
             UniScriptExecuting = false;
             Console.WriteLine("\nUniScript file finished.");
-            Program.Prompt();
         }
 
-        public static void ExecuteAutoexec() 
+        public async static void ExecuteAutoexec() 
         {
             UniScriptExecuting = true;
             foreach (string line in File.ReadAllLines(@"UniCMD.data\autoexec.cfg"))
@@ -111,6 +120,11 @@ namespace UniCMD
                     Program.UserCommand = line;
 
                     Program.CommandParser(line);
+
+                    while (!Program.ReadyToExecute)
+                    {
+                        await Task.Delay(1);
+                    }
                 }
             }
             Console.WriteLine("\nAutoexec finished");

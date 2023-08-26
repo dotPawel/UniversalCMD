@@ -4,8 +4,8 @@ namespace UniCMD
 {
     static internal class Program
     {
-        public static string Version = "v7.2r";
-        public static string Codename = "Stardust";
+        public static string Version = "v8.0r";
+        public static string Codename = "Caligula";
         // r - release
         // rc - release candidate
         // d - debug
@@ -13,6 +13,8 @@ namespace UniCMD
         public static string CurrentDir;
         public static string Command;
         public static string UserCommand;
+
+        public static bool ReadyToExecute;
 
         public static void Main()
         {
@@ -30,14 +32,23 @@ namespace UniCMD
             {
                 ConfigCommands.ParseStarttext();
             }
-
-            Console.WriteLine("""
+            else
+            {
+                Console.WriteLine("""
                      UniversalCMD / {0} / {1}
                   Host OS - {2}
                   Memory - {3} (KB)
                   CPU Name/model - {4}
                      For command index execute "help"
                 """, Codename, Version, Environment.OSVersion, proc.PrivateMemorySize64, cpu);
+            }     
+
+            if (Startup.checkForUpdates)
+            {
+                // call version checker here
+                Console.WriteLine();
+                VersionManager.CompareVersionToLatest(false);
+            }
 
             Prompt();
         }
@@ -85,6 +96,7 @@ namespace UniCMD
         }
         public static void CommandParser(string command)
         {
+            ReadyToExecute = false;
             // here the commands start
 
             // Behold no more! the if/else monster is gone.
@@ -105,7 +117,7 @@ namespace UniCMD
                     break;
 
                 case "clr":
-                    OtherUtils.ClearConsole();
+                    Console.Clear();
                     break;
 
                 case string s when s.StartsWith("echo "):
@@ -216,6 +228,15 @@ namespace UniCMD
 
                 case string s when s.StartsWith("file wrt "):
                     FileUtils.WriteFile();
+                    break;
+
+                // file wrtln
+                case "file wrtln":
+                    CommandUsages.FileWriteLineUsage();
+                    break;
+
+                case string s when s.StartsWith("file wrtln "):
+                    FileUtils.WriteLineFile();
                     break;
 
                 // file clr
@@ -443,6 +464,26 @@ namespace UniCMD
                     UniPKG.ListInstalledPackages();
                     break;
 
+                // VersionManager commands
+                case "vm":
+                    CommandUsages.VersionManagerUsage();
+                    break;
+
+                case "vm lst":
+                    VersionManager.ListAllReleases();
+                    break;
+
+                case "vm comp":
+                    VersionManager.CompareVersionToLatest(true);
+                    break;
+
+                case "vm pull":
+                    CommandUsages.VersionManagerPullUsage();
+                    break;
+
+                case string s when s.StartsWith("vm pull "):
+                    VersionManager.PullRelease();
+                    break;
 
                 // Networking commands
 
@@ -492,6 +533,8 @@ namespace UniCMD
                     Prompt();
                     break;
             }
+
+            ReadyToExecute = true;
             Prompt();
 
             // debug
@@ -502,10 +545,6 @@ namespace UniCMD
         }
         public static void InvalidCommand()
         {
-            if (UniScript.UniScriptExecuting == true)
-            {
-                return;
-            }
             Console.WriteLine("Command syntax error");
             Console.WriteLine("the entered command '" + UserCommand + "'");
             Console.WriteLine("isnt a valid UniCMD command");

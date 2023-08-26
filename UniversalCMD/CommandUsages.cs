@@ -13,7 +13,7 @@ namespace UniCMD
             Console.WriteLine("     UniversalCMD / Codename {0} / Build {1}", Program.Codename, Program.Version);
             Console.WriteLine("  a better AeroCL & a easy command line solution");
 
-            Program.Prompt();
+            
         }
         public static void CommandIndex()
         {
@@ -33,6 +33,9 @@ namespace UniCMD
                   ╚File Write
                    ╚File Wrt {name}
                    ╚File Wrt /P {path}
+                  ╚File WriteLine
+                   ╚File WrtLn {name} /s {user string}
+                   ╚File WrtLn /P {path} /s {user string}
                   ╚File Clear
                    ╚File Clr {name}
                    ╚File Clr /P {path}
@@ -40,8 +43,8 @@ namespace UniCMD
                    ╚File Cln {name}
                    ╚File Cln /P {path}
                   ╚File Rename
-                   ╚File Rnm {name} /name {new_name}
-                   ╚File Rnm /P {path} /name {new_name}
+                   ╚File Rnm {name} /name {new name}
+                   ╚File Rnm /P {path} /name {new name}
                   ╚File Zip
                    ╚File Zip {name}
                    ╚File Zip /P {path}
@@ -50,7 +53,7 @@ namespace UniCMD
                    ╚File Unzip /P {path}
                 
                  Directory Management
-                  ╚Set/Clear Directory
+                  ╚Set/clear directory
                    ╚SD
                    ╚SD Clr
                   ╚Directory Make
@@ -94,6 +97,15 @@ namespace UniCMD
                    ╚unipkg /uinst {package name}
                    ╚unipkg /list
 
+                 Version Manager
+                  ╚List all releases
+                   ╚VM Lst
+                  ╚Pull release by ID
+                   ╚VM Pull {version id}
+                   ╚VM Pull Latest
+                  ╚Compare local to latest
+                   ╚VM Comp
+
                  Networking
                   ╚Network Ping
                    ╚Net Ping {ip adress}
@@ -127,7 +139,7 @@ namespace UniCMD
                     ╚TMDL Example
                     ╚Parse Command
                      ╚[ptm-cmd] {command}
-                  ╚Configuration File
+                  ╚Configuration file
                    ╚Cfg Open
                    ╚Cfg Wrt
                    ╚Cfg Rd
@@ -149,11 +161,11 @@ namespace UniCMD
                 }
                 else
                 {
-                    Console.WriteLine(" ╚No macros found");
+                    Console.WriteLine("  ╚No macros found");
                 }
             }
 
-            Program.Prompt();
+            
         }
         //filesystem commands usage
         public static void DirMakeUsage()
@@ -166,7 +178,7 @@ namespace UniCMD
                   output : directory is created from name/path
 
                 """);
-            Program.Prompt();
+            
         }
         public static void DirDeleteUsage()
         {
@@ -178,7 +190,7 @@ namespace UniCMD
                   output : name/path is deleted
                 """);
             
-            Program.Prompt();
+            
         }
         public static void DirCloneUsage()
         {
@@ -190,7 +202,7 @@ namespace UniCMD
                   output : a copy of name/path is made, overwritten if optional /frc argument used
                 """);
             
-            Program.Prompt();
+            
         }
         public static void DirRenameUsage()
         {
@@ -202,7 +214,7 @@ namespace UniCMD
                   output : name/path is renamed to provided new name
                 """);
             
-            Program.Prompt();
+            
         }
         public static void FileCreateUsage()
         {
@@ -214,7 +226,7 @@ namespace UniCMD
                   output : name/path is created
                 """);
             
-            Program.Prompt();
+            
         }
         public static void FileDeleteUsage()
         {
@@ -226,7 +238,7 @@ namespace UniCMD
                   output : name/path is deleted
                 """);
             
-            Program.Prompt();
+            
         }
         public static void FileReadUsage()
         {
@@ -238,7 +250,7 @@ namespace UniCMD
                   output : contents of name/path are printed out
                 """);
             
-            Program.Prompt();
+            
         }
         public static void FileWriteUsage()
         {
@@ -249,8 +261,16 @@ namespace UniCMD
                           file wrt /p {path}
                   output : a writing process is opened from name/path
                 """);
-            
-            Program.Prompt();
+        }
+        public static void FileWriteLineUsage()
+        {
+            Console.WriteLine("""
+                Usage of 'file wrtln'
+
+                  input : file wrtln {name} /s {string}
+                          file wrtln /p {path} /s {string}
+                  output : string is appended to name/path
+                """);
         }
         public static void FileClearUsage()
         {
@@ -262,7 +282,6 @@ namespace UniCMD
                   output : name/path is wiped of all data
                 """);
             
-            Program.Prompt();
         }
         public static void FileCloneUsage()
         {
@@ -273,7 +292,7 @@ namespace UniCMD
                           file cln /p {path} /frc
                   output : a copy of name/path is made, overwritten if optional /frc argument used
                 """);   
-            Program.Prompt();
+            
         }
         public static void FileRenameUsage()
         {
@@ -284,7 +303,7 @@ namespace UniCMD
                           file rnm /p {path} /name {new name}
                   output : name/path is renamed to provided new name
                 """);         
-            Program.Prompt();
+            
         }
         public static void FileZipUsage()
         {
@@ -295,7 +314,7 @@ namespace UniCMD
                           file zip /p {directory path}
                   output : zip archive is created from directory
                 """);
-            Program.Prompt();
+            
         }
         public static void FileUnzipUsage()
         {
@@ -306,7 +325,7 @@ namespace UniCMD
                           file unzip /p {path}
                   output : zip archive is extracted from name/path
                 """);
-            Program.Prompt();
+            
         }
 
         // python commands usage
@@ -321,7 +340,7 @@ namespace UniCMD
                           irpy /p {path}
                   output : name/path is executed with IronPython (*must be a .py file)
                 """);
-            Program.Prompt();
+            
         }
 
         // backbridge stuff
@@ -336,7 +355,7 @@ namespace UniCMD
                   input : ACL_BB about
                   output : AeroCL backbridge information is displayed
                 """);
-            Program.Prompt();
+            
         }
         public static void BackbridgeAbout()
         {
@@ -346,7 +365,7 @@ namespace UniCMD
                 included AeroCL version : 2.0
                 loader version : {0}
                 """, AeroCL_BB.bbver);  
-            Program.Prompt();
+            
         }
 
         // process commands usage
@@ -360,7 +379,7 @@ namespace UniCMD
                 """);
             
 
-            Program.Prompt();
+            
         }
         public static void ProcessStartUsage()
         {
@@ -374,7 +393,7 @@ namespace UniCMD
                 """);
             
 
-            Program.Prompt();
+            
         }
         // network commands
         public static void NetworkPingUsage()
@@ -387,7 +406,7 @@ namespace UniCMD
                 """);
 
 
-            Program.Prompt();
+            
         }
         public static void NetworkDownloadUsage()
         {
@@ -400,7 +419,7 @@ namespace UniCMD
                 """);
 
 
-            Program.Prompt();
+            
         }
         public static void NetworkFetchContentUsage()
         {
@@ -412,7 +431,7 @@ namespace UniCMD
                 """);
 
 
-            Program.Prompt();
+            
         }
 
         // starttext & prompttext commands
@@ -427,7 +446,7 @@ namespace UniCMD
 
                 This feature supports TextModules, learn more by entering 'tmdl'
                 """);
-            Program.Prompt();
+            
         }
         public static void PrompttextHelp()
         {
@@ -442,7 +461,7 @@ namespace UniCMD
                 This feature supports TextModules, learn more by entering 'tmdl'
                 """);
              
-            Program.Prompt();
+            
         }
 
         public static void TextModulesHelp()
@@ -486,7 +505,7 @@ namespace UniCMD
                 *Textmodules colors do not work under the plain cmd window, use an terminal that supports ANSI
 
                 """);
-            Program.Prompt();
+            
         }
         public static void TextModulesExample()
         {
@@ -513,7 +532,7 @@ namespace UniCMD
             Console.WriteLine(" the current time is " + DateTime.Now.ToString("hh:mm tt"));
             Console.WriteLine(" you are using UniCMD version " + Program.Version);
             Console.WriteLine(" your os version is " + Environment.OSVersion.ToString());
-            Program.Prompt();
+            
         }
 
         public static void UniScriptHelp()
@@ -529,7 +548,7 @@ namespace UniCMD
 
                 The '/in' argument sets the ::unsc:input:: TextModule
                 """);
-            Program.Prompt();
+            
         }
         public static void ParseCommandHelp()
         {
@@ -539,7 +558,7 @@ namespace UniCMD
                   To apply TextModules to a command run :
                   '[ptm-cmd] {command}'
                 """);
-            Program.Prompt();
+            
         }
         // unipkg
         public static void UniPKGHelp()
@@ -552,7 +571,7 @@ namespace UniCMD
                 All UniPKG packages are hosted on;
                 https://unipkg.vercel.app/
                 """, ver);
-            Program.Prompt();
+            
         }
         public static void UniPKGInstallUsage()
         {
@@ -563,7 +582,7 @@ namespace UniCMD
                   output : package is downloaded and installed from server
                 """);
 
-            Program.Prompt();
+            
         }
         public static void UniPKGDepackageUsage()
         {
@@ -574,7 +593,7 @@ namespace UniCMD
                   output : package from current directory is installed
                 """);
 
-            Program.Prompt();
+            
         }
         public static void UniPKGUninstallUsage()
         {
@@ -587,7 +606,7 @@ namespace UniCMD
                 To list installed packages use 'unipkg /list'
                 """);
 
-            Program.Prompt();
+            
         }
         public static void UniPKGFetchInfoUsage()
         {
@@ -598,7 +617,7 @@ namespace UniCMD
                   output : package info is fetched from .pkginfo file
                 """);
 
-            Program.Prompt();
+            
         }
         public static void UniPKGFetchOnlineInfoUsage()
         {
@@ -609,7 +628,30 @@ namespace UniCMD
                   output : package info is fetched unipkg server
                 """);
 
-            Program.Prompt();
+            
+        }
+
+        // vm
+        public static void VersionManagerUsage()
+        {
+            Console.WriteLine("""
+                VersionManager ver. {0}
+                Allows for comparing and downloading UniCMD releases.
+
+                  'vm comp' for comparing local to latest
+                  'vm lst' for indexing all releases
+                  'vm pull' for usage
+                """, VersionManager.Version);
+        }
+        public static void VersionManagerPullUsage()
+        {
+            Console.WriteLine("""
+                Usage of 'vm pull'
+
+                  input : vm pull {version id}
+                          vm pull latest
+                  output : version is pulled to UniCMD.data into instance folder
+                """);
         }
     }
 }

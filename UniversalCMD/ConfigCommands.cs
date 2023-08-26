@@ -28,7 +28,6 @@ namespace UniCMD
                 Console.WriteLine("Failed to open configuration file");
                 OtherUtils.PrintException(ex);
             }
-            Program.Prompt();
         }
         public static void RewriteConfig()
         {
@@ -45,7 +44,6 @@ namespace UniCMD
                 Console.WriteLine("Failed to restore configuration file");
                 OtherUtils.PrintException(ex);
             }
-            Program.Prompt();
         }
         public static void PrintConfig()
         {
@@ -62,7 +60,6 @@ namespace UniCMD
                 Console.WriteLine("Could not print configuration file");
                 OtherUtils.PrintException(ex);
             }
-            Program.Prompt();
         }
 
         // starttext commands
@@ -81,7 +78,6 @@ namespace UniCMD
                 Console.WriteLine("Failed to parse starttext");
                 OtherUtils.PrintException(e);
             }
-            Program.Prompt();
         }
         public static void CreateStarttext()
         {
@@ -89,10 +85,9 @@ namespace UniCMD
             {
                 File.Create(@"UniCMD.data\starttext.unicmd").Close();
                 Console.WriteLine("StartText file created.");
-                Program.Prompt();
+                return;
             }
             Console.WriteLine("StartText file already exists.");
-            Program.Prompt();
         }
         public static void OpenStarttext()
         {
@@ -110,7 +105,6 @@ namespace UniCMD
             {
                 Console.WriteLine("File does not exist.");
             }
-            Program.Prompt();
         }
         public static void WriteTemplateStarttext()
         {
@@ -133,7 +127,6 @@ namespace UniCMD
             {
                 Console.WriteLine("StartText file not found.");
             }
-            Program.Prompt();
         }
         // prompttext commands  
         public static void ParsePrompttext()
@@ -161,12 +154,11 @@ namespace UniCMD
                 }
                 else
                 {
-                    Program.Prompt();
+                    return;
                 }
-                Program.Prompt();
+                return;
             }
             Console.WriteLine("PromptText file already exists.");
-            Program.Prompt();
         }
         public static void OpenPromptText()
         {
@@ -184,7 +176,6 @@ namespace UniCMD
             {
                 Console.WriteLine("File does not exist.");
             }
-            Program.Prompt();
         }
         public static void WritePromptTextTemplate()
         {
@@ -206,7 +197,6 @@ namespace UniCMD
             {
                 Console.WriteLine("StartText file not found.");
             }
-            Program.Prompt();
         }
 
         public static string ApplyTextModules(string text)

@@ -5,9 +5,11 @@ namespace UniCMD
 {
     static internal class Startup // https://cdn.discordapp.com/attachments/754607880359116824/1135948757280768000/gems.mp4
     {
+        // make this into a dictonary some time
         public static bool showExceptions = false;
         public static bool doAutoexec = false;
         public static bool printMacroInIndex = false;
+        public static bool checkForUpdates = false;
         public static string[] config;
         public static void MainStartUp()
         {
@@ -35,6 +37,11 @@ namespace UniCMD
             {
                 Console.WriteLine("printMacroInIndex > ENABLED");
                 printMacroInIndex = true;
+            }
+            if (config.Contains("checkForUpdates = y"))
+            {
+                Console.WriteLine("checkForUpdates > ENABLED");
+                checkForUpdates = true;
             }
 
             Console.WriteLine("  Start-Up finished");
@@ -123,6 +130,7 @@ namespace UniCMD
                 sw.WriteLine("showExceptions = n");
                 sw.WriteLine("doAutoexec = n");
                 sw.WriteLine("printMacroInIndex = y");
+                sw.WriteLine("checkForUpdates = y");
                 sw.Close();
             }
         }

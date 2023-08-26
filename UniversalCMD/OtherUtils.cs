@@ -9,7 +9,6 @@ namespace UniCMD
 {
     internal class OtherUtils
     {
-        public static string UniCMD_Name = System.AppDomain.CurrentDomain.FriendlyName;
         public static bool IsAdmin = WindowsIdentity.GetCurrent().Owner.IsWellKnown(WellKnownSidType.BuiltinAdministratorsSid);
         public static string ReturnCPUName(string cpu)
         {
@@ -20,11 +19,6 @@ namespace UniCMD
             }
             return cpu;
         }
-        public static void ClearConsole()
-        {
-            Console.Clear();
-            Program.Prompt();
-        }
         public static void PrintException(Exception exc)
         {
             if (Startup.showExceptions == true)
@@ -34,7 +28,7 @@ namespace UniCMD
         }
         public static void Echo()
         {
-            string text = Program.UserCommand.Replace("echo ", "");
+            var text = string.Join(" ", Program.UserCommand.Split(' ').Skip(1));
 
             if (text.StartsWith("/ptm "))
             {
@@ -43,11 +37,10 @@ namespace UniCMD
             }
 
             Console.WriteLine(text);
-            Program.Prompt();
         }
         public static void Sleep()
         {
-            string input = Program.Command.Replace("sleep ", "");
+            var input = string.Join(" ", Program.UserCommand.Split(' ').Skip(1));
             bool isInt = Int32.TryParse(input, out int x);
 
             if (isInt == true)
@@ -58,11 +51,10 @@ namespace UniCMD
             {
                 Console.WriteLine("Invalid input value");
             }
-            Program.Prompt();
         }
         public static void PTMCommand()
         {
-            string input = Program.Command.Replace("[ptm-cmd] ", "");
+            var input = string.Join(" ", Program.UserCommand.Split(' ').Skip(1));
 
             input = ConfigCommands.ApplyTextModules(input);
             
@@ -83,12 +75,12 @@ namespace UniCMD
                 
                 if (result.Key == ConsoleKey.Y)
                 {
-                    Console.WriteLine("");
-                    return;
+                    Console.WriteLine("\n");
                 }
                 else
                 {
                     Console.WriteLine("\nReturning to main prompt..");
+                    Program.ReadyToExecute = true;
                     Program.Prompt();
                 }
             }

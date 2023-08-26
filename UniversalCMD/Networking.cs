@@ -14,7 +14,7 @@ namespace UniCMD
     {
         public static void Ping()
         {
-            string ip = Program.Command.Replace("net ping ", "");
+            var ip = string.Join(" ", Program.UserCommand.Split(' ').Skip(2));
             try
             {
                 Ping ping = new Ping();
@@ -29,13 +29,12 @@ namespace UniCMD
                 Console.WriteLine("Cannot ping ip");
                 OtherUtils.PrintException(ex);
             }
-            Program.Prompt();
         }
         public static void Download()
         {
             // my brain is no longer functional
 
-            string ip = Program.Command.Replace("net dload ", "");
+            var ip = string.Join(" ", Program.UserCommand.Split(' ').Skip(2));
             string path = "";
             if (ip.Contains(" /p "))
             {
@@ -75,7 +74,7 @@ namespace UniCMD
         }
         public static void FetchContents()
         {
-            string ip = Program.Command.Replace("net fc ", "");
+            var ip = string.Join(" ", Program.UserCommand.Split(' ').Skip(2));
 
             try
             {
