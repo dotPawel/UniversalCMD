@@ -12,9 +12,9 @@ namespace UniCMD
 {
     internal class UniPKG
     {
-        public static string Version = "1.4";
+        public static string Version = "1.5";
         // online
-        public static void InstallOnlinePackage()
+        public static async void InstallOnlinePackage()
         {
             // were so back
             OtherUtils.RootCheck();
@@ -53,6 +53,7 @@ namespace UniCMD
                 ReadInfo(pkgname[2], true);
                 ConfirmInstall();
                 InstallFiles(pkgname[2]);
+                await ExecutePostInst(pkgname[2]);
 
                 DeleteTemp();
 
@@ -114,7 +115,7 @@ namespace UniCMD
         }
 
         // local
-        public static void Depackage()
+        public static async void Depackage()
         {
             if (Program.CurrentDir == null)
             {
@@ -151,6 +152,7 @@ namespace UniCMD
                 CheckPackageInfo(PackageName);
                 ReadInfo(PackageName, true);
                 InstallFiles(PackageName);
+                await ExecutePostInst(PackageName);
 
                 DeleteTemp();
                 
@@ -341,6 +343,9 @@ namespace UniCMD
                         case string s when s.Contains("UniCMDVer="):
                             Console.WriteLine(" For version : " + line.Replace("UniCMDVer=", ""));
                             break;
+                        case string s when s.Contains("Description="):
+                            Console.WriteLine(" Description : " + line.Replace("Description=", "").Replace(@"\n", "\n"));
+                            break;
                     }
                 }
             }
@@ -383,6 +388,31 @@ namespace UniCMD
                 Console.WriteLine("Returning to main prompt..");
                 Program.Prompt();
             }
+        }
+        async static Task ExecutePostInst(string PackageName)
+        {
+            if (File.Exists(@"UniCMD.data\UniPKG\TEMP\" + PackageName + ".postinst"))
+            {
+                Console.WriteLine("Found .postinst script, executing..\n");
+                UniScript.UniScriptExecuting = true;
+                foreach (string line in File.ReadAllLines(@"UniCMD.data\UniPKG\TEMP\" + PackageName + ".postinst"))
+                {
+                    if (line.Length > 1)
+                    {
+                        Program.Command = line.ToLower();
+                        Program.UserCommand = line;
+
+                        Program.CommandParser(line);
+
+                        while (!Program.ReadyToExecute)
+                        {
+                            await Task.Delay(1);
+                        }
+                    }
+                }
+                Console.WriteLine();
+            }
+            UniScript.UniScriptExecuting = false;
         }
     }
 }

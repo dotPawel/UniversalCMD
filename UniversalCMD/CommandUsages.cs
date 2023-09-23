@@ -86,6 +86,19 @@ namespace UniCMD
                  UniScript
                   ╚UniScript {name} /in {optional user argument}
                   ╚UniScript /P {path} /in {optional user argument}
+                  ╚User Input
+                    ╚UserInput Replace
+                     ╚UsrIn Repl {string 1} /in {string 2}
+                    ╚UserInput Read
+                     ╚UsrIn Rd
+                    ╚UserInput ReadFile
+                     ╚UsrIn RdF {name}
+                     ╚UsrIn RdF /p {path}
+                    ╚UserInput ToUpper/ToLower
+                     ╚UsrIn ToUpp
+                     ╚UsrIn ToLwr
+                    ╚UsrIn Clr
+                    ╚UsrIn Set {string}
 
                  UniPKG
                   ╚Online
@@ -547,8 +560,46 @@ namespace UniCMD
                   'uniscript /p {path} /in {optional argument}'
 
                 The '/in' argument sets the ::unsc:input:: TextModule
+                Use the 'UsrIn' set of commands to edit the user argument
                 """);
             
+        }
+        public static void UserInputUtilsHelp()
+        {
+            Console.WriteLine("""
+                The 'usrin' set of commands allows for editing the
+                UniScript user argument (::unsc:input:: textmodule) on the fly
+
+                Refer to command index for commands.
+                """);
+        }
+        public static void UserInputReplaceHelp()
+        {
+            Console.WriteLine("""
+                Usage of 'usrin repl'
+
+                  input : usrin repl {string 1} /in {string 2}
+                  output : string 1 is replaced with string 2 in user input argument
+                """);
+        }
+        public static void UserInputReadFileHelp()
+        {
+            Console.WriteLine("""
+                Usage of 'usrin rdf'
+
+                  input : usrin rdf {name}
+                          usrin rdf /p {path}
+                  output : user argument is set to contents of name/path
+                """);
+        }
+        public static void UserInputSetHelp()
+        {
+            Console.WriteLine("""
+                Usage of 'usrin set'
+
+                  input : usrin set {string}
+                  output : user argument is set to string
+                """);
         }
         public static void ParseCommandHelp()
         {

@@ -4,7 +4,7 @@ namespace UniCMD
 {
     static internal class Program
     {
-        public static string Version = "v8.0r";
+        public static string Version = "v8.2r";
         public static string Codename = "Caligula";
         // r - release
         // rc - release candidate
@@ -102,6 +102,9 @@ namespace UniCMD
             // Behold no more! the if/else monster is gone.
             switch (command)
             {
+                case string s when s.StartsWith("!!"): // uniscript code comments
+                    break;
+
                 case string s when s.StartsWith("[ptm-cmd] "):
                     OtherUtils.PTMCommand();
                     break;
@@ -413,6 +416,56 @@ namespace UniCMD
                 case string s when s.StartsWith("uniscript "):
                     UniScript.Execute();
                     break;
+
+                // UniScript user input commands
+                case "usrin":
+                    CommandUsages.UniScriptHelp();
+                    break;
+                    
+                case "usrin clr":
+                    UniScript.ClearUserInput();
+                    break;
+
+                case "usrin tolwr":
+                    UniScript.ToLowerUserInput();
+                    break;
+
+                case "usrin toupp":
+                    UniScript.ToUpperUserInput();
+                    break;
+
+                case "usrin rd":
+                    UniScript.ReadUserInput();
+                    break;
+
+                // usrin rdf
+                case "usrin rdf":
+                    CommandUsages.UserInputReadFileHelp();
+                    break;
+
+                case string s when s.StartsWith("usrin rdf "):
+                    UniScript.ReadFileUserInput();
+                    break;
+
+                // usrin set
+                case "usrin set":
+                    CommandUsages.UserInputSetHelp();
+                    break;
+
+                case string s when s.StartsWith("usrin set "):
+                    UniScript.SetUserInput();
+                    break;
+
+                // usrin repl
+                case "usrin repl":
+                    CommandUsages.UserInputReplaceHelp();
+                    break;
+
+                case string s when s.StartsWith("usrin repl "):
+                    UniScript.ReplaceUserInput();
+                    break;
+
+
 
 
                 // UniPKG commands
