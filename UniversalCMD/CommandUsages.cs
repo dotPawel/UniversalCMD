@@ -99,6 +99,16 @@ namespace UniCMD
                      ╚UsrIn ToLwr
                     ╚UsrIn Clr
                     ╚UsrIn Set {string}
+                  ╚String Dictionary
+                    ╚Dictionary Add
+                     ╚Dict Add {key name} /in {value}
+                    ╚Dictionary Remove
+                     ╚Dict Rem {key name}
+                    ╚Dictionary Set
+                     ╚Dict Set {key name} /in {value}
+                    ╚Dictionary Print/Clear
+                     ╚Dict Clr
+                     ╚Dict Rd
 
                  UniPKG
                   ╚Online
@@ -153,7 +163,7 @@ namespace UniCMD
                     ╚Parse Command
                      ╚[ptm-cmd] {command}
                   ╚Configuration file
-                   ╚Cfg Open
+                   ╚Cfg Set {entry to toggle}
                    ╚Cfg Wrt
                    ╚Cfg Rd
                 
@@ -163,7 +173,7 @@ namespace UniCMD
                    ╚ACL_BB about
                 """);
 
-            if (Startup.printMacroInIndex)
+            if (Startup.ConfigDict["printMacroInIndex"] == true)
             {
                 Console.WriteLine("\n Your macros (execute via .${macro name})");
                 string[] Macros = Directory.GetFiles("UniCMD.data\\Macros\\");
@@ -403,6 +413,9 @@ namespace UniCMD
                           proc run /p {path} /args {optional arguments}
                   output : name/path is started
                            (with arguments if provided at the end of command)
+
+                Optional '/s' argument can be added before the '/args' argument 
+                to wait before the process finishes
                 """);
             
 
@@ -446,6 +459,18 @@ namespace UniCMD
 
             
         }
+
+        // config
+        public static void ConfigSetUsage()
+        {
+            Console.WriteLine("""
+                Usage of 'cfg set'
+
+                  input : cfg set {config entry}
+                  output : config entry value is toggled
+                """);
+        }
+
 
         // starttext & prompttext commands
         public static void StarttextHelp()
@@ -504,6 +529,7 @@ namespace UniCMD
                  ::desk:: - Desktop directory
                  ::usrd:: - User directory
                  ::unsc:input:: - User argument for UniScript set using the /in argument, see 'uniscript' for more
+                 ::dict:"example":: - Example use of the string dictionary TextModule, see 'dict' for more
                 -- Color modules
                  :[red]:
                  :[green]:
@@ -601,6 +627,51 @@ namespace UniCMD
                   output : user argument is set to string
                 """);
         }
+
+        // dictionary commands
+        public static void DictionaryHelp()
+        {
+            Console.WriteLine("""
+                Dictionary allows for storing and setting strings in memory.
+                
+                  Example use of dictionary via TextModules :
+                  'echo /ptm ::dict:"keyname"::
+                  Output :
+                  'keyvalue'
+                """);
+
+        }
+        public static void DictionaryAddKeyHelp()
+        {
+            Console.WriteLine("""
+                Usage of 'dict add'
+                
+                  input : dict add {keyname} /in {value}
+                  output : key entry is added with value
+                """);
+
+        }
+        public static void DictionaryRemoveKeyHelp()
+        {
+            Console.WriteLine("""
+                Usage of 'dict rem'
+                
+                  input : dict rem {keyname}
+                  output : key is deleted
+                """);
+
+        }
+        public static void DictionarySetKeyHelp()
+        {
+            Console.WriteLine("""
+                Usage of 'dict set'
+                
+                  input : dict set {keyname} /in {value}
+                  output : key is set to value
+                """);
+
+        }
+
         public static void ParseCommandHelp()
         {
             Console.WriteLine("""

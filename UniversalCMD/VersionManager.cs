@@ -40,7 +40,7 @@ namespace UniCMD
                 if (showerror)
                 {
                     Console.WriteLine("Checking for update failed");
-                    OtherUtils.PrintException(ex);
+                    Other.PrintException(ex);
                 }
             }
         }
@@ -61,7 +61,7 @@ namespace UniCMD
             catch (Exception ex)
             {
                 Console.WriteLine("Fetching releases failed");
-                OtherUtils.PrintException(ex);
+                Other.PrintException(ex);
             }
             
         }
@@ -117,7 +117,7 @@ namespace UniCMD
                 Console.WriteLine();
                 if (result.Key == ConsoleKey.Y)
                 {
-                    Process.Start("explorer.exe", "UniCMD.data\\instance_" + release_name);
+                    System.Diagnostics.Process.Start("explorer.exe", "UniCMD.data\\instance_" + release_name);
                 }
                 else
                 {
@@ -127,7 +127,7 @@ namespace UniCMD
             catch (Exception ex)
             {
                 Console.WriteLine("Pulling release failed");
-                OtherUtils.PrintException(ex);
+                Other.PrintException(ex);
             }
         }
     }

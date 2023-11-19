@@ -27,7 +27,7 @@ namespace UniCMD
             catch (Exception ex)
             {
                 Console.WriteLine("Cannot ping ip");
-                OtherUtils.PrintException(ex);
+                Other.PrintException(ex);
             }
         }
         public static void Download()
@@ -46,7 +46,7 @@ namespace UniCMD
                 // if no path provided
                 if (Program.CurrentDir == null)
                 {
-                    FileUtils.NoDirSet();
+                    FileMan.NoDirSet();
                 }
                 else
                 {
@@ -69,7 +69,7 @@ namespace UniCMD
             catch (Exception ex)
             {
                 Console.WriteLine("Downloading file failed");
-                OtherUtils.PrintException(ex);
+                Other.PrintException(ex);
             }
         }
         public static void FetchContents()
@@ -89,7 +89,7 @@ namespace UniCMD
             catch (Exception ex)
             {
                 Console.WriteLine("Fetching url contents failed");
-                OtherUtils.PrintException(ex);
+                Other.PrintException(ex);
             }
         }
     }

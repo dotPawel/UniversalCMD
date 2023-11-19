@@ -17,7 +17,7 @@ namespace UniCMD
         public static async void InstallOnlinePackage()
         {
             // were so back
-            OtherUtils.RootCheck();
+            Other.RootCheck();
             string[] pkgname = Program.UserCommand.Split(" ");
             if (File.Exists(@"UniCMD.data\UniPKG\pkginfo\" + pkgname[2] + ".pkginfo"))
             {
@@ -70,7 +70,7 @@ namespace UniCMD
                 {
                     Console.WriteLine("Installation failed");
 
-                    OtherUtils.PrintException(ex);
+                    Other.PrintException(ex);
                 }
 
                 Console.WriteLine("Deleting package image..");
@@ -106,7 +106,7 @@ namespace UniCMD
                 {
                     Console.WriteLine("Fetching info failed");
 
-                    OtherUtils.PrintException(ex);
+                    Other.PrintException(ex);
                 }
 
                 Console.WriteLine(@"Deleting TEMP ..");
@@ -119,9 +119,9 @@ namespace UniCMD
         {
             if (Program.CurrentDir == null)
             {
-                FileUtils.NoDirSet();
+                FileMan.NoDirSet();
             }
-            OtherUtils.RootCheck();
+            Other.RootCheck();
             string[] pkgname = Program.UserCommand.Split(" ");
             if (!File.Exists(Program.CurrentDir + pkgname[2]))
             {
@@ -163,13 +163,13 @@ namespace UniCMD
                 Console.WriteLine("\nFailed to depackage UniPKG package");
                 Console.WriteLine("Deleting TEMP..");
                 Directory.Delete(@"UniCMD.data\UniPKG\TEMP", true);
-                OtherUtils.PrintException(ex);
+                Other.PrintException(ex);
             }
         }
         public static void Uninstall()
         {
             string[] pkgname = Program.UserCommand.Split(" ");
-            OtherUtils.RootCheck();
+            Other.RootCheck();
             if (!File.Exists(@"UniCMD.data\UniPKG\pkginfo\" + pkgname[2] + ".uninst"))
             {
                 Console.WriteLine("No .uninst file found for " + pkgname[2]);
@@ -199,7 +199,7 @@ namespace UniCMD
             catch (Exception ex)
             {
                 Console.WriteLine("Uninstalling failed.");
-                OtherUtils.PrintException(ex);
+                Other.PrintException(ex);
             }
         }
         public static void FetchInfo()
@@ -233,7 +233,7 @@ namespace UniCMD
             catch (Exception ex)
             {
                 Console.WriteLine("Listing packages failed");
-                OtherUtils.PrintException(ex);
+                Other.PrintException(ex);
                 return;
             }
         }
@@ -277,7 +277,7 @@ namespace UniCMD
             catch (Exception ex)
             {
                 Console.WriteLine("Installing files failed");
-                OtherUtils.PrintException(ex);
+                Other.PrintException(ex);
                 return;
             }
         }
@@ -307,7 +307,7 @@ namespace UniCMD
             catch (Exception ex) 
             {
                 Console.WriteLine("Checking package info failed");
-                OtherUtils.PrintException(ex);
+                Other.PrintException(ex);
                 return;
             }
 
@@ -352,7 +352,7 @@ namespace UniCMD
             catch (Exception ex)
             {
                 Console.WriteLine("Reading info failed");
-                OtherUtils.PrintException(ex);
+                Other.PrintException(ex);
                 return;
             }
             Console.WriteLine();
@@ -367,7 +367,7 @@ namespace UniCMD
             catch (Exception ex)
             {
                 Console.WriteLine("Deleting TEMP failed");
-                OtherUtils.PrintException(ex);
+                Other.PrintException(ex);
             }
         }
         static void ConfirmInstall()

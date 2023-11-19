@@ -6,10 +6,13 @@ namespace UniCMD
     static internal class Startup // https://cdn.discordapp.com/attachments/754607880359116824/1135948757280768000/gems.mp4
     {
         // make this into a dictonary some time
-        public static bool showExceptions = false;
-        public static bool doAutoexec = false;
-        public static bool printMacroInIndex = false;
-        public static bool checkForUpdates = false;
+        public static Dictionary<String, bool> ConfigDict = new Dictionary<String, bool>()
+        {
+            {"showExceptions", false },
+            {"doAutoexec", false },
+            {"printMacroInIndex", false },
+            {"checkForUpdates", false },
+        };
         public static string[] config;
         public static void MainStartUp()
         {
@@ -26,22 +29,23 @@ namespace UniCMD
             if (config.Contains("showExceptions = y"))
             {
                 Console.WriteLine("showExceptions > ENABLED");
-                showExceptions = true;
-            }
-            if (config.Contains("doAutoexec = y"))
-            {
-                Console.WriteLine("doAutoexec > ENABLED");
-                UniScript.ExecuteAutoexec();
+                ConfigDict["showExceptions"] = true;
             }
             if (config.Contains("printMacroInIndex = y"))
             {
                 Console.WriteLine("printMacroInIndex > ENABLED");
-                printMacroInIndex = true;
+                ConfigDict["printMacroInIndex"] = true;
             }
             if (config.Contains("checkForUpdates = y"))
             {
                 Console.WriteLine("checkForUpdates > ENABLED");
-                checkForUpdates = true;
+                ConfigDict["checkForUpdates"] = true;
+            }
+            if (config.Contains("doAutoexec = y"))
+            {
+                Console.WriteLine("doAutoexec > ENABLED");
+                ConfigDict["doAutoexec"] = true;
+                UniScript.ExecuteAutoexec();
             }
 
             Console.WriteLine("  Start-Up finished");

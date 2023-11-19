@@ -4,8 +4,8 @@ namespace UniCMD
 {
     static internal class Program
     {
-        public static string Version = "8.2r";
-        public static string Codename = "Caligula";
+        public static string Version = "9.0r";
+        public static string Codename = "Andromeda";
         // r - release
         // rc - release candidate
         // d - debug
@@ -23,14 +23,14 @@ namespace UniCMD
         }
         static void StartupText()
         {
-            Process proc = Process.GetCurrentProcess();
+            System.Diagnostics.Process proc = System.Diagnostics.Process.GetCurrentProcess();
             Console.Title = "UniCMD (" + Version + ")";
             string cpu = "";
-            cpu = OtherUtils.ReturnCPUName(cpu);
+            cpu = Other.ReturnCPUName(cpu);
 
             if (File.Exists(@"UniCMD.data\starttext.unicmd"))
             {
-                ConfigCommands.ParseStarttext();
+                Config.ParseStarttext();
             }
             else
             {
@@ -43,9 +43,8 @@ namespace UniCMD
                 """, Codename, Version, Environment.OSVersion, proc.PrivateMemorySize64, cpu);
             }     
 
-            if (Startup.checkForUpdates)
+            if (Startup.ConfigDict["checkForUpdates"])
             {
-                // call version checker here
                 Console.WriteLine();
                 VersionManager.CompareVersionToLatest(false);
             }
@@ -63,11 +62,11 @@ namespace UniCMD
 
             if (File.Exists(@"UniCMD.data\prompttext.unicmd"))
             {
-                ConfigCommands.ParsePrompttext();
+                Config.ParsePrompttext();
             }
             else
             {
-                if (OtherUtils.IsAdmin == true)
+                if (Other.IsAdmin == true)
                 {
                     Console.Write("(#) ");
                 }
@@ -106,7 +105,7 @@ namespace UniCMD
                     break;
 
                 case string s when s.StartsWith("[ptm-cmd] "):
-                    OtherUtils.PTMCommand();
+                    Other.PTMCommand();
                     break;
 
                 // Misc. commands
@@ -124,7 +123,7 @@ namespace UniCMD
                     break;
 
                 case string s when s.StartsWith("echo "):
-                    OtherUtils.Echo();
+                    Other.Echo();
                     break;
 
                 case "pause":
@@ -132,7 +131,7 @@ namespace UniCMD
                     break;
 
                 case string s when s.StartsWith("sleep "):
-                    OtherUtils.Sleep();
+                    Other.Sleep();
                     break;
 
                 case string s when s.StartsWith(".$"):
@@ -146,15 +145,15 @@ namespace UniCMD
 
                 // Directory commands
                 case "sd clr":
-                    FileUtils.ClearSetDirectory();
+                    FileMan.ClearSetDirectory();
                     break;
 
                 case string s when s.StartsWith("sd "):
-                    FileUtils.SetDirectory();
+                    FileMan.SetDirectory();
                     break;
 
                 case "dir lst":
-                    FileUtils.ListDir();
+                    FileMan.ListDir();
                     break;
 
                 // dir make
@@ -163,7 +162,7 @@ namespace UniCMD
                     break;
 
                 case string s when s.StartsWith("dir make "):
-                    FileUtils.CreateDir();
+                    FileMan.CreateDir();
                     break;
 
                 // dir del
@@ -172,7 +171,7 @@ namespace UniCMD
                     break;
 
                 case string s when s.StartsWith("dir del "):
-                    FileUtils.DeleteDir();
+                    FileMan.DeleteDir();
                     break;
 
                 // dir cln
@@ -181,7 +180,7 @@ namespace UniCMD
                     break;
 
                 case string s when s.StartsWith("dir cln "):
-                    FileUtils.CloneDir();
+                    FileMan.CloneDir();
                     break;
 
                 // dir rnm
@@ -190,7 +189,7 @@ namespace UniCMD
                     break;
 
                 case string s when s.StartsWith("dir rnm "):
-                    FileUtils.RenameDir();
+                    FileMan.RenameDir();
                     break;
 
 
@@ -203,7 +202,7 @@ namespace UniCMD
                     break;
 
                 case string s when s.StartsWith("file make "):
-                    FileUtils.CreateFile();
+                    FileMan.CreateFile();
                     break;
 
                 // file del
@@ -212,7 +211,7 @@ namespace UniCMD
                     break;
 
                 case string s when s.StartsWith("file del "):
-                    FileUtils.DeleteFile();
+                    FileMan.DeleteFile();
                     break;
 
                 // file rd
@@ -221,7 +220,7 @@ namespace UniCMD
                     break;
 
                 case string s when s.StartsWith("file rd "):
-                    FileUtils.ReadFile();
+                    FileMan.ReadFile();
                     break;
 
                 // file wrt
@@ -230,7 +229,7 @@ namespace UniCMD
                     break;
 
                 case string s when s.StartsWith("file wrt "):
-                    FileUtils.WriteFile();
+                    FileMan.WriteFile();
                     break;
 
                 // file wrtln
@@ -239,7 +238,7 @@ namespace UniCMD
                     break;
 
                 case string s when s.StartsWith("file wrtln "):
-                    FileUtils.WriteLineFile();
+                    FileMan.WriteLineFile();
                     break;
 
                 // file clr
@@ -248,7 +247,7 @@ namespace UniCMD
                     break;
 
                 case string s when s.StartsWith("file clr "):
-                    FileUtils.ClearFile();
+                    FileMan.ClearFile();
                     break; 
 
                 // file cln
@@ -257,7 +256,7 @@ namespace UniCMD
                     break;
 
                 case string s when s.StartsWith("file cln "):
-                    FileUtils.CloneFile();
+                    FileMan.CloneFile();
                     break;
 
                 // file rnm
@@ -266,7 +265,7 @@ namespace UniCMD
                     break;
 
                 case string s when s.StartsWith("file rnm "):
-                    FileUtils.RenameFile();
+                    FileMan.RenameFile();
                     break;
  
                 // file zip
@@ -275,7 +274,7 @@ namespace UniCMD
                     break;
 
                 case string s when s.StartsWith("file zip "):
-                    FileUtils.ZipFile();
+                    FileMan.ZipFile();
                     break;
 
                 // file zip
@@ -284,13 +283,13 @@ namespace UniCMD
                     break;
 
                 case string s when s.StartsWith("file unzip "):
-                    FileUtils.UnzipFile();
+                    FileMan.UnzipFile();
                     break;
 
 
                 // Process commands
                 case "proc lst":
-                    ProcessUtils.ListProcess();
+                    Process.ListProcess();
                     break;
 
                 // proc run
@@ -299,7 +298,7 @@ namespace UniCMD
                     break;
 
                 case string s when s.StartsWith("proc run "):
-                    ProcessUtils.RunProcess();
+                    Process.RunProcess();
                     break;
 
                 // proc end
@@ -308,11 +307,11 @@ namespace UniCMD
                     break;
 
                 case "proc end /all":
-                    ProcessUtils.KillAllProcess();
+                    Process.KillAllProcess();
                     break;
 
                 case string s when s.StartsWith("proc end "):
-                    ProcessUtils.KillProcess();
+                    Process.KillProcess();
                     break;
 
 
@@ -322,7 +321,7 @@ namespace UniCMD
                     break;
 
                 case string s when s.StartsWith("irpy "):
-                    IronPythonCommands.RunFile();
+                    IronPython.RunFile();
                     break;
 
 
@@ -341,16 +340,16 @@ namespace UniCMD
 
 
                 // Config commands
-                case "cfg open":
-                    ConfigCommands.OpenConfig();
+                case "cfg rd":
+                    Config.PrintCurrentConfig();
+                    break;
+
+                case string s when s.StartsWith("cfg set "):
+                    Config.SetConfigEntry();
                     break;
 
                 case "cfg wrt":
-                    ConfigCommands.RewriteConfig();
-                    break;
-
-                case "cfg rd":
-                    ConfigCommands.PrintConfig();
+                    Config.ApplyConfig();
                     break;
 
 
@@ -360,19 +359,19 @@ namespace UniCMD
                     break;
 
                 case "stxt parse":
-                    ConfigCommands.ParseStarttext();
+                    Config.ParseStarttext();
                     break;
 
                 case "stxt make":
-                    ConfigCommands.CreateStarttext();
+                    Config.CreateStarttext();
                     break;
 
                 case "stxt open":
-                    ConfigCommands.OpenStarttext();
+                    Config.OpenStarttext();
                     break;
 
                 case "stxt wrt-template":
-                    ConfigCommands.WriteTemplateStarttext();
+                    Config.WriteTemplateStarttext();
                     break;
 
 
@@ -382,15 +381,15 @@ namespace UniCMD
                     break;
 
                 case "ptxt make":
-                    ConfigCommands.CreatePromptText();
+                    Config.CreatePromptText();
                     break;
 
                 case "ptxt open":
-                    ConfigCommands.OpenPromptText();
+                    Config.OpenPromptText();
                     break;
 
                 case "ptxt wrt-template":
-                    ConfigCommands.WriteTemplateStarttext();
+                    Config.WriteTemplateStarttext();
                     break;
 
 
@@ -419,23 +418,23 @@ namespace UniCMD
 
                 // UniScript user input commands
                 case "usrin":
-                    CommandUsages.UniScriptHelp();
+                    CommandUsages.UserInputUtilsHelp();
                     break;
                     
                 case "usrin clr":
-                    UniScript.ClearUserInput();
+                    UserData.ClearUserInput();
                     break;
 
                 case "usrin tolwr":
-                    UniScript.ToLowerUserInput();
+                    UserData.ToLowerUserInput();
                     break;
 
                 case "usrin toupp":
-                    UniScript.ToUpperUserInput();
+                    UserData.ToUpperUserInput();
                     break;
 
                 case "usrin rd":
-                    UniScript.ReadUserInput();
+                    UserData.ReadUserInput();
                     break;
 
                 // usrin rdf
@@ -444,7 +443,7 @@ namespace UniCMD
                     break;
 
                 case string s when s.StartsWith("usrin rdf "):
-                    UniScript.ReadFileUserInput();
+                    UserData.ReadFileUserInput();
                     break;
 
                 // usrin set
@@ -453,7 +452,7 @@ namespace UniCMD
                     break;
 
                 case string s when s.StartsWith("usrin set "):
-                    UniScript.SetUserInput();
+                    UserData.SetUserInput();
                     break;
 
                 // usrin repl
@@ -462,10 +461,50 @@ namespace UniCMD
                     break;
 
                 case string s when s.StartsWith("usrin repl "):
-                    UniScript.ReplaceUserInput();
+                    UserData.ReplaceUserInput();
                     break;
 
 
+                // String dictionary
+                case "dict":
+                    CommandUsages.DictionaryHelp();
+                    break;
+
+                case "dict rd":
+                    UserData.PrintDictionary();
+                    break;
+
+                // dict add
+                case "dict add":
+                    CommandUsages.DictionaryAddKeyHelp();
+                    break;
+
+                case string s when s.StartsWith("dict add "):
+                    UserData.AddDictionaryKey();
+                    break;
+
+                // dict rem
+                case "dict rem":
+                    CommandUsages.DictionaryRemoveKeyHelp();
+                    break;
+
+                case string s when s.StartsWith("dict rem "):
+                    UserData.RemoveDictionaryKey();
+                    break;
+
+                // dict rem
+                case "dict set":
+                    CommandUsages.DictionarySetKeyHelp();
+                    break;
+
+                case string s when s.StartsWith("dict set "):
+                    UserData.SetDictionaryKey();
+                    break;
+
+                // dict clr
+                case "dict clr":
+                    UserData.ClearDictionary();
+                    break;
 
 
                 // UniPKG commands

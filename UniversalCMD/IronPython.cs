@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace UniCMD
 {
-    internal class IronPythonCommands
+    internal class IronPython
     {
         public static void RunFile()
         {
@@ -21,7 +21,7 @@ namespace UniCMD
             {
                 if (Program.CurrentDir == null)
                 {
-                    FileUtils.NoDirSet();
+                    FileMan.NoDirSet();
                 }
                 file = Program.CurrentDir + file;
             }

@@ -34,7 +34,7 @@ namespace UniCMD
             }
             if (dbg == "isroot?")
             {
-                if (OtherUtils.IsAdmin == true)
+                if (Other.IsAdmin == true)
                 {
                     Console.WriteLine("runningAsAdmin == True");
                 }
@@ -84,7 +84,7 @@ namespace UniCMD
                 catch (Exception ex)
                 {
                     Console.WriteLine("Cannot delete UniCMD.data");
-                    OtherUtils.PrintException(ex);
+                    Other.PrintException(ex);
                 }
                 dbg_prompt();
             }
@@ -98,14 +98,14 @@ namespace UniCMD
                 catch (Exception ex)
                 {
                     Console.WriteLine("Cannot delete UniPKG/TEMP");
-                    OtherUtils.PrintException(ex);
+                    Other.PrintException(ex);
                 }
                 dbg_prompt();
             }
             if (dbg == "temple")
             {
                 string text = ":{cyan}::[white]:An idiot admires complexity, a genius admires simplicity:[]:";
-                text = ConfigCommands.ApplyTextModules(text);
+                text = Config.ApplyTextModules(text);
 
                 Console.WriteLine(text);
                 SoundPlayer hymn = new SoundPlayer(Properties.Resources.risen);

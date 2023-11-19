@@ -20,7 +20,7 @@ namespace UniCMD // brain operated via bluetooth speaker
                 string[] SplitCommand = text.Split(" /in ");
                 text = SplitCommand[0];
 
-                ConfigCommands.UnscUserArg = SplitCommand[1];
+                UserData.UnscUserArg = SplitCommand[1];
             }
 
             if (File.Exists(@"UniCMD.data\Macros\" + text + ".unsc"))
@@ -64,7 +64,7 @@ namespace UniCMD // brain operated via bluetooth speaker
             {
                 if (Program.CurrentDir == null)
                 {
-                    FileUtils.NoDirSet();
+                    FileMan.NoDirSet();
                 }
                 file = Program.CurrentDir + file;
             }
@@ -74,7 +74,7 @@ namespace UniCMD // brain operated via bluetooth speaker
                 string[] SplitCommand = file.Split(" /in ");
                 file = SplitCommand[0];
 
-                ConfigCommands.UnscUserArg = SplitCommand[1];
+                UserData.UnscUserArg = SplitCommand[1];
             }
 
             if (File.Exists(file))
@@ -129,84 +129,6 @@ namespace UniCMD // brain operated via bluetooth speaker
             }
             Console.WriteLine("\nAutoexec finished");
             UniScriptExecuting = false;
-        }
-
-        // user input utils
-        public static void ClearUserInput()
-        {
-            ConfigCommands.UnscUserArg = null;
-            Console.WriteLine("[usrin] clear");
-        }
-        public static void SetUserInput()
-        {
-            var usrinp = string.Join(" ", Program.UserCommand.Split(' ').Skip(2));
-            ConfigCommands.UnscUserArg = usrinp;
-            Console.WriteLine("[usrin] set user argument to : " + usrinp);
-        }
-        public static void ReplaceUserInput()
-        {
-            var usrinp = string.Join(" ", Program.UserCommand.Split(' ').Skip(2));
-
-            if (usrinp.Contains(" /in "))
-            {
-                usrinp = usrinp.Split(" /in ")[0];
-            }
-            string[] newname = Program.UserCommand.Split(" /in "); // newname[1] is za0-sdjfzaoidfsjgoidmfxoigmodsxfmgoim[lo,
-
-            ConfigCommands.UnscUserArg = usrinp.Replace(usrinp, newname[1]);
-            Console.WriteLine("[usrin] replaced {0} with {1}", usrinp, newname[1]);
-        }
-        public static void ToLowerUserInput()
-        {
-            ConfigCommands.UnscUserArg = ConfigCommands.UnscUserArg.ToLower();
-            Console.WriteLine("[usrin] ToLower : " + ConfigCommands.UnscUserArg);
-        }
-        public static void ToUpperUserInput()
-        {
-            ConfigCommands.UnscUserArg = ConfigCommands.UnscUserArg.ToUpper();
-            Console.WriteLine("[usrin] ToUpper : " + ConfigCommands.UnscUserArg);
-        }
-        public static void ReadUserInput()
-        {
-            Console.Write(">");
-            ConfigCommands.UnscUserArg = Console.ReadLine();
-            Console.WriteLine();
-            Console.WriteLine("[usrin] set user argument to : " + ConfigCommands.UnscUserArg);
-        }
-        public static void ReadFileUserInput()
-        {
-            var path = string.Join(" ", Program.UserCommand.Split(' ').Skip(2));
-            if (path.StartsWith("/p "))
-            {
-                path = path.Replace("/p ", "");
-            }
-            else
-            {
-                if (Program.CurrentDir == null)
-                {
-                    FileUtils.NoDirSet();
-                }
-                path = Program.CurrentDir + path;
-            }
-
-            if (File.Exists(path))
-            {
-                try
-                {
-                    ConfigCommands.UnscUserArg = File.ReadAllText(path);
-                    Console.WriteLine("[usrin] set user argument to contents of : " + path);
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine("[usrin] cannot read file");
-                    OtherUtils.PrintException(ex);
-                }
-            }
-            else
-            {
-                Console.WriteLine("[usrin] file does not exist");
-            }
-
         }
     }
 }
