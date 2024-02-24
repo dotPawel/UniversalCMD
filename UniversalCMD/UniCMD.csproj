@@ -2,16 +2,16 @@
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFramework>net7.0</TargetFramework>
+    <TargetFramework>net8.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
     <GenerateDocumentationFile>False</GenerateDocumentationFile>
     <SignAssembly>False</SignAssembly>
-    <Description>UniversalCMD
+    <Description>Easy to use CLI shell
 </Description>
-    <PackageIcon>Icon2.png</PackageIcon>
-    <ApplicationIcon>Resources\Icon.ico</ApplicationIcon>
+    <PackageIcon>main_icon.png</PackageIcon>
+    <ApplicationIcon>Resources\UniCMD.ico</ApplicationIcon>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -23,7 +23,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Content Include="Resources\Icon.ico" />
+    <Content Include="Resources\UniCMD.ico" />
   </ItemGroup>
 
   <ItemGroup>
@@ -52,6 +52,10 @@
 
   <ItemGroup>
     <None Update="Resources\Icon2.png">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+    <None Update="Resources\main_icon.png">
       <Pack>True</Pack>
       <PackagePath>\</PackagePath>
     </None>

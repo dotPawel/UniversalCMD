@@ -1,9 +1,9 @@
-# ![Unicmd banner](https://user-images.githubusercontent.com/89011403/187036721-ad778434-1502-4378-b0e2-30aa343a8618.png)
+# ![banner_1](https://github.com/dotPawel/UniversalCMD/assets/89011403/4abb1023-7414-45a8-b32b-74fb978240e0)
   
-UniversalCMD is a **command line utility tool** written in C# (to put it simply, something like Microsoft's CMD)  
-made to be portable and easy to use. Containing a full set of file management commands and more, also a AeroCL replacement
+UniversalCMD is a **command line utility tool** written in C# (something like Windows' CMD or Unix's bash except much simpler)  
+Made to be portable and easy to use. Containing a full set of file management commands, it's own package manager and more.
 
-*UniversalCMD needs .NET 7.0 Runtime to run*
+*UniversalCMD needs .NET 8.0 Runtime to run*
 
 (Windows terminal recommended)
 
@@ -12,60 +12,53 @@ made to be portable and easy to use. Containing a full set of file management co
 ![Windows](https://img.shields.io/badge/Windows-0078D6?style=for-the-badge&logo=windows&logoColor=white)
 
 <p align="center">
-  <img src="https://user-images.githubusercontent.com/89011403/226937038-d282ca1b-bd49-4abf-90d3-ba6612913322.png" />
+  <img src="https://github.com/dotPawel/UniversalCMD/assets/89011403/ab3d8a97-a87e-41c9-ab99-82c4d5779602" />
 </p>
 
 
-# ![structure_banner](https://user-images.githubusercontent.com/89011403/226941736-aba1976e-712e-4734-97d7-6ccb37d567d8.png)
-Upon start up UniversalCMD checks for the following data, if missing UniversalCMD attempts to create them automaticly
+## ![bannel_file_structure](https://github.com/dotPawel/UniversalCMD/assets/89011403/599a24a8-bd1c-4d90-b508-eb067ad47fd5)
+Upon start up UniversalCMD checks for the following data, if missing UniversalCMD attempts to create them automaticly.
 ```
 UniCMD.data\  
   ╚ Macros\ - Macros folder
   ╚ UniPKG\ - UniPKG data (Package manager)
+   ╚ pkginfo\ - Installed package data 
   ╚ autoexec.cfg - Commands executed after startup
   ╚ config.cfg - User config
 ```
 
-# ![customization_banner](https://user-images.githubusercontent.com/89011403/212902032-d6f20440-5042-4df1-91ec-b4f328d6e2ba.png)
-UniversalCMD contains 3 customization features
+## ![banner_customization](https://github.com/dotPawel/UniversalCMD/assets/89011403/eec6d3a4-5cf7-4802-bbb6-e8f88b51df9c)
+UniversalCMD can be customized using 3 built-in features
 
-+ StartText - allows for changing the welcome text
-+ PromptText - allows for changing the prompt bar (somewhat like ohmyzsh but really simple)
-+ TextModules - allows for inserting data into text (not really customization but used heavily when customizing)
++ StartText - used for changing the welcome text
++ PromptText - used for changing the prompt bar
++ TextModules - allows for inserting data into text (can be used outside customization)
 
-(my setup)
+(my setup below)
 
-![my_unicmd_setup](https://user-images.githubusercontent.com/89011403/227204910-cb475bc1-08df-4eee-8beb-32fa9673c8d8.png)
+![my_unicmd_setup](https://github.com/dotPawel/UniversalCMD/assets/89011403/9cdb0d3f-6e38-45d4-9e56-d2f5fbc7086a)
 
-# ![unipkg_banner](https://github.com/dotPawel/UniversalCMD/assets/89011403/f203be12-afd6-4e70-a5e9-4b03b58bbe75)
+## ![banner_unipkg](https://github.com/dotPawel/UniversalCMD/assets/89011403/b6d1425b-bc9b-4816-b652-4d51152786cd)
 
-UniPKG is UniversalCMD's package manager hosted at https://unipkg.vercel.app/ 
+UniPKG is UniversalCMD's built-in package manager hosted at https://unipkg.vercel.app/  
+Learn how to make your own package at https://unipkg.vercel.app/how2pkg.html
 
-Complete with documentation at https://unipkg.vercel.app/how2pkg.html
+![unipkg](https://github.com/dotPawel/UniversalCMD/assets/89011403/12ad1423-825d-4c86-9dcb-05e2d0b65343)
 
-![unipkg_screenshot](https://github.com/dotPawel/UniversalCMD/assets/89011403/ceda03b2-b456-4870-8fa4-cae3d85bdacc)
+## ![banner_uniscript](https://github.com/dotPawel/UniversalCMD/assets/89011403/de1bb6c2-619b-49c4-a440-4ebd6bfc87c5)
 
-# ![uniscript_banner](https://user-images.githubusercontent.com/89011403/212897047-e1fa894b-6d0a-4eaf-8462-6ede8ec12310.png)
+UniScript allows for executing commands from a file as seen below, made for automating simple tasks, UniScript .unsc files can be executed as macros and using the 'uniscript' command
 
-UniScript is UniversalCMD's very simple scripting language, made mainly for automating simple tasks
+![unsc](https://github.com/dotPawel/UniversalCMD/assets/89011403/629d168f-34c2-4559-b37e-043e7a2b7d68)
 
-UniScript is also used by the macros feature
-
-![uniscript_example](https://user-images.githubusercontent.com/89011403/212900244-25629047-3298-45cb-8fd4-7a42e56bbcdf.png)
-
-# ![unidkit banner](https://github.com/dotPawel/UniversalCMD/assets/89011403/10806459-5dca-4440-860e-e35b88bbe6af)
+## ![banner_unidkit](https://github.com/dotPawel/UniversalCMD/assets/89011403/b6c21bbd-85ee-4e94-a904-4a15ded44cfe)
 
 UniDKIT is the officall development kit for UniCMD, it comes complete with syntax highlighting, autocomplete and a set of tools for UniPKG
 
-https://github.com/dotPawel/UniDKIT
+Source code at https://github.com/dotPawel/UniDKIT
 
-![unidkit_screenshot](https://github.com/dotPawel/UniversalCMD/assets/89011403/ed95b88d-39cd-4bcc-b0b4-d2e2fde34d29)
+![unidkit](https://github.com/dotPawel/UniversalCMD/assets/89011403/576f62ca-5859-4210-982c-4335ebbac1a4)
 
-Get it via UniPKG using ``unipkg /inst UniDKIT`` or click [here](https://github.com/dotPawel/UniDKIT/releases/latest) to get it manually
+Install it via UniPKG using ``unipkg /inst UniDKIT`` or click [here](https://github.com/dotPawel/UniDKIT/releases/latest) to get redirected to the release section in the UniDKIT repository
 
 
-# ![aclbb_banner](https://user-images.githubusercontent.com/89011403/187044183-d36343db-e355-4354-a8bf-cd9ca39d2ee5.png)
-
-If for any reason you need AeroCL it still can be started from UniversalCMD using ``acl_bb start``
-
-![acl_screenshot](https://user-images.githubusercontent.com/89011403/226953710-4cc5a571-4451-42ea-81ba-2bdb11b2165f.png)

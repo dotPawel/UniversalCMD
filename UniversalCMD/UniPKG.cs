@@ -1,10 +1,13 @@
-﻿using System;
+﻿using Microsoft.Scripting.Hosting.Shell;
+using Octokit;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http.Headers;
 using System.Net.Security;
+using System.Security.Policy;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -12,7 +15,7 @@ namespace UniCMD
 {
     internal class UniPKG
     {
-        public static string Version = "1.5";
+        public static string Version = "1.7";
         // online
         public static async void InstallOnlinePackage()
         {
@@ -111,6 +114,177 @@ namespace UniCMD
 
                 Console.WriteLine(@"Deleting TEMP ..");
                 Directory.Delete(@"UniCMD.data\UniPKG\TEMP", true);
+            }
+        }
+        public static void CheckPackageUpdate()
+        {
+            string[] packages = null;
+            var package = string.Join(" ", Program.UserCommand.Split(' ').Skip(2));
+            bool checkall = false;
+
+            if (package == "*")
+            {
+                packages = GetInstalledPackages();
+            }
+            else
+            {
+                packages = new string[1];
+                packages[0] = package;
+            }
+
+            Console.WriteLine("  Package update information");
+            Console.WriteLine("----------------------------------------------");
+
+            foreach (var pkg in packages)
+            {
+                try
+                {
+                    WebClient client = new WebClient();
+
+                    if (!File.Exists(@"UniCMD.data\UniPKG\pkginfo\" + pkg + ".pkginfo"))
+                    {
+                        Console.WriteLine($"[{pkg}] No .pkginfo file found for " + pkg);
+                    }
+                    string[] PkgInfoLines = File.ReadAllLines(@"UniCMD.data\UniPKG\pkginfo\" + pkg + ".pkginfo");
+                    string[] ServerPkgInfoLines = client.DownloadString("https://unipkg.vercel.app/unipkg/" + pkg + ".pkginfo").Split("\n");
+
+                    string LocalPackageVersion = PkgInfoLines.FirstOrDefault(verprefix => verprefix.Contains("PackageVersion=")).Replace("PackageVersion=", "");
+                    string ServerPackageVersion = ServerPkgInfoLines.FirstOrDefault(verprefix => verprefix.Contains("PackageVersion=")).Replace("PackageVersion=", "");
+
+                    if (LocalPackageVersion != "" && ServerPackageVersion != "")
+                    {
+                        if (LocalPackageVersion == ServerPackageVersion)
+                        {
+                            Console.WriteLine($"[{pkg}] Local is already on latest version");
+                        }
+                        else
+                        {
+                            Console.WriteLine($"[{pkg}] Update for package available [{LocalPackageVersion}] => [{ServerPackageVersion}]");
+                        }
+                    }
+                    else
+                    {
+                        Console.WriteLine($"[{pkg}] No version defined in .pkginfo file");
+                    }
+                }
+                catch (Exception ex)
+                {
+                    if (ex.Message == "The remote server returned an error: (404) Not Found.")
+                    {
+                        Console.WriteLine($"[{pkg}] No serverside package info found (404)");
+                    }
+                    else
+                    {
+                        Console.WriteLine("Checking for updates failed");
+
+                        Other.PrintException(ex);
+                    }
+                }
+            }
+        }
+        public static async void UpdatePackage()
+        {
+            string[] packages = null;
+            var package = string.Join(" ", Program.UserCommand.Split(' ').Skip(2));
+            bool checkall = false;
+
+            if (package == "*")
+            {
+                packages = GetInstalledPackages();
+            }
+            else
+            {
+                packages = new string[1];
+                packages[0] = package;
+            }
+
+            Console.WriteLine("  Package updating");
+            Console.WriteLine("----------------------------------------------");
+
+            foreach (var pkg in packages)
+            {
+                try
+                {
+                    WebClient client = new WebClient();
+
+                    if (!File.Exists(@"UniCMD.data\UniPKG\pkginfo\" + pkg + ".pkginfo"))
+                    {
+                        Console.WriteLine($"[{pkg}] No .pkginfo file found for " + pkg);
+                    }
+                    string[] PkgInfoLines = File.ReadAllLines(@"UniCMD.data\UniPKG\pkginfo\" + pkg + ".pkginfo");
+                    string[] ServerPkgInfoLines = client.DownloadString("https://unipkg.vercel.app/unipkg/" + pkg + ".pkginfo").Split("\n");
+
+                    string LocalPackageVersion = PkgInfoLines.FirstOrDefault(verprefix => verprefix.Contains("PackageVersion=")).Replace("PackageVersion=", "");
+                    string ServerPackageVersion = ServerPkgInfoLines.FirstOrDefault(verprefix => verprefix.Contains("PackageVersion=")).Replace("PackageVersion=", "");
+
+                    if (LocalPackageVersion != "" && ServerPackageVersion != "")
+                    {
+                        if (LocalPackageVersion == ServerPackageVersion)
+                        {
+                            Console.WriteLine($"[{pkg}] Local is already on latest version");
+                        }
+                        else
+                        {
+                            Console.WriteLine($"[{pkg}] Updating package [{LocalPackageVersion}] => [{ServerPackageVersion}]");
+
+                            if (!File.Exists(@"UniCMD.data\UniPKG\pkginfo\" + pkg + ".uninst"))
+                            {
+                                return;
+                            }
+                            foreach (string line in File.ReadAllLines(@"UniCMD.data\UniPKG\pkginfo\" + pkg + ".uninst"))
+                            {
+                                if (line.EndsWith(@"\"))
+                                {
+                                    Directory.Delete(line, true);
+                                }
+                                else
+                                {
+                                    File.Delete(line);
+                                }
+                            }
+                            File.Delete(@"UniCMD.data\UniPKG\pkginfo\" + pkg + ".uninst");
+                            File.Delete(@"UniCMD.data\UniPKG\pkginfo\" + pkg + ".pkginfo");
+
+                            client.DownloadFile("https://unipkg.vercel.app/unipkg/" + pkg + ".unipkg", @"UniCMD.data\UniPKG\" + pkg + ".unipkg");
+
+                            try
+                            {
+                                Directory.Delete(@"UniCMD.data\UniPKG\TEMP", true);
+                            }
+                            catch { }
+                            Directory.CreateDirectory(@"UniCMD.data\UniPKG\TEMP");
+
+                            System.IO.Compression.ZipFile.ExtractToDirectory(@"UniCMD.data\UniPKG\" + pkg + ".unipkg", @"UniCMD.data\UniPKG\TEMP");
+
+                            File.Delete(@"UniCMD.data\UniPKG\" + pkg + ".unipkg");    
+
+                            CheckPackageInfo(pkg);
+                            InstallFiles(pkg);
+                            await ExecutePostInst(pkg);
+
+                            DeleteTemp();
+
+                            Console.WriteLine($"[{pkg}] Update successful");
+                        }
+                    }
+                    else
+                    {
+                        Console.WriteLine($"[{pkg}] No version defined in .pkginfo file");
+                    }
+                }
+                catch (Exception ex)
+                {
+                    if (ex.Message == "The remote server returned an error: (404) Not Found.")
+                    {
+                        Console.WriteLine($"[{pkg}] No serverside package info found (404)");
+                    }
+                    else
+                    {
+                        Console.WriteLine("Updating packages failed failed");
+
+                        Other.PrintException(ex);
+                    }
+                }
             }
         }
 
@@ -221,13 +395,10 @@ namespace UniCMD
                 Console.WriteLine("  Installed packages");
                 Console.WriteLine("----------------------------------------------");
 
-                foreach (var d in files)
+                string[] packages = GetInstalledPackages();
+                foreach (string package in packages)
                 {
-                    if (d.EndsWith(".pkginfo"))
-                    {
-                        string pkgname = Path.GetFileName(d).Replace(".pkginfo", "");
-                        Console.WriteLine(" " + pkgname);
-                    }
+                    Console.WriteLine(package);
                 }
             }
             catch (Exception ex)
@@ -285,29 +456,26 @@ namespace UniCMD
         {
             try
             {
-                if (!File.Exists(@"UniCMD.data\UniPKG\TEMP\" + PackageName + ".pkginfo"))
+                string[] extensions = { ".pkginfo", ".inst", ".uninst" };
+                foreach (string extension in extensions)
                 {
-                    Console.WriteLine("File does not have .pkginfo file, halting");
-                    DeleteTemp();
-                    Program.Prompt();
-                }
-                if (!File.Exists(@"UniCMD.data\UniPKG\TEMP\" + PackageName + ".inst"))
-                {
-                    Console.WriteLine("File does not have .inst file, halting");
-                    DeleteTemp();
-                    Program.Prompt();
-                }
-                if (!File.Exists(@"UniCMD.data\UniPKG\TEMP\" + PackageName + ".uninst"))
-                {
-                    Console.WriteLine("File does not have .uninst file, halting");
-                    DeleteTemp();
-                    Program.Prompt();
+                    string filePath = $@"UniCMD.data\UniPKG\TEMP\{PackageName}{extension}";
+
+                    if (!File.Exists(filePath))
+                    {
+                        Console.WriteLine($"Package does not have {extension} file, halting");
+                        DeleteTemp();
+                        Program.Prompt();
+                        break;
+                    }
                 }
             }
             catch (Exception ex) 
             {
                 Console.WriteLine("Checking package info failed");
                 Other.PrintException(ex);
+                DeleteTemp();
+                Program.Prompt();
                 return;
             }
 
@@ -413,6 +581,21 @@ namespace UniCMD
                 Console.WriteLine();
             }
             UniScript.UniScriptExecuting = false;
+        }
+
+        static string[] GetInstalledPackages()
+        {
+            List<string> packages = new List<string>();
+            var files = Directory.GetFiles(@"UniCMD.data\UniPKG\pkginfo\");
+            foreach (var d in files)
+            {
+                if (d.EndsWith(".pkginfo"))
+                {
+                    string pkgname = Path.GetFileName(d).Replace(".pkginfo", "");
+                    packages.Add(pkgname);
+                }
+            }
+            return packages.ToArray();
         }
     }
 }

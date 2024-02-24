@@ -10,15 +10,6 @@ namespace UniCMD
     internal class Other
     {
         public static bool IsAdmin = WindowsIdentity.GetCurrent().Owner.IsWellKnown(WellKnownSidType.BuiltinAdministratorsSid);
-        public static string ReturnCPUName(string cpu)
-        {
-            ManagementObjectSearcher mos = new ManagementObjectSearcher("root\\CIMV2", "SELECT * FROM Win32_Processor");
-            foreach (ManagementObject mo in mos.Get())
-            {
-                cpu = mo["Name"].ToString();
-            }
-            return cpu;
-        }
         public static void PrintException(Exception exc)
         {
             if (Startup.ConfigDict["showExceptions"] == true)

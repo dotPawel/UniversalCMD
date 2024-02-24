@@ -1,11 +1,7 @@
-﻿using System.Diagnostics;
-using static System.Net.Mime.MediaTypeNames;
-
-namespace UniCMD
+﻿namespace UniCMD
 {
     static internal class Startup // https://cdn.discordapp.com/attachments/754607880359116824/1135948757280768000/gems.mp4
     {
-        // make this into a dictonary some time
         public static Dictionary<String, bool> ConfigDict = new Dictionary<String, bool>()
         {
             {"showExceptions", false },

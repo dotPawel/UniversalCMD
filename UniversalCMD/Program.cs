@@ -1,11 +1,9 @@
-﻿using System.Diagnostics;
-
-namespace UniCMD
+﻿namespace UniCMD
 {
     static internal class Program
     {
-        public static string Version = "9.0r";
-        public static string Codename = "Andromeda";
+        public static string Version = "10.0r";
+        public static string Codename = "Athena";
         // r - release
         // rc - release candidate
         // d - debug
@@ -25,8 +23,6 @@ namespace UniCMD
         {
             System.Diagnostics.Process proc = System.Diagnostics.Process.GetCurrentProcess();
             Console.Title = "UniCMD (" + Version + ")";
-            string cpu = "";
-            cpu = Other.ReturnCPUName(cpu);
 
             if (File.Exists(@"UniCMD.data\starttext.unicmd"))
             {
@@ -38,10 +34,10 @@ namespace UniCMD
                      UniversalCMD / {0} / {1}
                   Host OS - {2}
                   Memory - {3} (KB)
-                  CPU Name/model - {4}
+                  User - {4}
                      For command index execute "help"
-                """, Codename, Version, Environment.OSVersion, proc.PrivateMemorySize64, cpu);
-            }     
+                """, Codename, Version, Environment.OSVersion, proc.PrivateMemorySize64, Environment.UserName);
+            }
 
             if (Startup.ConfigDict["checkForUpdates"])
             {
@@ -248,7 +244,7 @@ namespace UniCMD
 
                 case string s when s.StartsWith("file clr "):
                     FileMan.ClearFile();
-                    break; 
+                    break;
 
                 // file cln
                 case "file cln":
@@ -267,7 +263,7 @@ namespace UniCMD
                 case string s when s.StartsWith("file rnm "):
                     FileMan.RenameFile();
                     break;
- 
+
                 // file zip
                 case "file zip":
                     CommandUsages.FileZipUsage();
@@ -406,7 +402,7 @@ namespace UniCMD
                     CommandUsages.ParseCommandHelp();
                     break;
 
-                
+
                 // UniScript commands
                 case "uniscript":
                     CommandUsages.UniScriptHelp();
@@ -420,7 +416,7 @@ namespace UniCMD
                 case "usrin":
                     CommandUsages.UserInputUtilsHelp();
                     break;
-                    
+
                 case "usrin clr":
                     UserData.ClearUserInput();
                     break;
@@ -506,6 +502,34 @@ namespace UniCMD
                     UserData.ClearDictionary();
                     break;
 
+                // CallDLL invoker
+                case "cdll":
+                    CommandUsages.CallDLLHelp();
+                    break;
+
+                // cdll load
+                case "cdll load":
+                    CommandUsages.CallDLLLoadHelp();
+                    break;
+
+                case string s when s.StartsWith("cdll load "):
+                    CallDLL.LoadDLL();
+                    break;
+
+                // cdll clr
+                case "cdll clr":
+                    CallDLL.UnloadDLL();
+                    break;
+
+                // cdll inv
+                case "cdll inv":
+                    CommandUsages.CallDllInvokeHelp();
+                    break;
+
+                case string s when s.StartsWith("cdll inv "):
+                    CallDLL.InvokeDLL();
+                    break;
+
 
                 // UniPKG commands
                 case "unipkg":
@@ -550,6 +574,22 @@ namespace UniCMD
 
                 case string s when s.StartsWith("unipkg /uinst "):
                     UniPKG.Uninstall();
+                    break;
+
+                case "unipkg /upd":
+                    CommandUsages.UniPKGUpdateUsage();
+                    break;
+
+                case string s when s.StartsWith("unipkg /upd "):
+                    UniPKG.UpdatePackage();
+                    break;
+
+                case "unipkg /cupd":
+                    CommandUsages.UniPKGCheckUpdateUsage();
+                    break;
+
+                case string s when s.StartsWith("unipkg /cupd "):
+                    UniPKG.CheckPackageUpdate();
                     break;
 
                 case "unipkg /list":
@@ -633,7 +673,7 @@ namespace UniCMD
             if (command == "dbg_start")
             {
                 Debug.dbg_start();
-            }          
+            }
         }
         public static void InvalidCommand()
         {

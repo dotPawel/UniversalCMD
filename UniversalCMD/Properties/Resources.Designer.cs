@@ -61,11 +61,20 @@ namespace UniCMD.Properties {
         }
         
         /// <summary>
+        ///   Wyszukuje zlokalizowany zasób typu System.IO.UnmanagedMemoryStream podobny do zasobu System.IO.MemoryStream.
+        /// </summary>
+        internal static System.IO.UnmanagedMemoryStream risen {
+            get {
+                return ResourceManager.GetStream("risen", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Wyszukuje zlokalizowany zasób typu System.Drawing.Icon podobny do zasobu (Ikona).
         /// </summary>
-        internal static System.Drawing.Icon Icon {
+        internal static System.Drawing.Icon UniCMD {
             get {
-                object obj = ResourceManager.GetObject("Icon", resourceCulture);
+                object obj = ResourceManager.GetObject("UniCMD", resourceCulture);
                 return ((System.Drawing.Icon)(obj));
             }
         }
@@ -73,19 +82,10 @@ namespace UniCMD.Properties {
         /// <summary>
         ///   Wyszukuje zlokalizowany zasób typu System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap Icon2 {
+        internal static System.Drawing.Bitmap UniCMD_png {
             get {
-                object obj = ResourceManager.GetObject("Icon2", resourceCulture);
+                object obj = ResourceManager.GetObject("UniCMD_png", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Wyszukuje zlokalizowany zasób typu System.IO.UnmanagedMemoryStream podobny do zasobu System.IO.MemoryStream.
-        /// </summary>
-        internal static System.IO.UnmanagedMemoryStream risen {
-            get {
-                return ResourceManager.GetStream("risen", resourceCulture);
             }
         }
     }

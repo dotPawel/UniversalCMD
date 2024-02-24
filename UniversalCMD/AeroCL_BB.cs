@@ -8,6 +8,11 @@ namespace UniCMD
 {
     static internal class AeroCL_BB
     {
+        // To those that don't know, this is a older project of mine ported to this one (UniCMD)
+        // The code is ass, and it is probably to be removed
+        // I will not optimize this mess
+
+
         public static string currentDir = "";
         public static string bbver = "0.7";
         internal static void acl_main()
@@ -21,21 +26,9 @@ namespace UniCMD
                 {
                     string currentDir = Program.CurrentDir;                
                     string userName = Environment.UserName;
-                    ManagementObjectSearcher mos =
-                    new ManagementObjectSearcher("root\\CIMV2", "SELECT * FROM Win32_Processor");
-                    Console.WriteLine("==================================================");
                     Console.WriteLine(" AeroCL 2.0 | " + userName);
                     Console.WriteLine(" (UniCMD Backbridge {0})", bbver);
-                    Console.WriteLine("==================================================");
-                    Console.WriteLine(" |OS; " + Environment.OSVersion);
-                    Console.WriteLine(" |PC; " + Environment.MachineName);
-                    foreach (ManagementObject mo in mos.Get())
-                    {
-                        Console.WriteLine(" |CPU; " + mo["Name"]);
-                    }
-                    Console.WriteLine("==================================================");
-                    Console.WriteLine("'HELP' For command list");
-                    Console.WriteLine("==================================================");
+                    Console.WriteLine();
                     cmdvoid();              
                 }
                 static void cmdvoid()
@@ -83,8 +76,8 @@ namespace UniCMD
                     if (CMD == "ACL_BB RESTART")
                     {
                         Console.Clear();
-                        currentDir = null;
-                        CMD = null;
+                        currentDir = "";
+                        CMD = "";
                         welcomeScreen();
                     }
 
